@@ -1,8 +1,14 @@
+@font-face {
+    font-family: "BubbleGum";
+    src: url("../font/Bubblegum.ttf");
+  }
+  
 body, html{
     padding: 0;
     margin: 0;
 }
 #header header{
+    font-family: 'Roboto', sans-serif;
     border-bottom: 2px solid #707070;
     margin: 0;
     padding: 0;
@@ -44,4 +50,40 @@ body, html{
     float: left;
     margin-left: 1vw;
     width: 6vw;
+}
+#form form{
+    margin: auto;
+    margin-top: 10vh;
+    height: 20vh;
+    border: 1px solid #707070;
+    width: 40vw;
+    height: 20vh;
+    font-family: "BubbleGum";
+}
+#form input{
+    margin-top: 3vh;
+    font-family: "BubbleGum";
+    height: 4vh;
+    padding-left: 1vw;
+    text-transform: lowercase;
+}
+#form input::placeholder{
+    color: #D5D5D5;
+    text-transform: uppercase;
+}
+#form select{
+    margin-top: 3vh;
+    font-family: "BubbleGum";
+    color: #D5D5D5;
+    width: 10vw;
+}
+#submit_search{
+    display: flex;
+    justify-content: center;
+    margin-top: 2vh;
+}
+#container_input{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
