@@ -8,27 +8,15 @@
     <title>Accueil</title>
 </head>
 <body>
-
-    <section id="header">
-        <header>
-            <a href="index.html"><img src="assets/img/logo.png" alt="logo_fog" id="logo_fog"></a>
-            <div id="container_menu">
-                <button id="button_ad">creer une annonce +</button>
-                <a href="#"><img src="assets/img/bell.png" alt="logo_bell" id="logo_bell"></a>
-                <a href="#"><img src="assets/img/wrench.png" alt="logo_admin" id="logo_admin"></a>
-                <div id="container_user">
-                    <img src="assets/img/user.png" alt="logo_user" id="logo_user">
-                    <p>Nom user</p>
-                </div>
-            </div>
-        </header>
-    </section>
-
+    <?php require_once "include/header.php"?>
     <section id="form">
         <form action="" method="POST">
             <div id="container_input">
                 <select name="" id="">
-                    <option value="">Categorie</option>
+                    <option value="default">Categorie</option>
+                    <option value="console">Console</option>
+                    <option value="video_games">Jeux-video</option>
+                    <option value="accessories">Accessoires</option>
                 </select>
                 <input type="text" name="" id="" placeholder="rechercher">
                 <input type="text" name="" id="" placeholder="lieu">
@@ -104,29 +92,6 @@
             </div>
         </div>
     </section>
-    <section id="footer">
-        <div id="footer_left">
-            <h1>A propos de F.O.G</h1>
-            <hr>
-            <a href="">Qui sommes nous ?</a>
-            <a href="">Nous contacter</a>
-            <a href="">Plan du site</a>
-        </div>
-        <div id="footer_center">
-            <h1>Retrouvez nous sur les réseaux sociaux</h1>
-            <hr>
-            <a href=""><img src="assets/img/twitter.png" alt="logo twitter" id="logo_twitter"><p>@FOGshop</p></a>
-            <a href=""><img src="assets/img/facebook.png" alt="logo facebook" id="logo_facebook"><p>F.O.G</p></a>
-            <a href=""><img src="assets/img/insta.png" alt="logo insta" id="logo_insta"><p>@FOGshop</p></a>
-        </div>
-        <div id="footer_right">
-            <h1>Informations légales</h1>
-            <hr>
-            <a href="">Conditions Générales de Vente</a>
-            <a href="">Vie privée / Cookies</a>
-            <a href="">Condition Générales d'utilisation</a>
-            <a href="">Vos droits et obligations</a>
-        </div>
-    </section>
+    <?php require_once "include/footer.php"?>
 </body>
 </html>
