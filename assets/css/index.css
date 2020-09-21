@@ -87,3 +87,118 @@ body, html{
     flex-direction: row;
     justify-content: space-around;
 }
+#content{
+    font-family: "BubbleGum";
+    color: #707070;
+    margin-top: 15vh;
+    display: flex;
+    flex-direction: column;
+}
+#content h1{
+    margin-left: 5vw;
+}
+#content #category{
+    margin-bottom: 10vh;
+    display: flex;
+    justify-content: space-evenly;
+}
+#slide_category1, #slide_category2, #slide_category3, #slide_category4, #slide_category5, #slide_category6{
+    background-color: black;
+    width: 10vw;
+    height: 20vh;
+}
+#content #user_suggestion{
+    margin-bottom: 10vh;
+    display: flex;
+    justify-content: space-evenly;
+}
+#slide_suggestion1, #slide_suggestion2, #slide_suggestion3, #slide_suggestion4, #slide_suggestion5, #slide_suggestion6{
+    background-color: black;
+    width: 10vw;
+    height: 20vh;
+}
+#content #rand_category{
+    margin-bottom: 10vh;
+    display: flex;
+    justify-content: space-evenly;
+}
+#slide_rand1, #slide_rand2, #slide_rand3, #slide_rand4, #slide_rand5, #slide_rand6{
+    background-color: black;
+    width: 10vw;
+    height: 20vh;
+}
+#footer{
+    margin-top: 20vh;
+    bottom: 0;
+    left: 0;
+    height: 50vh;
+    color: white;
+    font-family: 'Roboto', sans-serif;;
+    background-color: #707070;
+    display: flex;
+    justify-content: space-around;
+}
+#footer h1{
+    font-size: 1em;
+}
+#footer hr{
+    color: white;
+    border-top: 2px solid white;
+    width: 100%;
+}
+#footer_left{
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    text-align: center;
+}
+#footer_left a {
+    margin-top: 2vh;
+    text-decoration: none;
+    color: white;
+}
+#logo_twitter{
+    width: auto;
+    height: 2vw;
+}
+#logo_facebook{
+    width: auto;
+    height: 2vw;
+}
+#logo_insta{
+    width: auto;
+    height: 2vw;
+}
+#footer_center{
+    display: flex;
+    flex-direction: column;
+    width: 23vw;
+    text-align: center;
+}
+#footer_center a{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: bold;
+    justify-content: space-between;
+    width: 12vw;
+    text-decoration: none;
+    color: white;
+}
+#footer_right{
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    text-align: center;
+}
+#footer_right a{
+    color: white;
+    text-decoration: none;
+    margin-top: 2vh;
+}
+#footer a:hover{
+    text-decoration: underline;
+}
