@@ -1,5 +1,6 @@
 <?php
 
+$action = GETPOST("action");
 $categorie = GETPOST("categorie");
 $name = GETPOST("name");
 $location = GETPOST("location");
