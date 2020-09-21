@@ -1,30 +1,37 @@
 <?php
 
-$action = GETPOST("action");
 $categorie = GETPOST("categorie");
 $name = GETPOST("name");
 $location = GETPOST("location");
 
-header('Location: /web/recherche.php?location="'.$lieu.'"?name="'.$name.'
-        "?categorie="'.$categorie.'"');
+// Create sql
+$sql = 'SELECT * FROM product';
+$tabWhere = [];
+if($categorie != "") {$tabWhere[] = "categorie = ".$categorie; }
+if($name != "") {$tabWhere[] = "name = ".$name; }
+if($location != "") {$tabWhere[] = "location = ".$location; }
+if(count($tabWhere) > 0)
+{
+    $sql .= ' WHERE '.join(" and ", $tabWhere);
+}
 
-
-
-print $categorie;
-
-
-print '<form action="'.$_SERVER['PHP_SELF'].'" method="post"/>';
-print '<input type="hidden" name="action" value="generate"/>';
-print '<input name="categorie"/>';
-print '<input type="button" type="submit" value="Valider"/>';
+print($sql);
 
 function GETPOST($champ)
 {
     if(isset($_POST[$champ]))
     {
+        print("Bes yes post");
         return htmlentities($_POST[$champ]);
     }
-    else {
+    else if(isset($_GET[$champ]))
+    {
+        print("Bes yes get");
+        return htmlentities($_GET[$champ]);
+    }
+    else 
+    {
+        print("no");
         return "";
     }
 }
