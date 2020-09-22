@@ -1,3 +1,30 @@
+<?php
+
+    error_reporting(E_ALL);
+    require("include/dbcon.php");
+
+    $db = getConn();
+
+    $action = GETPOST("action");
+    $categorie = GETPOST("category");
+    $name = GETPOST("research");
+    $location = GETPOST("location");
+
+    if($action == "generate")
+    {
+        if($categorie != "" or $name != "" or $location != "")
+        {
+            header('Location: productSearch.php?location="'.$location.'"&name="'.$name.'"&categorie="'.$categorie.'"');
+        }
+    }
+    else
+    {
+        print('<pre>');
+        print_r($_POST);
+        print('</pre>');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -26,14 +53,15 @@
     <section id="form">
         <form action="" method="POST">
             <div id="container_input">
-                <select name="" id="">
+                <select name="category" id="">
                     <option value="default">Categorie</option>
                     <option value="console">Console</option>
                     <option value="video_games">Jeux-video</option>
                     <option value="accessories">Accessoires</option>
                 </select>
-                <input type="text" name="" id="" placeholder="rechercher">
-                <input type="text" name="" id="" placeholder="lieu">
+                <input type="text" name="research" id="" placeholder="rechercher">
+                <input type="text" name="location" id="" placeholder="lieu">
+                <input type="hidden" name="action" value="generate">
             </div>
             <div id="submit_search">
                 <a href="" type="submit"><img src="assets/img/search.png" alt="chercher" id="button_search"></a>
@@ -44,24 +72,14 @@
     <section id="content">
         <h1>top categeries</h1>
         <div id="category">
-            <div id="slide_category1">
-
-            </div>
-            <div id="slide_category2">
-
-            </div>
-            <div id="slide_category3">
-
-            </div>
-            <div id="slide_category4">
-
-            </div>
-            <div id="slide_category5">
-
-            </div>
-            <div id="slide_category6">
-
-            </div>
+            <?php 
+                $result = $db->query("SELECT * FROM product_type");
+                while($enr = $result->fetch(PDO::FETCH_ASSOC))
+                {
+                    print("Yes");
+                }
+            ?>
+            
         </div>
         <h1>interessant pour vous</h1>
         <div id="user_suggestion">
