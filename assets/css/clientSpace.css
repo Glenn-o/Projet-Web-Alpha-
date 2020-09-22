@@ -14,6 +14,9 @@ body, html{
     padding: 0;
     height: 50px;
 }
+#button_ad{
+    width: 14vw;
+}
 #logo_fog{
     width: 7vw;
 }
@@ -125,4 +128,47 @@ body, html{
 }
 #footer a:hover{
     text-decoration: underline;
+}
+#main #info_user{
+    border-radius: 10px;
+    background-color: #EBECEF;
+    width: 40.5vw;
+    height: 60vh;
+    margin-right: 0.5vw;
+}
+#main #last_ad{
+    border-radius: 10px;
+    background-color: #EBECEF;
+    width: 30.5vw;
+    height: 60vh;
+    margin-left: 0.5vw;
+}
+#main{
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh;
+    flex-direction: column;
+}
+#container1{
+    display: inline-flex;
+    justify-content: center;
+}
+#container2{
+    margin-top: 2vh;
+    display: inline-flex;
+    justify-content: center;
+}
+#main #ads{
+    border-radius: 10px;
+    background-color: #EBECEF;
+    height: 30vh;
+    width: 35.5vw;
+    margin-right: 0.5vw;
+}
+#main #newsletter{
+    border-radius: 10px;
+    background-color: #EBECEF;
+    height: 30vh;
+    width: 35.5vw;
+    margin-left: 0.5vw;
 }
