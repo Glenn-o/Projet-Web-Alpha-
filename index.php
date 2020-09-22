@@ -1,3 +1,29 @@
+<?php
+
+    require("./include/dbcon.php");
+
+    $db = getConn();
+
+    $action = GETPOST("action");
+    $categorie = GETPOST("categorie");
+    $name = GETPOST("name");
+    $location = GETPOST("location");
+
+    if($action == "generate")
+    {
+        if($categorie != "" or $name != "" or $location != "")
+        {
+            header('Location: /web/searchForm.php?location="'.$location.'"&name="'.$name.'"&categorie="'.$categorie.'"');
+        }
+    }
+    else
+    {
+        print("Pas d'action");
+    }
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -34,6 +60,7 @@
                 </select>
                 <input type="text" name="" id="" placeholder="rechercher">
                 <input type="text" name="" id="" placeholder="lieu">
+                <input type="hidden" name="action" value="generate">
             </div>
             <div id="submit_search">
                 <a href="" type="submit"><img src="assets/img/search.png" alt="chercher" id="button_search"></a>
@@ -44,24 +71,14 @@
     <section id="content">
         <h1>top categeries</h1>
         <div id="category">
-            <div id="slide_category1">
-
-            </div>
-            <div id="slide_category2">
-
-            </div>
-            <div id="slide_category3">
-
-            </div>
-            <div id="slide_category4">
-
-            </div>
-            <div id="slide_category5">
-
-            </div>
-            <div id="slide_category6">
-
-            </div>
+            <?php 
+                $result = $db->query("SELECT * FROM product_type");
+                while($enr = $result->fetch(PDO::FETCH_ASSOC))
+                {
+                    print("Yes");
+                }
+            ?>
+            
         </div>
         <h1>interessant pour vous</h1>
         <div id="user_suggestion">
