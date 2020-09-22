@@ -12,7 +12,7 @@
 
     if($action == "generate")
     {
-        if($categorie != "" or $name != "" or $location != "")
+        if($category != "" or $research != "" or $location != "")
         {
             header('Location: Views/productSearch.php?location="'.$location.'"&research="'.$name.'"&category="'.$categorie.'"');
         }
