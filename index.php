@@ -1,28 +1,29 @@
 <?php
 
-    require("./include/dbcon.php");
+    error_reporting(E_ALL);
+    require("include/dbcon.php");
 
     $db = getConn();
 
     $action = GETPOST("action");
-    $categorie = GETPOST("categorie");
-    $name = GETPOST("name");
+    $categorie = GETPOST("category");
+    $name = GETPOST("research");
     $location = GETPOST("location");
 
     if($action == "generate")
     {
         if($categorie != "" or $name != "" or $location != "")
         {
-            header('Location: /web/searchForm.php?location="'.$location.'"&name="'.$name.'"&categorie="'.$categorie.'"');
+            header('Location: productSearch.php?location="'.$location.'"&name="'.$name.'"&categorie="'.$categorie.'"');
         }
     }
     else
     {
-        print("Pas d'action");
+        print('<pre>');
+        print_r($_POST);
+        print('</pre>');
     }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -52,14 +53,14 @@
     <section id="form">
         <form action="" method="POST">
             <div id="container_input">
-                <select name="" id="">
+                <select name="category" id="">
                     <option value="default">Categorie</option>
                     <option value="console">Console</option>
                     <option value="video_games">Jeux-video</option>
                     <option value="accessories">Accessoires</option>
                 </select>
-                <input type="text" name="" id="" placeholder="rechercher">
-                <input type="text" name="" id="" placeholder="lieu">
+                <input type="text" name="research" id="" placeholder="rechercher">
+                <input type="text" name="location" id="" placeholder="lieu">
                 <input type="hidden" name="action" value="generate">
             </div>
             <div id="submit_search">

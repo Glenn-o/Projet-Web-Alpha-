@@ -1,4 +1,7 @@
-<?php  
+<?php 
+    require_once "include/dbcon";
+
+    $db = getConn();
     $action = GETPOST("action");
     $categorie = GETPOST("categorie");
     $name = GETPOST("name");
@@ -14,6 +17,17 @@
     {
         $sql .= ' WHERE '.join(" and ", $tabWhere);
     }
+    $res = $db->query($sql);
+    $count = $res->rowCount();
+    
+    if($count > 0)
+    {
+        print("Y a des resultat");
+    }
+    else
+    {
+        print("Pas de resultat");
+    }
 
     print($sql);
 ?>
@@ -25,6 +39,10 @@
     <title>Document</title>
 </head>
 <body>
+<?php
+
+
+?>
     
 </body>
 </html>
