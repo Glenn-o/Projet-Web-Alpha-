@@ -6,22 +6,16 @@
     $db = getConn();
 
     $action = GETPOST("action");
-    $categorie = GETPOST("category");
-    $name = GETPOST("research");
+    $category = GETPOST("category");
+    $research = GETPOST("research");
     $location = GETPOST("location");
 
     if($action == "generate")
     {
         if($categorie != "" or $name != "" or $location != "")
         {
-            header('Location: productSearch.php?location="'.$location.'"&name="'.$name.'"&categorie="'.$categorie.'"');
+            header('Location: Views/productSearch.php?location="'.$location.'"&research="'.$name.'"&category="'.$categorie.'"');
         }
-    }
-    else
-    {
-        print('<pre>');
-        print_r($_POST);
-        print('</pre>');
     }
 ?>
 
@@ -64,7 +58,7 @@
                 <input type="hidden" name="action" value="generate">
             </div>
             <div id="submit_search">
-                <a href="" type="submit"><img src="assets/img/search.png" alt="chercher" id="button_search"></a>
+                <button type="submit"><img src="assets/img/search.png" alt="chercher" id="button_search"></button>
             </div>
         </form>
     </section>

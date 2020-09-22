@@ -1,28 +1,44 @@
 <?php 
-    require_once "include/dbcon";
+    require_once "../include/dbcon.php";
+
+    //const
+    $maxProduct = 10;
 
     $db = getConn();
     $action = GETPOST("action");
-    $categorie = GETPOST("categorie");
-    $name = GETPOST("name");
+    $category = GETPOST("category");
+    $research = GETPOST("research");
     $location = GETPOST("location");
 
     // Create sql
     $sql = 'SELECT * FROM product';
     $tabWhere = [];
-    if($categorie != "") {$tabWhere[] = "categorie = ".$categorie; }
-    if($name != "") {$tabWhere[] = "name = ".$name; }
-    if($location != "") {$tabWhere[] = "location = ".$location; }
-    if(count($tabWhere) > 0)
-    {
-        $sql .= ' WHERE '.join(" and ", $tabWhere);
-    }
+    // if($category != "") {$tabWhere[] = "categorie = '$category'"; }
+    // if($research != "") {$tabWhere[] = "research = '$research'"; }
+    // if($location != "") {$tabWhere[] = "location = '$location'"; }
+    // if(count($tabWhere) > 0)
+    // {
+    //     $sql .= ' WHERE '.join(" and ", $tabWhere);
+    // }
+
     $res = $db->query($sql);
     $count = $res->rowCount();
     
     if($count > 0)
     {
-        print("Y a des resultat");
+        $all = $res->fetchAll();
+        $page = $_GET["page"] ?? 1;
+        $nbrPage = ceil($count / $maxProduct);
+        $capResult = $page * $maxProduct;
+        if($capResult > $count)
+        {
+            $capResult = $count;
+        }
+        $start = ($page-1) * $maxProduct;
+        for($i=$start;$i< $capResult;$i++)
+        {
+            print($all[$i]["name"]);
+        }
     }
     else
     {
