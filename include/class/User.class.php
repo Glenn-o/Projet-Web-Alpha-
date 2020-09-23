@@ -1,7 +1,4 @@
 <?php
-
-require_once '../dbcon.php';
-
 class User
 {
     // var $id;
@@ -15,27 +12,31 @@ class User
     // var $appreciation;
     // var $avatar;
 
-    public static function tryConnexion(string $userName, string $password) : boolean
+    public static function tryConnexion(string $userName, string $password) : bool
     {
         $db = getConn();
-        if($userName !== "")
+        if($userName !== "") // Si nom renseigné
         {
             $password = sha1($password);
-            $checkUserSQL = 'SELECT login FROM users WHERE name = userName = "'.$userName.'" TOP 1';
+            $checkUserSQL = 'SELECT username FROM users WHERE username =  "'.$userName.'"';
             $resultUser = $db->query($checkUserSQL);
-            if($resultUser->rowCount() > 0)
+            if($resultUser->rowCount() > 0) // Si user trouvé grace a nom
             {
-                if($password != "")
-                $checkPassword = 'SELECT password FROM users WHERE password = "'.$password.'" TOP 1';
-                $resultUser = $db->query($checkPassword);
-                if($resultUser->rowCount() > 1)
+                if($password != "") // Si mot de passe renseigné
                 {
-                    $_SESSION["userName"] = $username;
-                    header('Location : index.php?action=connexion');
-                }
-                else
-                {
-                    print("Mauvais mot de passe");
+                    $checkPassword = 'SELECT password FROM users WHERE password = "'.$password.'"';
+                    $resultUser = $db->query($checkPassword);
+                    if($resultUser->rowCount() > 0) // Si mot de passe correspond
+                    {
+                        $_SESSION["userName"] = $_POST["name"];
+
+                        header('Location: ../index.php');
+                        return true;
+                    }
+                    else
+                    {
+                        print("Mauvais mot de passe");
+                    }
                 }
             }
         }
@@ -43,6 +44,7 @@ class User
         {
             print("Nom d'utilisateur nom renseigné");
         }
+        return false;
         $db = null;
     }
 
@@ -73,8 +75,4 @@ class User
     }
     
 }
-
-
-
-
 ?>
