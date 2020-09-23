@@ -1,5 +1,4 @@
 <?php
-
     error_reporting(E_ALL);
     require("include/dbcon.php");
 
@@ -14,7 +13,7 @@
     {
         if($category != "" or $research != "" or $location != "")
         {
-            header('Location: Views/productSearch.php?location="'.$location.'"&research="'.$name.'"&category="'.$categorie.'"');
+            header('Location: Views/productSearch.php?location='.$location.'&research='.$research.'&category='.$category);
         }
     }
 ?>
@@ -50,8 +49,8 @@
                 <select name="category" id="">
                     <option value="default">Categorie</option>
                     <option value="console">Console</option>
-                    <option value="video_games">Jeux-video</option>
-                    <option value="accessories">Accessoires</option>
+                    <option value="jeux">Jeux-video</option>
+                    <option value="accesoires">Accessoires</option>
                 </select>
                 <input type="text" name="research" id="" placeholder="rechercher">
                 <input type="text" name="location" id="" placeholder="lieu">
