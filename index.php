@@ -1,4 +1,5 @@
 <?php
+
     error_reporting(E_ALL);
     require("include/dbcon.php");
 
@@ -13,7 +14,7 @@
     {
         if($category != "" or $research != "" or $location != "")
         {
-            header('Location: Views/productSearch.php?location='.$location.'&research='.$research.'&category='.$category);
+            header('Location: Views/productSearch.php?location="'.$location.'"&research="'.$name.'"&category="'.$categorie.'"');
         }
     }
 ?>
@@ -24,6 +25,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/index.css">
+    <link href="assets/css/header.css" rel="stylesheet">
+    <link href="assets/css/footer.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
     <title>Accueil</title>
 </head>
@@ -49,8 +52,8 @@
                 <select name="category" id="">
                     <option value="default">Categorie</option>
                     <option value="console">Console</option>
-                    <option value="jeux">Jeux-video</option>
-                    <option value="accesoires">Accessoires</option>
+                    <option value="video_games">Jeux-video</option>
+                    <option value="accessories">Accessoires</option>
                 </select>
                 <input type="text" name="research" id="" placeholder="rechercher">
                 <input type="text" name="location" id="" placeholder="lieu">

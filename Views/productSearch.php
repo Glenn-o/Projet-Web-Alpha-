@@ -32,11 +32,13 @@
     $count = $res->rowCount();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="../assets/css/header.css" rel="stylesheet">
+    <link href="../assets/css/footer.css" rel="stylesheet">
 </head>
 <body>
 <?php
