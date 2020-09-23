@@ -11,22 +11,15 @@
     $location = GETPOST("location");
 
     // Create sql
-    $sql = 'SELECT * FROM product as Prod';
+    $sql = 'SELECT * FROM product';
     $tabWhere = [];
-    if($category !== 'default') {
-        $tabWhere[] = "Type.name = '$category'";
-        $sql .= " INNER JOIN product_type as Type ON Type.id_product_type = Prod.id_product_type";
-    }
-    if($research !== "") {
-        $tabWhere[] = "Prod.name LIKE '%$research%'";
-    }
-    if($location != "") {
-        $tabWhere[] = "Prod.city = '$location'";
-    }
-    if(count($tabWhere) > 0)
-    {
-        $sql .= ' WHERE '.join(" and ", $tabWhere);
-    }
+    // if($category != "") {$tabWhere[] = "categorie = '$category'"; }
+    // if($research != "") {$tabWhere[] = "research = '$research'"; }
+    // if($location != "") {$tabWhere[] = "location = '$location'"; }
+    // if(count($tabWhere) > 0)
+    // {
+    //     $sql .= ' WHERE '.join(" and ", $tabWhere);
+    // }
 
     $res = $db->query($sql);
     $count = $res->rowCount();
@@ -44,19 +37,15 @@
         $start = ($page-1) * $maxProduct;
         for($i=$start;$i< $capResult;$i++)
         {
-            // $monImage = base64_decode($all[$i]["image1"]);
-            print '<img id="produit_img_'.$i.'" src="data:image/jpg/png;base64,'.base64_encode($all[$i]["image1"]).'">';
-            print '<p>'.$all[$i]["name"].'</p>';
-            print '<p>'.$all[$i]["state"].'</p>';
-            print '<p>'.$all[$i]["city"].'</p>';
-            print '<p>'.round($all[$i]["price"], 2).'€</p>';
-
+            print($all[$i]["name"]);
         }
     }
     else
     {
         print("Pas de resultat");
     }
+
+    print($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,6 +56,7 @@
 </head>
 <body>
 <?php
+
 
 ?>
     
