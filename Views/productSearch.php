@@ -1,7 +1,5 @@
 <?php 
     require_once "../include/dbcon.php";
-    print_r($_POST);
-    print_r($_GET);
 
     //const
     $maxProduct = 10;
@@ -11,18 +9,15 @@
     $category = GETPOST("category");
     $research = GETPOST("research");
     $location = GETPOST("location");
-    print('<br>'.$category.'/'.$research.'/'.$location.'<br>');
 
     // Create sql
     $sql = 'SELECT * FROM product as Prod';
     $tabWhere = [];
     if($category !== 'default') {
-        print("Presence de categorie");
         $tabWhere[] = "Type.name = '$category'";
         $sql .= " INNER JOIN product_type as Type ON Type.id_product_type = Prod.id_product_type";
     }
     if($research !== "") {
-        print("Presence d'une recherche");
         $tabWhere[] = "Prod.name LIKE '%$research%'";
     }
     if($location != "") {
@@ -54,14 +49,14 @@
             print '<p>'.$all[$i]["name"].'</p>';
             print '<p>'.$all[$i]["state"].'</p>';
             print '<p>'.$all[$i]["city"].'</p>';
+            print '<p>'.round($all[$i]["price"], 2).'€</p>';
+
         }
     }
     else
     {
         print("Pas de resultat");
     }
-
-    print($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
