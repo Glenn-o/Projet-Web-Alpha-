@@ -1,3 +1,7 @@
+<?php 
+session_start();
+$presenceSession = !empty($_SESSION);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

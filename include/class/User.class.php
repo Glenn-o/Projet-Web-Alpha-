@@ -28,7 +28,7 @@ class User
                     $resultUser = $db->query($checkPassword);
                     if($resultUser->rowCount() > 0) // Si mot de passe correspond
                     {
-                        $_SESSION["userName"] = $_POST["name"];
+                        $_SESSION["name"] = $_POST["name"];
 
                         header('Location: ../index.php');
                         return true;
