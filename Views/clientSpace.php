@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace Client</title>
     <link href="../assets/css/clientSpace.css" rel="stylesheet">
+    <link href="../assets/css/header.css" rel="stylesheet">
+    <link href="../assets/css/footer.css" rel="stylesheet">
 </head>
 <body>
     <?php require_once "../include/header.php"?>
@@ -21,7 +23,7 @@
                     <label class="label_info" id="lbl3" for="inp3">E-mail</label>
                     <input type="email" class="text_info" id="inp3" name="email_input" required >
 
-                    <image id="avatar" src="../assets/img/user.png" alt="user's avatar">
+                    <image id="avatar" src="../assets/img/user.png" alt="avatar utilisateur">
                     <input type="file" class="avatar_info" id="inp4" name="avatar_input" required >
 
                     <button class="button_info" type="submit">Modifier</button>
