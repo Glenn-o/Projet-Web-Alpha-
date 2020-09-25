@@ -22,5 +22,6 @@ if(!empty($_POST)){
         <input type="text" name = "password">
         <input type="submit">
     </form>
+    <a href="inscription.php"><p>Créer un compte</p></a>
 </body>
 </html>

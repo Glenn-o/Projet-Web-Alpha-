@@ -12,10 +12,12 @@
 
     if($action == "generate")
     {
-        if($category != "" or $research != "" or $location != "")
-        {
-            header('Location: Views/productSearch.php?location="'.$location.'"&research="'.$name.'"&category="'.$categorie.'"');
-        }
+        header('Location: Views/productSearch.php?location='.$location.'&research='.$research.'&category='.$category);
+    }
+    else if($action == "disconnect")
+    {
+        session_unset();
+        header('Location: index.php');
     }
     $presenceSession = !empty($_SESSION);
 ?>
@@ -43,6 +45,7 @@
                     <img src="assets/img/user.png" alt="logo_user" id="logo_user">
                     <p><?php if($presenceSession) echo $_SESSION["name"]; else echo "Se connecter" ?></p>
                 </div></a>
+                <a href="index.php"><button type="submit">Deconnexion</button></a>
             </div>
         </header>
     </section>
@@ -53,8 +56,8 @@
                 <select name="category" id="">
                     <option value="default">Categorie</option>
                     <option value="console">Console</option>
-                    <option value="video_games">Jeux-video</option>
-                    <option value="accessories">Accessoires</option>
+                    <option value="jeux">Jeux-video</option>
+                    <option value="accessoires">Accessoires</option>
                 </select>
                 <input type="text" name="research" id="" placeholder="rechercher">
                 <input type="text" name="location" id="" placeholder="lieu">

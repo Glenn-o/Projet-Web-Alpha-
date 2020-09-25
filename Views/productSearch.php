@@ -30,6 +30,7 @@
 
     $res = $db->query($sql);
     $count = $res->rowCount();
+    print $sql;
 ?>
 <!DOCTYPE html>
 <html lang="fr">

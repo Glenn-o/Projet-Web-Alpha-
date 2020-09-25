@@ -48,10 +48,12 @@ class User
         $db = null;
     }
 
-    public static function tryRegister(string $lastName, string $firstName, string $userName, string $address, string $city, string $postalCode, string $country, string $phone, float $appreciation, string $password, string $email, string $avatar) : boolean
+    public static function tryRegister(string $lastName, string $firstName, string $userName, string $address, string $city, string $postalCode, string $country, string $phone, string $password, string $email, string $avatar) : boolean
     {
         $db = getConn();
-        $insertUserSQL = 'INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `appreciation`, `avatar`) VALUES (' . $lastName . ', '.$firstName.','.$address.','.$city.','. $postalCode.', '. $country.','.$phone.','.$email.','.$appreciation.', '.$avatar.')';        
+        $password = sha1($password);
+        $avatar = base64_encode($avatar);
+        $insertUserSQL = 'INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `appreciation`, `avatar`) VALUES (' . $lastName . ', '.$firstName.','.$address.','.$city.','. $postalCode.', '. $country.','.$phone.','.$email.',, '.$avatar.')';        
         $insert = $db->exec($insertUserSQL);
         if($insert === true){
             echo "vous etes inscrit";
@@ -69,9 +71,11 @@ class User
         $db = null;
     }
 
-    public static function checkUser(string $email, string $userName) : boolean
+    public static function deconnexion() : bool
     {
-        
+        session_start();
+        session_unset();
+        session_destroy();
     }
     
 }
