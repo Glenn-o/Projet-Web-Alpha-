@@ -69,7 +69,7 @@ class User
     }
 
     public static function getFile(){
-        $directory = "../assets/img";
+        $directory = "../assets/img/";
         if(!empty($_FILES['avatar']['name'])){
             $tmp_name = $_FILES['avatar']['tmp_name'];
             $name = basename($_FILES['avatar']['name']);
@@ -107,12 +107,12 @@ class User
     public static function getAvatar(string $username)
     {
         $db = getConn();
-        $sql = "SELECT avatar from users WHERE username = ".$username;
+        $sql = "SELECT avatar from users WHERE username = '".$username."'";
         $result = $db->query($sql);
         if($result != FALSE)
         {
-            $enregistrement = $db->fetch(PDO::FETCH_ASSOC);
-            return base64_encode($enregistrement["avatar"]);
+            $enregistrement = $result->fetch(PDO::FETCH_ASSOC);
+            return $enregistrement["avatar"];
         }
         $db = null;
 

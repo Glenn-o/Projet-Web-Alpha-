@@ -45,10 +45,10 @@ if(!empty($_POST["firstName"]) and !empty($_POST["lastName"]) and !empty($_POST[
     <input type="text" name="city"  placeholder = "Ville"><br>
     <input type="text" name="postalCode"  placeholder = "Code Postal"><br>
     <input type="text" name="country"  placeholder = "Pays"><br>
-    <input type="text" name="phone"  placeholder = "Téléphone"><br>
-    <input type="text" name="email"  placeholder = "Email"><br>
-    <input type="text" name="password"  placeholder = "Mot de passe"><br>
-    <input type="text" name="password-confirmed"  placeholder = "Confirmation"><p><?= $wrongPassword?></p><br>
+    <input type="number" name="phone"  placeholder = "Téléphone"><br>
+    <input type="email" name="email"  placeholder = "Email"><br>
+    <input type="password" name="password"  placeholder = "Mot de passe"><br>
+    <input type="password" name="password-confirmed"  placeholder = "Confirmation"><p><?= $wrongPassword?></p><br>
     <label for="avatar">Avatar :</label>
     <input type="file" name="avatar" id="avatar"><br>
     <button type="submit"> Valider </button>

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    
+    require_once("class/User.class.php");
     $presenceSession = !empty($_SESSION);
 ?>
 
@@ -12,8 +12,8 @@
             <a href="#"><img src="../assets/img/bell.png" alt="logo_bell" id="logo_bell"></a>
             <a href="#"><img src="../assets/img/wrench.png" alt="logo_admin" id="logo_admin"></a>
             <a href="<?php 
-            if($presenceSession){ echo "clientSpace.php";else echo "Views/connexion.php"?>"><div id="container_user">
-                    <img src="../assets/img/user.png" alt="logo_user" id="logo_user">
+            if($presenceSession) echo "clientSpace.php"; else echo "connexion.php"?>"><div id="container_user">
+                    <img src='<?php if(!$presenceSession) echo "../assets/img/user.png"; else echo "data:image/jpg/png;base64,".User::getAvatar($_SESSION['name'])?>' alt="logo_user" id="logo_user">
                     <p><?php if($presenceSession) echo $_SESSION["name"]; else echo "Se connecter" ?></p>
             </div></a>
         </div>
