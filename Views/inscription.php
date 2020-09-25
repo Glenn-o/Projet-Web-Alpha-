@@ -16,10 +16,6 @@ if(!empty($_POST["firstName"]) and !empty($_POST["lastName"]) and !empty($_POST[
         print 'connexion raté';
     }
 }
-else
-{
-    print 'Remplis les champs chien de la casse';
-}
 
 
 

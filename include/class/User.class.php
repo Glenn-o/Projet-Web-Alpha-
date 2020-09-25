@@ -54,18 +54,18 @@ class User
         $password = sha1($_POST["password"]);
         $avatar = User::getFile();
         $insertUserSQL = 'INSERT INTO `users`(`lastname`, `firstname`,`password`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `avatar`) VALUES (' . $_POST["lastName"] . ', '.$_POST["firstName"] .','.$password.','.$_POST["address"].','.$_POST["city"].','. $_POST["postalCode"] .', '. $_POST["country"].','.$_POST["phone"].','.$_POST["email"].', '.$avatar.')';        
-        $insert = $db->exec($insertUserSQL);
-        if($insert === true){
-            echo "vous etes inscrit";
-            return true;
-        }
-        else{
-            echo "L'inscription n'a pas marché";
-            return false;
-        }
-        $db = null;
-        // print $insertUserSQL;
-        // print '<img id="produit" src="data:image/jpg/png;base64,'.$avatar.'">';
+        // $insert = $db->exec($insertUserSQL);
+        // if($insert === true){
+        //     echo "vous etes inscrit";
+        //     return true;
+        // }
+        // else{
+        //     echo "L'inscription n'a pas marché";
+        //     return false;
+        // }
+        // $db = null;
+        print $insertUserSQL;
+        print '<img id="produit" src="data:image/jpg/png;base64,'.$avatar.'">';
         
     }
 
