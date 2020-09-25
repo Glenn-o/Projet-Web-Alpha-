@@ -3,6 +3,9 @@ body, html{
     margin: 0;
     font-family:  'Roboto', sans-serif;
 }
+#main {
+    min-height: 100vh;
+}
 #pannel_left{
     width: 15vw;
     float: left;

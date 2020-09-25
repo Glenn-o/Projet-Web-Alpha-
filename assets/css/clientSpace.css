@@ -6,6 +6,7 @@
 body, html{
     padding: 0;
     margin: 0;
+    font-family:  'Roboto', sans-serif;
 }
 #main #info_user{
     border-radius: 10px;
@@ -26,6 +27,7 @@ body, html{
     justify-content: center;
     margin-top: 10vh;
     flex-direction: column;
+    min-height: 100vh;
 }
 #container1{
     display: inline-flex;
