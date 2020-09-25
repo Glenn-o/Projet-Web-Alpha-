@@ -1,0 +1,54 @@
+@font-face {
+    font-family: "BubbleGum";
+    src: url("../font/Bubblegum.ttf");
+  }
+  
+body, html{
+    padding: 0;
+    margin: 0;
+    font-family:  'Roboto', sans-serif;
+}
+#main #info_user{
+    border-radius: 10px;
+    background-color: #EBECEF;
+    width: 40.5vw;
+    height: 60vh;
+    margin-right: 0.5vw;
+}
+#main #last_ad{
+    border-radius: 10px;
+    background-color: #EBECEF;
+    width: 30.5vw;
+    height: 60vh;
+    margin-left: 0.5vw;
+}
+#main{
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh;
+    flex-direction: column;
+    min-height: 100vh;
+}
+#container1{
+    display: inline-flex;
+    justify-content: center;
+}
+#container2{
+    margin-top: 2vh;
+    display: inline-flex;
+    justify-content: center;
+}
+#main #ads{
+    border-radius: 10px;
+    background-color: #EBECEF;
+    height: 30vh;
+    width: 35.5vw;
+    margin-right: 0.5vw;
+}
+#main #newsletter{
+    border-radius: 10px;
+    background-color: #EBECEF;
+    height: 30vh;
+    width: 35.5vw;
+    margin-left: 0.5vw;
+}

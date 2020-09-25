@@ -1,0 +1,47 @@
+#header header{
+    font-family: 'Roboto', sans-serif;
+    border-bottom: 2px solid #707070;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+}
+#button_ad{
+    width: 14vw;
+}
+#logo_fog{
+    width: 7vw;
+}
+#logo_bell{
+    width: 2vw;
+}
+#logo_admin{
+    width: 2vw;
+}
+#container_menu{
+    float: right;
+    width: 25vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    margin-right: 2vw;
+}
+#container_user{
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#logo_user{
+    margin: auto;
+    width: 2vw;
+}
+#container_user p{
+    font-size: 0.7em;
+    margin: 0;
+}
+#logo_fog{
+    float: left;
+    margin-left: 1vw;
+    width: 6vw;
+}
