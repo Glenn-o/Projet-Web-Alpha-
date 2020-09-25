@@ -41,7 +41,6 @@
                 </div>
                 <div class="card">
                 </div>
-
             </div>
         </div>
         <p id="title_ads">Partenaire</p>

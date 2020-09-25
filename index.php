@@ -74,9 +74,11 @@
         <div id="category">
             <?php 
                 $result = $db->query("SELECT * FROM product_type");
+                $index = 0;
                 while($enr = $result->fetch(PDO::FETCH_ASSOC))
                 {
-                    print("Yes");
+                    print("Yes".$index);
+                    $index++;
                 }
             ?>
             
