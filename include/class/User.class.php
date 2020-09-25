@@ -48,20 +48,48 @@ class User
         $db = null;
     }
 
-    public static function tryRegister(string $lastName, string $firstName, string $userName, string $address, string $city, string $postalCode, string $country, string $phone, string $password, string $email, string $avatar) : boolean
+    public static function tryRegister() : bool
     {
         $db = getConn();
-        $password = sha1($password);
-        $avatar = base64_encode($avatar);
-        $insertUserSQL = 'INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `appreciation`, `avatar`) VALUES (' . $lastName . ', '.$firstName.','.$address.','.$city.','. $postalCode.', '. $country.','.$phone.','.$email.',, '.$avatar.')';        
+        $password = sha1($_POST["password"]);
+        $avatar = User::getFile();
+        $insertUserSQL = "INSERT INTO `users`(`lastname`, `firstname`,`username`,`password`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `avatar`) VALUES ('".$_POST["lastName"]."', '".$_POST["firstName"] ."','".$_POST["userName"]."','".$password."','".$_POST["address"]."','".$_POST["city"]."','". $_POST["postalCode"] ."', '". $_POST["country"]."',".$_POST["phone"].",'".$_POST["email"]."','".$avatar."')";        
         $insert = $db->exec($insertUserSQL);
         if($insert === true){
             echo "vous etes inscrit";
+            $db = null;
+            return true;
         }
         else{
             echo "L'inscription n'a pas marché";
+            $db = null;
+            return false;
         }
-        $db = null;
+        
+    }
+
+    public static function getFile(){
+        $directory = "../assets/img";
+        if(!empty($_FILES['avatar']['name'])){
+            $tmp_name = $_FILES['avatar']['tmp_name'];
+            $name = basename($_FILES['avatar']['name']);
+            move_uploaded_file($tmp_name, "$directory/$name");
+            $path = $directory. $name ;
+            $data = file_get_contents($path);
+            $base64 = base64_encode($data);
+            unlink($path);
+            return $base64; 
+        }else{
+            $data = file_get_contents("$directory/point_interogation.jpg");
+            return base64_encode($data);
+        }
+    }
+
+    public static function getMultiplesFiles() : array
+    {
+        print("Bonjour, voila vos fichiers");
+        $returnFiles = [];
+        return $returnFiles;
     }
 
     public static function getEmail() : string 
@@ -71,11 +99,11 @@ class User
         $db = null;
     }
 
-    public static function deconnexion() : bool
+    public static function deconnexion()
     {
-        session_start();
         session_unset();
         session_destroy();
+        header("Location: index.php");
     }
     
 }

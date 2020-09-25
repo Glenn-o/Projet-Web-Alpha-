@@ -1,7 +1,8 @@
 <?php
     session_start();
     error_reporting(E_ALL);
-    require("include/dbcon.php");
+    require "include/dbcon.php";
+    require 'include/class/User.class.php';
 
     $db = getConn();
 
@@ -14,10 +15,9 @@
     {
         header('Location: Views/productSearch.php?location='.$location.'&research='.$research.'&category='.$category);
     }
-    else if($action == "disconnect")
+    else if($action == "deconnexion")
     {
-        session_unset();
-        header('Location: index.php');
+        User::deconnexion();
     }
     $presenceSession = !empty($_SESSION);
 ?>
@@ -45,7 +45,7 @@
                     <img src="assets/img/user.png" alt="logo_user" id="logo_user">
                     <p><?php if($presenceSession) echo $_SESSION["name"]; else echo "Se connecter" ?></p>
                 </div></a>
-                <a href="index.php"><button type="submit">Deconnexion</button></a>
+                <a href="index.php?action=deconnexion"><button type="submit">Deconnexion</button></a>
             </div>
         </header>
     </section>
@@ -74,9 +74,11 @@
         <div id="category">
             <?php 
                 $result = $db->query("SELECT * FROM product_type");
+                $index = 0;
                 while($enr = $result->fetch(PDO::FETCH_ASSOC))
                 {
-                    print("Yes");
+                    print("Yes".$index);
+                    $index++;
                 }
             ?>
             

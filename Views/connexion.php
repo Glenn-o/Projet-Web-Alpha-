@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL);
 session_start();
 require_once '../include/dbcon.php';
 include '../include/class/User.class.php';
@@ -9,14 +8,19 @@ if(!empty($_POST)){
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Annonces</title>
+    <link href="../assets/css/ad.css" rel="stylesheet">
+    <link href="../assets/css/header.css" rel="stylesheet">
+    <link href="../assets/css/footer.css" rel="stylesheet">
 </head>
 <body>
+    <?php require_once "../include/header.php"?>
     <form action="" method="POST">
         <input type="text" name="name">
         <input type="text" name = "password">
