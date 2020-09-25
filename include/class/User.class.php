@@ -55,7 +55,7 @@ class User
         $avatar = User::getFile();
         $insertUserSQL = "INSERT INTO `users`(`lastname`, `firstname`,`username`,`password`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `avatar`) VALUES ('".$_POST["lastName"]."', '".$_POST["firstName"] ."','".$_POST["userName"]."','".$password."','".$_POST["address"]."','".$_POST["city"]."','". $_POST["postalCode"] ."', '". $_POST["country"]."',".$_POST["phone"].",'".$_POST["email"]."','".$avatar."')";        
         $insert = $db->exec($insertUserSQL);
-        if($insert === true){
+        if($insert !== FALSE){
             echo "vous etes inscrit";
             $db = null;
             return true;
@@ -80,7 +80,7 @@ class User
             unlink($path);
             return $base64; 
         }else{
-            $data = file_get_contents("$directory/point_interogation.jpg");
+            $data = file_get_contents("$directory/user.png");
             return base64_encode($data);
         }
     }
@@ -97,6 +97,25 @@ class User
         $db = getConn();
 
         $db = null;
+    }
+
+    public static function checkUsername(string $username)
+    {
+        $sql = "SELECT * from users WHERE username";
+    }
+
+    public static function getAvatar(string $username)
+    {
+        $db = getConn();
+        $sql = "SELECT avatar from users WHERE username = ".$username;
+        $result = $db->query($sql);
+        if($result != FALSE)
+        {
+            $enregistrement = $db->fetch(PDO::FETCH_ASSOC);
+            return base64_encode($enregistrement["avatar"]);
+        }
+        $db = null;
+
     }
 
     public static function deconnexion()
