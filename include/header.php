@@ -1,3 +1,9 @@
+<?php
+    session_start();
+
+    $presenceSession = !empty($_SESSION);
+?>
+
 <section id="header">
     <header>
         <a href="../index.php"><img src="../assets/img/logo.png" alt="logo_fog" id="logo_fog"></a>
