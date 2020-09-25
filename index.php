@@ -1,8 +1,9 @@
 <?php
-    session_start();
-    error_reporting(E_ALL);
     require "include/dbcon.php";
     require 'include/class/User.class.php';
+
+    session_start();
+
 
     $db = getConn();
 
@@ -30,7 +31,7 @@
     <link rel="stylesheet" href="assets/css/index.css">
     <link href="assets/css/header.css" rel="stylesheet">
     <link href="assets/css/footer.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Accueil</title>
 </head>
 <body>
@@ -72,7 +73,7 @@
     <section id="content">
         <h1>top categeries</h1>
         <div id="category">
-            <?php 
+            <?php
                 $result = $db->query("SELECT * FROM product_type");
                 $index = 0;
                 while($enr = $result->fetch(PDO::FETCH_ASSOC))
@@ -81,7 +82,7 @@
                     $index++;
                 }
             ?>
-            
+
         </div>
         <h1>interessant pour vous</h1>
         <div id="user_suggestion">

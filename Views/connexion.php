@@ -1,12 +1,6 @@
 <?php
-session_start();
 require_once '../include/dbcon.php';
 include '../include/class/User.class.php';
-if(!empty($_POST)){
-    if (!User::tryConnexion($_POST["name"], $_POST["password"]))
-    {
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +14,13 @@ if(!empty($_POST)){
     <link href="../assets/css/footer.css" rel="stylesheet">
 </head>
 <body>
-    <?php require_once "../include/header.php"?>
+    <?php require_once "../include/header.php";
+    if(!empty($_POST)){
+        if (!User::tryConnexion($_POST["name"], $_POST["password"]))
+        {
+        }
+    }
+    ?>
     <form action="" method="POST">
         <input type="text" name="name">
         <input type="text" name = "password">

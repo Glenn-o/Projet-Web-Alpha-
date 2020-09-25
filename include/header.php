@@ -1,7 +1,6 @@
 <?php
-    if(!session_status() == PHP_SESSION_ACTIVE)
-        session_start();
-
+    session_start();
+    
     $presenceSession = !empty($_SESSION);
 ?>
 
@@ -12,7 +11,16 @@
             <a href="#"><img src="../assets/img/button.png" alt="button" id="button_ad"></a>
             <a href="#"><img src="../assets/img/bell.png" alt="logo_bell" id="logo_bell"></a>
             <a href="#"><img src="../assets/img/wrench.png" alt="logo_admin" id="logo_admin"></a>
-            <a href="<?php if($presenceSession) echo "Views/clientSpace.php"; else echo "Views/connexion.php"?>"><div id="container_user">
+            <a href="<?php 
+            if($presenceSession){ 
+                if(strpos($_SERVER['PHP_SELF'], "Views/clientSpace.php") !== TRUE) {
+                    echo "";
+                }
+                else{
+                    echo "Views/clientSpace.php"; 
+                }
+            }
+            else echo "Views/connexion.php"?>"><div id="container_user">
                     <img src="../assets/img/user.png" alt="logo_user" id="logo_user">
                     <p><?php if($presenceSession) echo $_SESSION["name"]; else echo "Se connecter" ?></p>
             </div></a>

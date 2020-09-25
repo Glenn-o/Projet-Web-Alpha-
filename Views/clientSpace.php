@@ -1,3 +1,13 @@
+<?php
+$action = GETPOST("action");
+
+if($action == "modify")
+{
+
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

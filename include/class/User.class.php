@@ -85,6 +85,33 @@ class User
         }
     }
 
+    public static function changeUserValue()
+    {
+        $db = getConn();
+        //Recuperer les valeurs de base
+        $db->query("SELECT * FROM users WHERE name = " . $_SESSION["name"]);
+        $result = $db->fetch(PDO::FETCH_ASSOC);
+        $param = [];
+        foreach($result as $key=>$value)
+        {
+            if($_POST[$key] == $result[$key])
+            {
+                $param[] = $key.' = '.$_POST[$key];
+            }
+        }
+        //Creer la requete
+        $sqlChangeUserVariable = 'UPDATE users
+        SET  
+        '.join(',', $param).'
+        WHERE name = '. $_SESSION["name"];
+        
+        //Changer la requete
+        $sqlChangeUserVariable = str_replace("()", $param, $sqlChangeUserVariable);
+        //Executer la requete
+        // $db->query($sqlChangeUserVariable);
+        print($sqlChangeUserVariable);
+    }
+
     public static function getMultiplesFiles() : array
     {
         print("Bonjour, voila vos fichiers");
