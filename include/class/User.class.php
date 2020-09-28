@@ -124,6 +124,28 @@ class User
         session_destroy();
         header("Location: index.php");
     }
+
+    // Retourne un tableau d'enregistrement selon un numero de page et un numero maximum de produit
+    public static function getAllByPage($pageNbr, $maxProduct)
+    {
+        $db = getConn();
+        $sql = "SELECT * FROM product";
+        $result = $db->query($sql);
+        $count = $result->rowCount();
+        $all = $res->fetchAll();
+        $nbrPage = ceil($count / $maxProduct);
+        $capResult = $page * $maxProduct;
+        if($capResult > $count)
+        {
+            $capResult = $count;
+        }
+        $start = ($page-1) * $maxProduct;
+        $tabReturn = [];
+        for($i=$start;$i< $capResult;$i++)
+        {
+            $tabReturn[] = $all[$i];
+        }
+    }
     
 }
 ?>
