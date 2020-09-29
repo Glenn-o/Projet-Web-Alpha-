@@ -18,7 +18,7 @@ class Product {
     */
 
 
-    //CREATE
+    #region CREATE
     public static function createProduct()
     {
         $db = getConn();
@@ -30,7 +30,9 @@ class Product {
         $result = $db->query($sql);
         return $result != false;
     }
-    //READ
+    #endregion
+
+    #region READ
     public static function getProductById($id)
     {
         $db = getConn();
@@ -43,6 +45,24 @@ class Product {
 
     }
 
+    // Recupere toutes les photos d'une annonce
+    public static function getAllPictureByProductID($id) : array
+    {
+        $db = getConn();
+        $sql = 'SELECT image1, ifnull(length(image2), ""), ifnull(length(image3), "")
+                ,ifnull(length(image4), ""),ifnull(length(image5), "") from product';
+        $result = $db->query($sql);
+        if($result != FALSE)
+        {
+            return $result->fetch_all();
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+    
+    // Recupere toutes les annonces
     public static function getAllProduct()
     {
         $db = getConn();
@@ -52,30 +72,9 @@ class Product {
         {
             return $result->fetch_all();
         }
+        else
+        return FALSE;
 
-    }
-
-    //UPDATE
-    public static function updateProductById($id)
-    {
-        $db = getConn();
-        $sql = "UPDATE product SET ";
-        $sql .= "name = '".$_POST["name"]."', description = '".$_POST["description"]."',";
-        $sql .= "price = ".$_POST["price"].", image1 = '".$image1."',";
-        $sql .= "state = '".$_POST["state"]."', city = '".$_POST["city"]."', premium = ".$premium;
-        $sql .= "fk_product_id = ".$_POST["categorie"];
-        $sql .= " WHERE product_id = ".$id;
-        $result = $db->query($sql);
-        return $result != FALSE;
-    }
-
-    //DELETE
-    public static function deleteProductById()
-    {
-        $db = getConn();
-        $sql = "DELETE FROM product WHERE product_id = ".$id;
-        $result = $db->query($sql);
-        return $result != FALSE;
     }
 
     // Retourne un tableau d'enregistrement selon un numero de page et un numero maximum de produit
@@ -98,5 +97,34 @@ class Product {
         {
             $tabReturn[] = $all[$i];
         }
+        return $tabReturn;
     }
+    #endregion
+
+    #region UPDATE
+    public static function updateProductById($id)
+    {
+        $db = getConn();
+        $sql = "UPDATE product SET ";
+        $sql .= "name = '".$_POST["name"]."', description = '".$_POST["description"]."',";
+        $sql .= "price = ".$_POST["price"].", image1 = '".$image1."',";
+        $sql .= "state = '".$_POST["state"]."', city = '".$_POST["city"]."', premium = ".$premium;
+        $sql .= "fk_product_id = ".$_POST["categorie"];
+        $sql .= " WHERE id_product = ".$id;
+        $result = $db->query($sql);
+        return $result != FALSE;
+    }
+    #endregion
+
+    #region DELETE
+    public static function deleteProductById()
+    {
+        $db = getConn();
+        $sql = "DELETE FROM product WHERE product_id = ".$id;
+        $result = $db->query($sql);
+        return $result != FALSE;
+    }
+    #endregion
+
+    
 }

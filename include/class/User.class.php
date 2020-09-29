@@ -1,17 +1,23 @@
 <?php
 class User
 {
-    // var $id;
-    // var $lastName;
-    // var $firstName;
-    // var $address;
-    // var $city;
-    // var $postalCode;
-    // var $country;
-    // var $phone;
-    // var $appreciation;
-    // var $avatar;
+    /*
+    id int auto_increment
+    lastname string
+    firstname string 
+    adress string
+    city string
+    postal_code string
+    country string
+    phone number
+    email string
+    appreciation float
+    avatar blob/base64
+    username string
+    password string/sha1
+    */
 
+    #region FONCTIONS CONNEXION / INSCRIPTION
     public static function tryConnexion(string $userName, string $password) : bool
     {
         $db = getConn();
@@ -48,7 +54,16 @@ class User
         $db = null;
     }
 
-    public static function tryRegister() : bool
+    public static function deconnexion()
+    {
+        session_unset();
+        session_destroy();
+        header("Location: index.php");
+    }
+    #endregion
+
+    #region CREATE
+    public static function createUser() : bool
     {
         $db = getConn();
         $password = sha1($_POST["password"]);
@@ -67,10 +82,82 @@ class User
         }
         
     }
+    #endregion
 
-    public static function getFile(){
+    #region READ
+    //Recupere un User par son ID
+    public static function getUserById($id)
+    {
+        $db = getConn();
+        $sql = "SELECT * from users where id_user = ".$id;
+        $result = $db->query($sql);
+        if($result != FALSE)
+        {
+            return $result->fetch(PDO::FETCH_ASSOC);
+        }
+
+    }
+    // Recupere toutes les annonces
+    public static function getAllUser()
+    {
+        $db = getConn();
+        $sql = "SELECT * from users";
+        $result = $db->query($sql);
+        if($result != FALSE)
+        {
+            return $result->fetch_all();
+        }
+        else
+            return FALSE;
+
+    }
+    #endregion
+    
+    #region UPDATE
+    public static function updateUserById($id)
+    {
+        $db = getConn();
+        $password = sha1($_POST["password"]);
+        $avatar = "";
+        if(!empty($_FILES['avatar']['name'])){ // Si image envoyé dans formulaire, on va la chercher
+            $tmp_name = $_FILES['avatar']['tmp_name'];
+            $name = basename($_FILES['avatar']['name']);
+            move_uploaded_file($tmp_name, "$directory/$name");
+            $path = $directory. $name ;
+            $data = file_get_contents($path);
+            $avatar = base64_encode($data);
+            unlink($path);
+        }
+        $sql = "UPDATE users SET ";
+        $sql .= "name = '".$_POST["lastname"]."', firstname = '".$_POST["firstname"]."',";
+        $sql .= "adress = '".$_POST["adress"]."', city = '".$_POST["city"]."',";
+        $sql .= "postal_code = '".$_POST["postal_code"]."', country = '".$_POST["country"]."',";
+        $sql .= "phone = ".$_POST["price"].", email = '".$_POST["email"]."',";
+        $sql .= "username = '".$_POST["username"]."',";
+        $sql .= "password = '".$password."', fk_product_id = ".$_POST["categorie"];
+        if($avatar != "")
+            $sql .= "avatar = ".$avatar;
+        $sql .= " WHERE id_user = ".$id;
+        $result = $db->query($sql);
+        return $result != FALSE;
+    }
+    #endregion
+
+    #region DELETE
+    public static function deleteUserById($id)
+    {
+        $db = getConn();
+        $sql = "DELETE FROM users WHERE id = ".$id;
+        $result = $db->query();
+        return $result != FALSE; // Si ok retourne vrai, sinon faux
+    }
+    #endregion
+
+
+    #region Utils
+    public static function findAvatar(){
         $directory = "../assets/img/";
-        if(!empty($_FILES['avatar']['name'])){
+        if(!empty($_FILES['avatar']['name'])){ // Si image envoyé dans formulaire, on va la chercher
             $tmp_name = $_FILES['avatar']['tmp_name'];
             $name = basename($_FILES['avatar']['name']);
             move_uploaded_file($tmp_name, "$directory/$name");
@@ -79,24 +166,10 @@ class User
             $base64 = base64_encode($data);
             unlink($path);
             return $base64; 
-        }else{
+        }else{                              // Sinon on prend celle par defaut
             $data = file_get_contents("$directory/user.png");
             return base64_encode($data);
         }
-    }
-
-    public static function getMultiplesFiles() : array
-    {
-        print("Bonjour, voila vos fichiers");
-        $returnFiles = [];
-        return $returnFiles;
-    }
-
-    public static function getEmail() : string 
-    {
-        $db = getConn();
-
-        $db = null;
     }
 
     public static function checkUsername(string $username)
@@ -115,14 +188,7 @@ class User
             return $enregistrement["avatar"];
         }
         $db = null;
-
     }
-
-    public static function deconnexion()
-    {
-        session_unset();
-        session_destroy();
-        header("Location: index.php");
-    }
+    #endregion
 }
 ?>
