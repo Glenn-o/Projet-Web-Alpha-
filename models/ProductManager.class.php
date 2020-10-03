@@ -1,8 +1,9 @@
 <?php
 
 require_once "models/Database.class.php";
+require_once "models/Manager.class.php";
 
-class ProductManager
+class ProductManager extends Manager
 {
     // Info product
     /*
@@ -24,14 +25,38 @@ class ProductManager
     #region CREATE
     public static function createProduct()
     {
+        //DATABASE
         $db = Database::getPDO();
-        $premium = $_POST["premium"] ? true : false;
-        $image1 = base64_encode($_POST["image1"]);
-        $sql = "INSERT INTO product(name, description, price, image1, state, city, premium, id_product_type) VALUES ";
-        $sql .= "('".$_POST["name"]."','".$_POST["description"]."',".$_POST["price"].",'".$image1;
-        $sql .= "','".$_POST["state"]."','".$_POST["city"]."',".$premium.")";
-        $result = $db->query($sql);
-        return $result != false;
+        //PREMIUM
+        $name = GETPOST('name');
+        $price = GETPOST('price');
+        $description = GETPOST('$description');
+        $state = GETPOST('state');
+        $city = GETPOST('city');
+        $status = GETPOST('status');
+        switch (GETPOST('categorie'))
+        {
+            case 'console': $id_product_type = 1;
+            case 'jeu': $id_product_type = 2;
+            case 'accessoire': $id_product_type = 3;
+            default: $id_product_type = 1;
+        }
+        $premium = GETPOST("premium") ? true : false;
+        $image = base64_encode(GETPOST("image"));
+        //REQUETE
+        $sql = "INSERT INTO `product`(`name`, `price`, `description`, `state`, `premium`, `city`, `status`, `id_product_type`, `id_user`) VALUES (:name,:price,:description,:state,:premium,:city,:status,:id_product_type,:id_user)";
+        $req = $db->prepare($sql);
+        $tabParam = [
+            ":name"=>$name,
+            ":price" => $price,
+            ":description" => $description,
+            ":state" => $state,
+            ":premium" => $premium,
+            ":city" => $city,
+            ":status" => $status,
+            ":id_product_type" => $id_product_type,
+            ":id_user" => $id_user
+        ];
     }
     #endregion
 
@@ -39,7 +64,7 @@ class ProductManager
     public static function getProductById($id)
     {
         $db = Database::getPDO();
-        $sql = "SELECT $ from product where id_product = ".$id;
+        $sql = "SELECT * from product where id_product = ".$id;
         $result = $db->query($sql);
         if($result != false)
         {
@@ -52,17 +77,9 @@ class ProductManager
     public static function getAllPictureByProductID($id) : array
     {
         $db = Database::getPDO();
-        $sql = 'SELECT image1, ifnull(length(image2), ""), ifnull(length(image3), "")
-                ,ifnull(length(image4), ""),ifnull(length(image5), "") from product';
+        $sql = "SELECT image FROM product_image WHERE id_product = ".$id;
         $result = $db->query($sql);
-        if($result != FALSE)
-        {
-            return $result;
-        }
-        else
-        {
-            return FALSE;
-        }
+        return $result;
     }
 
     // Recupere toutes les annonces
@@ -107,7 +124,7 @@ class ProductManager
     public static function getProductsByUserId($user_id)
     {
         $db = Database::getPDO();
-        $req = $db->prepare("SELECT * FROM product WHERE id_user_creator = ?");
+        $req = $db->prepare("SELECT * FROM product WHERE id_user = ?");
         $req->execute([$user_id]);
         return $req;
     }
