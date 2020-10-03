@@ -13,8 +13,13 @@ while ($data = $req->fetch(PDO::FETCH_ASSOC))
             <img id="produit" src="data:image/jpg/png;base64,<?= $data['cover_image'] ?>" >
             <div id="div_info_product">
                 <p class="name_product"><?= $data["name"] ?></p>
+<<<<<<< HEAD
                 <p class="price_product"><?= $data["format_price"] ?>€</p>
                 <p class="description_product"><?= $data["description"] ?> </p>
+=======
+                <p class="price_product"><?= $data["price"] ?>€</p>
+                <p class="description_product"><?= $data["description"] ?></p>
+>>>>>>> modif list product
             </div>
             <div id="div_info_user">
                 <p><?= $data["city"]?></p>

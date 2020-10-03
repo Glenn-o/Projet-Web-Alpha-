@@ -7,6 +7,11 @@ body, html{
     padding: 0;
     margin: 0;
     font-family:  'Roboto', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    background-image: url("../img/background.png");
+    background-size:cover;
+    background-repeat: no-repeat;
 }
 #main #info_user{
     border-radius: 10px;
@@ -51,4 +56,9 @@ body, html{
     height: 30vh;
     width: 35.5vw;
     margin-left: 0.5vw;
+}
+#titre{
+    text-align: center;
+    font-size: 2vw;
+    text-transform: uppercase;
 }

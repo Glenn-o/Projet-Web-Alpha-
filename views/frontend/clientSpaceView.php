@@ -4,9 +4,14 @@ $css = "clientSpace.css";
 ?>
 
 <?php ob_start() ?>
+<<<<<<< HEAD
 <h1> Espace Client</h1>
 <?= $errorMessage ?>
+=======
+
+>>>>>>> modif list product
 <section id="main">
+    <h1 id="titre"> Espace Client</h1>
     <div id="container1">
         <div id="info_user">
             <form action="<?= $pageModif ?>" method="post" class="form_info_user" enctype="multipart/form-data">
