@@ -14,7 +14,7 @@ while ($data = $req->fetch(PDO::FETCH_ASSOC))
             <div id="div_info_product">
                 <p class="name_product"><?= $data["name"] ?></p>
                 <p class="price_product"><?= $data["price"] ?>€</p>
-                <p class="description_product"><?= $data["description"] ?> kdofkdlfklkldsfkdlfsmfdslfksmfkdslfslmfkdsmlfkdsmfkdslmfkdslmfkdsfkm</p>
+                <p class="description_product"><?= $data["description"] ?></p>
             </div>
             <div id="div_info_user">
                 <p><?= $data["city"]?></p>

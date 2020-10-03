@@ -4,9 +4,9 @@ $css = "clientSpace.css";
 ?>
 
 <?php ob_start() ?>
-<h1> Espace Client</h1>
 
 <section id="main">
+    <h1 id="titre"> Espace Client</h1>
     <div id="container1">
         <div id="info_user">
             <form action="" method="post" class="form_info_user" enctype="multipart/form-data">
