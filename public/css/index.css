@@ -8,6 +8,7 @@ body, html{
     margin: 0;
     min-height: 100vh;
     position: relative;
+    font-family:  'Roboto', sans-serif;
 }
 
 #form form{
@@ -52,6 +53,8 @@ body, html{
     margin-top: 15vh;
     display: flex;
     flex-direction: column;
+    position: relative;
+    
 }
 #content h1{
     margin-left: 5vw;
