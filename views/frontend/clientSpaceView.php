@@ -1,6 +1,6 @@
 <?php 
 $title = "Espace Client";
-$css = "clientSPace";
+$css = "clientSpace.css";
 ?>
 
 <?php ob_start() ?>
@@ -11,15 +11,15 @@ $css = "clientSPace";
         <div id="info_user">
             <form action="" method="post" class="form_info_user" enctype="multipart/form-data">
                 <label class="label_info" id="lbl1" for="inp1">Pseudo</label>
-                <input type="text" class="text_info" id="inp1" name="username" required >
+                <input type="text" class="text_info" id="inp1" name="username" value="<?= $data["username"] ?>" required >
 
                 <label class="label_info"id="lbl2" for="inp2">Mot de passe</label>
-                <input type="password" class="text_info" id="inp2" name="psswd_input" required >
+                <input type="password" class="text_info" id="inp2" name="psswd_input" value="<?= $data["password"]?>" required >
                 
                 <label class="label_info" id="lbl3" for="inp3">E-mail</label>
-                <input type="email" class="text_info" id="inp3" name="email_input" required >
+                <input type="email" class="text_info" id="inp3" name="email_input" value="<?= $data["email"]?>" required >
 
-                <image id="avatar" src="../assets/img/user.png" alt="avatar utilisateur">
+                <image id="avatar" src="data:img/png;base64,<?= $data["avatar"]?>" alt="avatar utilisateur">
                 <input type="file" class="avatar_info" id="inp4" name="avatar_input" required >
 
                 <button class="button_info" type="submit">Modifier</button>

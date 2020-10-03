@@ -58,8 +58,14 @@ class UserManager
     #endregion
 
     #region CREATE
-    public static function createUser() : bool
+    public static function createUser(&$errorMessage) : bool
     {
+        // print_r([$_POST["password"], $_POST["password_confirmed"]]);
+        if(GETPOST("password") !== GETPOST("password-confirmed"))
+        {
+            $errorMessage = "Les champs mot de passe ne correspondent pas";
+            return FALSE;
+        }
         $db = Database::getPDO();
         $password = sha1(GETPOST("password"));
         $avatar = UserManager::getFile();
@@ -78,29 +84,35 @@ class UserManager
             $password,
             $avatar
         ];
-        $req = $db->prepare($sql);
-        $req->execute($tabParam);
-        if($req != FALSE) {
+        
+        try{
+            $req = $db->prepare($sql);
+            $req->execute($tabParam);
             header('Location: index.php?page=connexion');
-        } 
-        else {
-            return FALSE;
         }
+        catch(PDOException $error )
+        {
+            if($error->getCode() == '23000')
+                $errorMessage = "Utilisateur existant : ". GETPOST('userName');
+            return false;
+        }
+        // if($req != FALSE) {
+        // } 
+        // else {
+        //     return FALSE;
+        // }
         
     }
     #endregion
 
     #region READ
     //Recupere un User par son ID
-    public static function getUserById($id)
+    public static function getUserByUsername($userName)
     {
         $db = Database::getPDO();
-        $sql = "SELECT * from users where id_user = ".$id;
-        $result = $db->query($sql);
-        if($result != FALSE)
-        {
-            return $result->fetch(PDO::FETCH_ASSOC);
-        }
+        $req = $db->prepare("SELECT * from users where username = ?");
+        $req->execute([$_SESSION["name"]]);
+        return $req->fetch(PDO::FETCH_ASSOC);
 
     }
     // Recupere toutes les annonces
@@ -168,10 +180,17 @@ class UserManager
             $name = basename($_FILES['avatar']['name']);
             move_uploaded_file($tmp_name, "$directory/$name");
             $path = $directory. $name ;
-            $data = file_get_contents($path);
-            $base64 = base64_encode($data);
-            unlink($path);
-            return $base64; 
+            if(exif_imagetype($path) == IMAGETYPE_PNG or exif_imagetype($path) == IMAGETYPE_JPEG) {
+                $data = file_get_contents($path);
+                $base64 = base64_encode($data);
+                unlink($path);
+                return $base64; 
+            }
+            else {
+                $data = file_get_contents("$directory/user.png");
+                unlink($path);
+                return base64_encode($data);
+            }
         }else{                              // Sinon on prend celle par defaut
             $data = file_get_contents("$directory/user.png");
             return base64_encode($data);
@@ -194,6 +213,14 @@ class UserManager
             return $enregistrement["avatar"];
         }
         $db = null;
+    }
+
+    public static function getIDByName($userName)
+    {
+        $db = Database::getPDO();
+        $req = $db->prepare("SELECT id_user FROM users WHERE username = ?");
+        $req->execute([$userName]);
+        return $req->fetch(PDO::FETCH_ASSOC)["id_user"];
     }
     #endregion
 }

@@ -46,22 +46,10 @@ function inscription()
     GETPOSTEMPTY("country") and GETPOSTEMPTY("phone") and GETPOSTEMPTY("password") and
     GETPOSTEMPTY("email"))
     {
-        if(GETPOST("password") === GETPOST("password-confirmed"))
-        {
-            if(UserManager::createUser())
+            if(UserManager::createUser($wrongPassword))
             {
                 $wrongPassword =  'connexion reussie';
             }
-            else
-            {
-                $wrongPassword = 'connexion raté';
-            }
-        }
-        else
-        {
-            $wrongPassword = "Mot de passe différent";
-        }
-        
     }
     else
     {
@@ -79,7 +67,10 @@ function pageAccueil()
 function clientSpace()
 {
     //Dernieres annonces
-
+    if(!empty($_SESSION["name"]))
+    {
+        $data = UserManager::getUserByUsername($_SESSION["name"]);
+    }
     //Info utilisateur
 
     //View
