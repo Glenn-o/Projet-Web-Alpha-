@@ -19,12 +19,11 @@ function connexion()
     $message = "";
     if(GETPOST("action") == "tryConnexion")
     {
-        echo 'tentative de connexion';
         $username = GETPOST("username");
         $password = GETPOST("password");
-        if($username == "" or $password == "")
+        if(empty($username) or empty($password))
         {
-            throw new Exception("Mot de passe non renseigné");
+            throw new Exception("Mot de passe ou Pseudo non renseigné");
         }
         else
         {

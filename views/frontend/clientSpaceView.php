@@ -1,6 +1,6 @@
 <?php 
 $title = "Espace Client";
-$css = "clientSPace";
+$css = "clientSpace.css";
 ?>
 
 <?php ob_start() ?>
