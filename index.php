@@ -27,6 +27,9 @@ try {
             case "clientSpace":
                 clientSpace();
                 break;
+            case "adminSpace":
+                pageAdmin();
+                break;
         }
     }
     else {

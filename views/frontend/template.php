@@ -1,3 +1,13 @@
+<?php
+    $presenceSession = !empty($_SESSION["name"]);
+    if($presenceSession)
+    {
+        $id = UserManager::getIDByName($_SESSION["name"]);
+        $buttonAdmin = UserManager::getTypeById($id) != 1;
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -14,12 +24,12 @@
         <header>
             <a href="index.php"><img src="public/img/logo.png" alt="logo_fog" id="logo_fog"></a>
             <div id="container_menu">
-                <a href='<?php echo !empty($_SESSION["name"]) ? 'index.php?action=deconnexion' : "#" ?> '><img src="public/img/button.png" alt="button" id="button_ad"></a>
+                <a href='<?php echo  $presenceSession ? 'index.php?action=deconnexion' : "#" ?> '><img src="public/img/button.png" alt="button" id="button_ad"></a>
                 <a href="#"><img src="public/img/bell.png" alt="logo_bell" id="logo_bell"></a>
-                <a href="#"><img src="public/img/wrench.png" alt="logo_admin" id="logo_admin"></a>
-                <a href='<?php echo !empty($_SESSION["name"]) ? "index.php?page=clientSpace" : "index.php?page=connexion" ?>'><div id="container_user">
-                    <img src='<?php echo !empty($_SESSION["name"]) ? "data:image/jpg/png;base64,".UserManager::getAvatar($_SESSION["name"]) : "public/img/user.png" ?>' alt="logo_user" id="logo_user">
-                    <p><?php echo !empty($_SESSION["name"]) ? $_SESSION["name"] : "Se connecter"; ?></p>
+                <a href="index.php?page=adminSpace"><img src="public/img/wrench.png" alt="logo_admin" id="logo_admin" <?php echo $buttonAdmin ? '' : 'style="display:none"' ?> ></a>
+                <a href='<?php echo $presenceSession ? "index.php?page=clientSpace" : "index.php?page=connexion" ?>'><div id="container_user">
+                    <img src='<?php echo $presenceSession ? "data:image/jpg/png;base64,".UserManager::getAvatar($_SESSION["name"]) : "public/img/user.png" ?>' alt="logo_user" id="logo_user">
+                    <p><?php echo $presenceSession ? $_SESSION["name"] : "Se connecter"; ?></p>
                 </div></a>
             </div>
         </header>
