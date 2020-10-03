@@ -1,9 +1,9 @@
 <?php
 
-
+require_once "models/Manager.class.php";
 require_once "models/Database.class.php";
 
-class UserManager
+class UserManager extends Manager
 {
     /*
     Info Users
@@ -68,7 +68,7 @@ class UserManager
         }
         $db = Database::getPDO();
         $password = sha1(GETPOST("password"));
-        $avatar = UserManager::getFile();
+        $avatar = parent::getFile();
         $sql = "INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `username`, `password`, `avatar`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         $tabParam = [
@@ -160,47 +160,40 @@ class UserManager
                 $tabUpdate["email"] = GETPOST("email");
             if(GETPOST("username") != "")
                 $tabUpdate["username"] = GETPOST("username");
-            $tabUpdate["newsletter"] = GETPOSTEMPTY("newsletter") ? "1" : 0;
-            $tabUpdate["partnernews"] = GETPOSTEMPTY("partnernews") ? "1" : 0;
+            $tabUpdate["config_news"] = GETPOSTEMPTY("newsletter") ? "1" : 0;
+            $tabUpdate["config_part"] = GETPOSTEMPTY("partnernews") ? "1" : 0;
             
             //GESTION PASSWORD
-            if(GETPOST("password") === GETPOST("password_confirmed"))
+            if(GETPOSTEMPTY("password") and GETPOSTEMPTY("password_confirmed") and GETPOSTEMPTY("old_password"))
             {
-                if(GETPOSTEMPTY("old_password"))
+                if(GETPOST("password") === GETPOST("password_confirmed"))
                 {
-                    $oldPassword = sha1(GETPOST("old_password"));
-                    if(self::getPassword($id) === $oldPassword)
+                    if(GETPOSTEMPTY("old_password"))
                     {
-                        $tabUpdate["password"] = sha1(GETPOST("password"));
+                        $oldPassword = sha1(GETPOST("old_password"));
+                        if(self::getPassword($id) === $oldPassword)
+                        {
+                            $tabUpdate["password"] = sha1(GETPOST("password"));
+                        }
+                        else
+                        {
+                            throw new Exception("Ancien mot de passe erroné");
+                        }
                     }
                     else
                     {
-                        throw new Exception("Ancien mot de passe erroné");
+                        throw new Exception("Ancien mot de passe non rempli");
                     }
                 }
                 else
                 {
-                    throw new Exception("Ancien mot de passe non rempli");
+                    throw new Exception("Mots de passe de confirmation différent");
                 }
-            }
-            else
-            {
-                throw new Exception("Mots de passe de confirmation différent");
             }
             
             //Gestion avatar
             if(!empty($_FILES['avatar']['name'])){ // Si image envoyé dans formulaire, on va la chercher
-                $tmp_name = $_FILES['avatar']['tmp_name'];
-                $name = basename($_FILES['avatar']['name']);
-                move_uploaded_file($tmp_name, "$directory/$name");
-                $path = $directory. $name ;
-                if(exif_imagetype($path) != IMAGETYPE_PNG and exif_imagetype($path) != IMAGETYPE_JPEG)
-                {
-                    throw new Exception("Mauvais format d'image (PNG ou JPEG seulement)");
-                }
-                $data = file_get_contents($path);
-                $tabUpdate["avatar"] = base64_encode($data);
-                unlink($path);
+                $tabUpdate['avatar'] = parent::getFile();
             }
 
             $sql = "UPDATE users SET ";
@@ -251,29 +244,6 @@ class UserManager
 
 
     #region Utils
-    public static function getFile(){
-        $directory = "public/img/";
-        if(!empty($_FILES['avatar']['name'])){ // Si image envoyé dans formulaire, on va la chercher
-            $tmp_name = $_FILES['avatar']['tmp_name'];
-            $name = basename($_FILES['avatar']['name']);
-            move_uploaded_file($tmp_name, "$directory/$name");
-            $path = $directory. $name ;
-            if(exif_imagetype($path) == IMAGETYPE_PNG or exif_imagetype($path) == IMAGETYPE_JPEG) {
-                $data = file_get_contents($path);
-                $base64 = base64_encode($data);
-                unlink($path);
-                return $base64; 
-            }
-            else {
-                $data = file_get_contents("$directory/user.png");
-                unlink($path);
-                return base64_encode($data);
-            }
-        }else{                              // Sinon on prend celle par defaut
-            $data = file_get_contents("$directory/user.png");
-            return base64_encode($data);
-        }
-    }
 
     public static function checkUsername(string $username)
     {
