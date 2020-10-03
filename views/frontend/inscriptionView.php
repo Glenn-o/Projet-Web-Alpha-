@@ -1,29 +1,34 @@
 <?php 
 $title = "Inscription";
-$css = "inscription";
+$css = "inscription.css";
 
 ?>
 
 <?php ob_start() ?>
-<h1> Inscription</h1>
-<h2> Rentrez vos information pour pouvoir vous inscrire </h2>
+<section id="main">
+    <h1> Inscription</h1>
 
-<form action="<?= $_SERVER["PHP_SELF"].'?page=inscription&action=inscription'?>" method="POST" enctype="multipart/form-data">
-    <input type="text" name="firstName" placeholder = "Nom"><br>
-    <input type="text" name="lastName"  placeholder = "Prénom"><br>
-    <input type="text" name="userName"  placeholder = "Utilisateur"><br>
-    <input type="text" name="address"  placeholder = "Adresse"><br>
-    <input type="text" name="city"  placeholder = "Ville"><br>
-    <input type="text" name="postalCode"  placeholder = "Code Postal"><br>
-    <input type="text" name="country"  placeholder = "Pays"><br>
-    <input type="number" name="phone"  placeholder = "Téléphone"><br>
-    <input type="email" name="email"  placeholder = "Email"><br>
-    <input type="password" name="password"  placeholder = "Mot de passe"><br>
-    <input type="password" name="password-confirmed"  placeholder = "Confirmation"><p><?= $wrongPassword?></p><br>
-    <label for="avatar">Avatar :</label>
-    <input type="file" name="avatar" id="avatar"><br>
-    <button type="submit"> Valider </button>
-</form>
+    <form action="<?= $_SERVER["PHP_SELF"].'?page=inscription&action=inscription'?>" method="POST" enctype="multipart/form-data">
+        <h2> Rentrez vos information pour pouvoir vous inscrire </h2>
+        <input type="text" class="input_modif"name="firstName" placeholder = "Nom">
+        <input type="text" class="input_modif"name="lastName"  placeholder = "Prénom">
+        <input type="text" class="input_modif"name="userName"  placeholder = "Utilisateur">
+        <input type="text" class="input_modif"name="address"  placeholder = "Adresse">
+        <input type="text" class="input_modif"name="city"  placeholder = "Ville">
+        <input type="text" class="input_modif"name="postalCode"  placeholder = "Code Postal">
+        <input type="text" class="input_modif"name="country"  placeholder = "Pays">
+        <input type="number" class="input_modif"name="phone"  placeholder = "Téléphone">
+        <input type="email" class="input_modif"name="email"  placeholder = "Email">
+        <input type="password"class="input_modif" name="password"  placeholder = "Mot de passe">
+        <input type="password"class="input_modif" name="password-confirmed"  placeholder = "Confirmation"><p><span><?= $wrongPassword?><span></p>
+        <div>
+            <label for="avatar">Avatar :</label>
+            <input type="file" name="avatar" id="avatar">
+        </div>
+        
+        <button type="submit"> Valider </button>
+    </form>
+</section>
 
 <?php $content = ob_get_clean() ?>
 
