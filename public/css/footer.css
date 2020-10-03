@@ -14,7 +14,7 @@
 
 }
 #footer h1{
-    font-size: 1em;
+    font-size: 2.7vh;
 }
 #footer hr{
     color: white;
@@ -29,6 +29,7 @@
 }
 #footer_left a {
     margin-top: 2vh;
+    font-size: 2.7vh;
     text-decoration: none;
     color: white;
 }
@@ -60,6 +61,7 @@
     font-weight: bold;
     justify-content: space-between;
     width: 12vw;
+    font-size: 2.7vh;
     text-decoration: none;
     color: white;
 }
@@ -72,6 +74,7 @@
 #footer_right a{
     color: white;
     text-decoration: none;
+    font-size: 2.7vh;
     margin-top: 2vh;
 }
 #footer a:hover{

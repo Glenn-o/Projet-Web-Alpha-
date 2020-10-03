@@ -1,0 +1,95 @@
+body, html {
+    padding: 0;
+    margin: 0;
+    font-family:  'Roboto', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    background-image: url("../img/background.png");
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+#main form{
+    border-radius: 1vw;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    background-color: #EBECEF;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+.input_modif{
+    font-family:  'Roboto', sans-serif;
+    width: 20vw;
+    height: 5vh;
+    border: none;
+    background-color: #EBECEF;
+    border-bottom: 0.5vh solid black;
+    margin-top: 2Vh;
+    font-size: 1.3vw;
+    margin-bottom: 2vh;
+    outline: none;
+}
+.input_modif:active, .input_modif:focus{
+    border-bottom: 0.5vh solid #4264aa;
+}
+#main h1{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2vw;
+}
+#main{
+    margin-top: 5vh;
+    margin-bottom: 10vh;
+}
+#main form h2{
+    font-size: 1.5vw;
+    font-weight: normal;
+}
+#main form button{
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    background-color: #4264aa;
+    color: white;
+    border: 0.3vh solid #4264aa;
+    padding: 1vh 3vw 1vh 3vw;
+    font-size: 1vw;
+    cursor: pointer;
+}
+#main form button:hover, #main form button:focus{
+    background-color: #EBECEF;
+    color: #4264aa;
+    transition: 200ms;
+}
+/* Firefox */ 
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Chrome */
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button { 
+	-webkit-appearance: none;
+	margin:0;
+}
+
+/* Opéra*/
+input::-o-inner-spin-button,
+input::-o-outer-spin-button { 
+	-o-appearance: none;
+	margin:0
+}
+span{
+    color: red;
+   
+}
+p{
+    font-size: 1vw;
+}
+label{
+    font-size: 1.3vw;
+}
+input[type=file]{
+    font-size: 1vw;
+}
