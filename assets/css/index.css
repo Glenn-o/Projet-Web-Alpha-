@@ -9,6 +9,9 @@ body, html{
     min-height: 100vh;
     position: relative;
     font-family:  'Roboto', sans-serif;
+    background-image: url("../img/background.png");
+    background-size:cover;
+    background-repeat: no-repeat;
 }
 
 #form form{

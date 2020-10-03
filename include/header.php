@@ -6,7 +6,7 @@
 
 <section id="header">
     <header>
-        <a href="../index.php"><img src="../assets/img/logo.png" alt="logo_fog" id="logo_fog"></a>
+    <a href="../index.php"><img src="../assets/img/logo.png" alt="logo_fog" id="logo_fog"></a>
         <div id="container_menu">
             <a href="#"><img src="../assets/img/button.png" alt="button" id="button_ad"></a>
             <a href="#"><img src="../assets/img/bell.png" alt="logo_bell" id="logo_bell"></a>
