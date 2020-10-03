@@ -96,11 +96,6 @@ class UserManager
                 $errorMessage = "Utilisateur existant : ". GETPOST('userName');
             return false;
         }
-        // if($req != FALSE) {
-        // } 
-        // else {
-        //     return FALSE;
-        // }
         
     }
     #endregion
@@ -112,6 +107,15 @@ class UserManager
         $db = Database::getPDO();
         $req = $db->prepare("SELECT * from users where username = ?");
         $req->execute([$_SESSION["name"]]);
+        return $req->fetch(PDO::FETCH_ASSOC);
+
+    }
+
+    public static function getUserById($id)
+    {
+        $db = Database::getPDO();
+        $req = $db->prepare("SELECT * from users where id_user = ?");
+        $req->execute($id);
         return $req->fetch(PDO::FETCH_ASSOC);
 
     }
@@ -132,32 +136,106 @@ class UserManager
     #endregion
 
     #region UPDATE
-    public static function updateUserById($id)
+    public static function updateUserById($id, &$errorMessage) : bool
     {
         $db = Database::getPDO();
-        $password = sha1(GETPOST("password"));
-        $avatar = "";
-        if(!empty($_FILES['avatar']['name'])){ // Si image envoyé dans formulaire, on va la chercher
-            $tmp_name = $_FILES['avatar']['tmp_name'];
-            $name = basename($_FILES['avatar']['name']);
-            move_uploaded_file($tmp_name, "$directory/$name");
-            $path = $directory. $name ;
-            $data = file_get_contents($path);
-            $avatar = base64_encode($data);
-            unlink($path);
-        }
-        $sql = "UPDATE users SET lastname = '?', firstname = '?', adress = '?', city = '?', postal_code = '?', country = '?', phone = ?, email = '?', username = '?', password = '?'";
-        $tabParam = [GETPOST("lastName"), GETPOST('firstName'), GETPOST('address'), GETPOST('city'), GETPOST('postalCode'),GETPOST("country"), GETPOST('phone'), GETPOST('email'), GETPOST('username'), $password];
-        if($avatar != "")
-        {
-            $sql .= "avatar = ?";
-            $tabParam[] = $avatar;
-        }
-        $sql .= " WHERE id_user = ".$id;
+        //GESTION CHAMPS NORMAUX
+        try{
+            $tabUpdate =  [];
+            if(GETPOST("lastname") != "")
+                $tabUpdate["lastname"] = GETPOST("lastname");
+            if(GETPOST("firstname") != "")
+                $tabUpdate["firstname"] = GETPOST("firstname");
+            if(GETPOST("address") != "")
+                $tabUpdate["address"] = GETPOST("address");
+            if(GETPOST("city") != "")
+                $tabUpdate["city"] = GETPOST("city");
+            if(GETPOST("postal_code") != "")
+                $tabUpdate["postal_code"] = GETPOST("postal_code");
+            if(GETPOST("country") != "")
+                $tabUpdate["country"] = GETPOST("country");
+            if(GETPOST("phone") != "")
+                $tabUpdate["phone"] = GETPOST("phone");
+            if(GETPOST("email") != "")
+                $tabUpdate["email"] = GETPOST("email");
+            if(GETPOST("username") != "")
+                $tabUpdate["username"] = GETPOST("username");
+            $tabUpdate["newsletter"] = GETPOSTEMPTY("newsletter") ? "1" : 0;
+            $tabUpdate["partnernews"] = GETPOSTEMPTY("partnernews") ? "1" : 0;
+            
+            //GESTION PASSWORD
+            if(GETPOST("password") === GETPOST("password_confirmed"))
+            {
+                if(GETPOSTEMPTY("old_password"))
+                {
+                    $oldPassword = sha1(GETPOST("old_password"));
+                    if(self::getPassword($id) === $oldPassword)
+                    {
+                        $tabUpdate["password"] = sha1(GETPOST("password"));
+                    }
+                    else
+                    {
+                        throw new Exception("Ancien mot de passe erroné");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Ancien mot de passe non rempli");
+                }
+            }
+            else
+            {
+                throw new Exception("Mots de passe de confirmation différent");
+            }
+            
+            //Gestion avatar
+            if(!empty($_FILES['avatar']['name'])){ // Si image envoyé dans formulaire, on va la chercher
+                $tmp_name = $_FILES['avatar']['tmp_name'];
+                $name = basename($_FILES['avatar']['name']);
+                move_uploaded_file($tmp_name, "$directory/$name");
+                $path = $directory. $name ;
+                if(exif_imagetype($path) != IMAGETYPE_PNG and exif_imagetype($path) != IMAGETYPE_JPEG)
+                {
+                    throw new Exception("Mauvais format d'image (PNG ou JPEG seulement)");
+                }
+                $data = file_get_contents($path);
+                $tabUpdate["avatar"] = base64_encode($data);
+                unlink($path);
+            }
 
-        $req = $db->prepare($sql);
-        $result = $req->execute($tabParam);
-        return $result != FALSE;
+            $sql = "UPDATE users SET ";
+
+
+            $tabParamJoint = [];
+            foreach($tabUpdate as $field => $value)
+            {
+                $tabParamJoint[] = " $field = :$field";
+            }
+
+            $sql .= join(',' ,$tabParamJoint);
+
+            $sql .= " WHERE id_user = ".$id;
+
+            $req = $db->prepare($sql);
+            $result = $req->execute($tabUpdate);
+            return true;
+        }
+        catch(Exception $error )
+        {
+            if($error->getCode() == '23000')
+                $errorMessage = "Utilisateur existant : ". GETPOST('userName');
+            else
+                $errorMessage = $error->getMessage();
+            return false;
+        }
+    }
+
+    public static function getTypeById($id)
+    {
+        $db = Database::getPDO();
+        $sql = "SELECT id_user_type FROM users WHERE id_user = ".$id;
+        $result = $db->query($sql)->fetch(PDO::FETCH_ASSOC)["id_user_type"];
+        return $result;
     }
     #endregion
 
@@ -165,7 +243,7 @@ class UserManager
     public static function deleteUserById($id)
     {
         $db = Database::getPDO();
-        $sql = "DELETE FROM users WHERE id = ".$id;
+        $sql = "DELETE FROM users WHERE id_user = ".$id;
         $result = $db->query();
         return $result != FALSE; // Si ok retourne vrai, sinon faux
     }
@@ -222,5 +300,19 @@ class UserManager
         $req->execute([$userName]);
         return $req->fetch(PDO::FETCH_ASSOC)["id_user"];
     }
+    #endregion
+
+    #region Getter
+    public static function getPassword($id)
+    {
+        $db = Database::getPDO();
+        $req = $db->prepare("SELECT password FROM users WHERE id_user = ?");
+        $req->execute([$id]);
+        return $req->fetch(PDO::FETCH_ASSOC)["password"];
+    }
+    #endregion
+
+    #region Setter
+
     #endregion
 }

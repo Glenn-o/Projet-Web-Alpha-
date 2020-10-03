@@ -67,10 +67,17 @@ function pageAccueil()
 function clientSpace()
 {
     //Dernieres annonces
+    $errorMessage = "";
     if(!empty($_SESSION["name"]))
     {
+        $id = UserManager::getIDByName($_SESSION["name"]);
+        if(GETPOST("action") == "modification")
+            UserManager::updateUserById($id, $errorMessage);
         $data = UserManager::getUserByUsername($_SESSION["name"]);
+        $reqProduct = ProductManager::getProductsByUserId($id);
+
     }
+    $pageModif = $_SERVER["PHP_SELF"]."?page=clientSpace&action=modification";
     //Info utilisateur
 
     //View
