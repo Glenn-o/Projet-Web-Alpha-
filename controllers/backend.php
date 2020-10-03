@@ -6,8 +6,34 @@ require_once "models/UserManager.class.php";
 
 function pageAdmin()
 {
-    $productManager = new ProductManager();
-    $req = $productManager->getAllProducts();
+    switch(GETPOST("vue"))
+    {
+        case "user":
+            vueUser();
+        break;
+        case "product":
+            vueProduct();
+        break;
+        case "bill":
+            vueBill();
+        break;
+        default:
+        require 'view/backend/adminView.php';
+        break;
+    }
+}
 
-    require ("views/backend/adminView.php");
+function vueUser()
+{
+
+}
+
+function vueProduct()
+{
+    
+}
+
+function vueBill()
+{
+    
 }
