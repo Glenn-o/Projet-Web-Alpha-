@@ -1,6 +1,9 @@
 <?php
-require_once("../dbcon.php");
-class Product {
+
+require_once "models/Database.class.php";
+
+class ProductManager
+{
     // Info product
     /*
     name string
@@ -21,7 +24,7 @@ class Product {
     #region CREATE
     public static function createProduct()
     {
-        $db = getConn();
+        $db = Database::getPDO();
         $premium = $_POST["premium"] ? true : false;
         $image1 = base64_encode($_POST["image1"]);
         $sql = "INSERT INTO product(name, description, price, image1, state, city, premium, id_product_type) VALUES ";
@@ -35,12 +38,12 @@ class Product {
     #region READ
     public static function getProductById($id)
     {
-        $db = getConn();
+        $db = Database::getPDO();
         $sql = "SELECT $ from product where id_product = ".$id;
         $result = $db->query($sql);
         if($result != false)
         {
-            return $result->fetch(PDO::FETCH_ASSOC);
+            return $result;
         }
 
     }
@@ -48,39 +51,63 @@ class Product {
     // Recupere toutes les photos d'une annonce
     public static function getAllPictureByProductID($id) : array
     {
-        $db = getConn();
+        $db = Database::getPDO();
         $sql = 'SELECT image1, ifnull(length(image2), ""), ifnull(length(image3), "")
                 ,ifnull(length(image4), ""),ifnull(length(image5), "") from product';
         $result = $db->query($sql);
         if($result != FALSE)
         {
-            return $result->fetch_all();
+            return $result;
         }
         else
         {
             return FALSE;
         }
     }
-    
+
     // Recupere toutes les annonces
-    public static function getAllProduct()
+    public static function getAllProducts()
     {
-        $db = getConn();
-        $sql = "SELECT $ from product";
+        $db = Database::getPDO();
+        $sql = "SELECT * from product";
         $result = $db->query($sql);
         if($result != false)
         {
-            return $result->fetch_all();
+            return $result;
         }
         else
-        return FALSE;
+            return FALSE;
 
+    }
+
+    public static function getProductByFilter($location, $research, $category)
+    {
+        $db = Database::getPDO();
+        // Create sql
+        $sql = 'SELECT * FROM product as Prod';
+        $tabWhere = [];
+        if($category !== 'default') {
+            $tabWhere[] = "Type.name = '$category'";
+            $sql .= " INNER JOIN product_type as Type ON Type.id_product_type = Prod.id_product_type";
+        }
+        if($research !== "") {
+            $tabWhere[] = "Prod.name LIKE '%$research%'";
+        }
+        if($location != "") {
+            $tabWhere[] = "Prod.city = '$location'";
+        }
+        if(count($tabWhere) > 0)
+        {
+            $sql .= ' WHERE '.join(" and ", $tabWhere);
+        }
+
+        return $db->query($sql);
     }
 
     // Retourne un tableau d'enregistrement selon un numero de page et un numero maximum de produit
     public static function getAllByPage($pageNbr, $maxProduct)
     {
-        $db = getConn();
+        $db = Database::getPDO();
         $sql = "SELECT * FROM product";
         $result = $db->query($sql);
         $count = $result->rowCount();
@@ -104,7 +131,7 @@ class Product {
     #region UPDATE
     public static function updateProductById($id)
     {
-        $db = getConn();
+        $db = Database::getPDO();
         $sql = "UPDATE product SET ";
         $sql .= "name = '".$_POST["name"]."', description = '".$_POST["description"]."',";
         $sql .= "price = ".$_POST["price"].", image1 = '".$image1."',";
@@ -119,12 +146,10 @@ class Product {
     #region DELETE
     public static function deleteProductById()
     {
-        $db = getConn();
+        $db = Database::getPDO();
         $sql = "DELETE FROM product WHERE product_id = ".$id;
         $result = $db->query($sql);
         return $result != FALSE;
     }
     #endregion
-
-    
 }

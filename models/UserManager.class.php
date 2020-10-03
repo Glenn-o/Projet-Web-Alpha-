@@ -1,7 +1,13 @@
 <?php
-class User
+
+
+require_once "models/Database.class.php";
+
+class UserManager
 {
     /*
+    Info Users
+
     id int auto_increment
     lastname string
     firstname string 
@@ -20,65 +26,65 @@ class User
     #region FONCTIONS CONNEXION / INSCRIPTION
     public static function tryConnexion(string $userName, string $password) : bool
     {
-        $db = getConn();
-        if($userName !== "") // Si nom renseigné
+        $db = Database::getPDO();
+        $password = sha1($password);
+        $checkUserSQL = 'SELECT username FROM users WHERE username =  "'.$userName.'"';
+        $resultUser = $db->query($checkUserSQL);
+        if($resultUser->rowCount() > 0) // Si user trouvé grace a nom
         {
-            $password = sha1($password);
-            $checkUserSQL = 'SELECT username FROM users WHERE username =  "'.$userName.'"';
-            $resultUser = $db->query($checkUserSQL);
-            if($resultUser->rowCount() > 0) // Si user trouvé grace a nom
+            $checkPassword = 'SELECT password FROM users WHERE password = "'.$password.'"';
+            $resultUser = $db->query($checkPassword);
+            if($resultUser->rowCount() > 0) // Si mot de passe correspond
             {
-                if($password != "") // Si mot de passe renseigné
-                {
-                    $checkPassword = 'SELECT password FROM users WHERE password = "'.$password.'"';
-                    $resultUser = $db->query($checkPassword);
-                    if($resultUser->rowCount() > 0) // Si mot de passe correspond
-                    {
-                        $_SESSION["name"] = $_POST["name"];
+                $_SESSION["name"] = $_POST["username"];
 
-                        header('Location: ../index.php');
-                        return true;
-                    }
-                    else
-                    {
-                        print("Mauvais mot de passe");
-                    }
-                }
+                header('Location: index.php');
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
-        else
-        {
-            print("Nom d'utilisateur nom renseigné");
-        }
-        return false;
         $db = null;
+        return false;
     }
 
     public static function deconnexion()
     {
         session_unset();
         session_destroy();
-        header("Location: index.php");
     }
     #endregion
 
     #region CREATE
     public static function createUser() : bool
     {
-        $db = getConn();
-        $password = sha1($_POST["password"]);
-        $avatar = User::getFile();
-        $insertUserSQL = "INSERT INTO `users`(`lastname`, `firstname`,`username`,`password`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `avatar`) VALUES ('".$_POST["lastName"]."', '".$_POST["firstName"] ."','".$_POST["userName"]."','".$password."','".$_POST["address"]."','".$_POST["city"]."','". $_POST["postalCode"] ."', '". $_POST["country"]."',".$_POST["phone"].",'".$_POST["email"]."','".$avatar."')";        
-        $insert = $db->exec($insertUserSQL);
-        if($insert !== FALSE){
-            echo "vous etes inscrit";
-            $db = null;
-            return true;
-        }
-        else{
-            echo "L'inscription n'a pas marché";
-            $db = null;
-            return false;
+        $db = Database::getPDO();
+        $password = sha1(GETPOST("password"));
+        $avatar = UserManager::getFile();
+        $sql = "INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `username`, `password`, `avatar`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
+        $tabParam = [
+            GETPOST('lastName'),
+            GETPOST('firstName'),
+            GETPOST('address'),
+            GETPOST('city'),
+            GETPOST('postalCode'),
+            GETPOST("country"),
+            GETPOST('phone'),
+            GETPOST('email'),
+            GETPOST('userName'),
+            $password,
+            $avatar
+        ];
+        $req = $db->prepare($sql);
+        $req->execute($tabParam);
+        if($req != FALSE) {
+            header('Location: index.php?page=connexion');
+        } 
+        else {
+            return FALSE;
         }
         
     }
@@ -88,7 +94,7 @@ class User
     //Recupere un User par son ID
     public static function getUserById($id)
     {
-        $db = getConn();
+        $db = Database::getPDO();
         $sql = "SELECT * from users where id_user = ".$id;
         $result = $db->query($sql);
         if($result != FALSE)
@@ -98,26 +104,26 @@ class User
 
     }
     // Recupere toutes les annonces
-    public static function getAllUser()
+    public static function getAllUsers()
     {
-        $db = getConn();
+        $db = Database::getPDO();
         $sql = "SELECT * from users";
         $result = $db->query($sql);
         if($result != FALSE)
         {
-            return $result->fetch_all();
+            return $result;
         }
         else
             return FALSE;
 
     }
     #endregion
-    
+
     #region UPDATE
     public static function updateUserById($id)
     {
-        $db = getConn();
-        $password = sha1($_POST["password"]);
+        $db = Database::getPDO();
+        $password = sha1(GETPOST("password"));
         $avatar = "";
         if(!empty($_FILES['avatar']['name'])){ // Si image envoyé dans formulaire, on va la chercher
             $tmp_name = $_FILES['avatar']['tmp_name'];
@@ -128,17 +134,17 @@ class User
             $avatar = base64_encode($data);
             unlink($path);
         }
-        $sql = "UPDATE users SET ";
-        $sql .= "name = '".$_POST["lastname"]."', firstname = '".$_POST["firstname"]."',";
-        $sql .= "adress = '".$_POST["adress"]."', city = '".$_POST["city"]."',";
-        $sql .= "postal_code = '".$_POST["postal_code"]."', country = '".$_POST["country"]."',";
-        $sql .= "phone = ".$_POST["price"].", email = '".$_POST["email"]."',";
-        $sql .= "username = '".$_POST["username"]."',";
-        $sql .= "password = '".$password."', fk_product_id = ".$_POST["categorie"];
+        $sql = "UPDATE users SET lastname = '?', firstname = '?', adress = '?', city = '?', postal_code = '?', country = '?', phone = ?, email = '?', username = '?', password = '?'";
+        $tabParam = [GETPOST("lastName"), GETPOST('firstName'), GETPOST('address'), GETPOST('city'), GETPOST('postalCode'),GETPOST("country"), GETPOST('phone'), GETPOST('email'), GETPOST('username'), $password];
         if($avatar != "")
-            $sql .= "avatar = ".$avatar;
+        {
+            $sql .= "avatar = ?";
+            $tabParam[] = $avatar;
+        }
         $sql .= " WHERE id_user = ".$id;
-        $result = $db->query($sql);
+
+        $req = $db->prepare($sql);
+        $result = $req->execute($tabParam);
         return $result != FALSE;
     }
     #endregion
@@ -146,7 +152,7 @@ class User
     #region DELETE
     public static function deleteUserById($id)
     {
-        $db = getConn();
+        $db = Database::getPDO();
         $sql = "DELETE FROM users WHERE id = ".$id;
         $result = $db->query();
         return $result != FALSE; // Si ok retourne vrai, sinon faux
@@ -155,8 +161,8 @@ class User
 
 
     #region Utils
-    public static function findAvatar(){
-        $directory = "../assets/img/";
+    public static function getFile(){
+        $directory = "public/img/";
         if(!empty($_FILES['avatar']['name'])){ // Si image envoyé dans formulaire, on va la chercher
             $tmp_name = $_FILES['avatar']['tmp_name'];
             $name = basename($_FILES['avatar']['name']);
@@ -179,7 +185,7 @@ class User
 
     public static function getAvatar(string $username)
     {
-        $db = getConn();
+        $db = Database::getPDO();
         $sql = "SELECT avatar from users WHERE username = '".$username."'";
         $result = $db->query($sql);
         if($result != FALSE)
@@ -191,4 +197,3 @@ class User
     }
     #endregion
 }
-?>
