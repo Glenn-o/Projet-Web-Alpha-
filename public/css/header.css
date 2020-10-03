@@ -22,7 +22,7 @@
     float: right;
     width: 25vw;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     height: 8vh;
     margin-right: 2vw;

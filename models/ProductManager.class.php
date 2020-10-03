@@ -104,6 +104,14 @@ class ProductManager
         return $db->query($sql);
     }
 
+    public static function getProductsByUserId($user_id)
+    {
+        $db = Database::getPDO();
+        $req = $db->prepare("SELECT * FROM product WHERE id_user_creator = ?");
+        $req->execute([$user_id]);
+        return $req;
+    }
+
     // Retourne un tableau d'enregistrement selon un numero de page et un numero maximum de produit
     public static function getAllByPage($pageNbr, $maxProduct)
     {

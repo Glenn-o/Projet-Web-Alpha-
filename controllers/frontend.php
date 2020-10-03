@@ -45,22 +45,10 @@ function inscription()
     GETPOSTEMPTY("country") and GETPOSTEMPTY("phone") and GETPOSTEMPTY("password") and
     GETPOSTEMPTY("email"))
     {
-        if(GETPOST("password") === GETPOST("password-confirmed"))
-        {
-            if(UserManager::createUser())
+            if(UserManager::createUser($wrongPassword))
             {
                 $wrongPassword =  'connexion reussie';
             }
-            else
-            {
-                $wrongPassword = 'connexion raté';
-            }
-        }
-        else
-        {
-            $wrongPassword = "Mot de passe différent";
-        }
-        
     }
     else
     {
@@ -78,7 +66,17 @@ function pageAccueil()
 function clientSpace()
 {
     //Dernieres annonces
+    $errorMessage = "";
+    if(!empty($_SESSION["name"]))
+    {
+        $id = UserManager::getIDByName($_SESSION["name"]);
+        if(GETPOST("action") == "modification")
+            UserManager::updateUserById($id, $errorMessage);
+        $data = UserManager::getUserByUsername($_SESSION["name"]);
+        $reqProduct = ProductManager::getProductsByUserId($id);
 
+    }
+    $pageModif = $_SERVER["PHP_SELF"]."?page=clientSpace&action=modification";
     //Info utilisateur
 
     //View
