@@ -79,20 +79,28 @@ body, html{
     display: flex;
     justify-content: space-evenly;
 }
-#slide_category1, #slide_category2, #slide_category3, #slide_category4, #slide_category5, #slide_category6{
-    background-color: black;
+.slide_category{
+    /* background-color: black; */
     width: 10vw;
     height: 20vh;
+    border: 2px solid black;
+}
+.slide_category img {
+    width: 2vw;
 }
 #content #user_suggestion{
     margin-bottom: 10vh;
     display: flex;
     justify-content: space-evenly;
 }
-#slide_suggestion1, #slide_suggestion2, #slide_suggestion3, #slide_suggestion4, #slide_suggestion5, #slide_suggestion6{
-    background-color: black;
+.slide_suggestion{
+    /* background-color: black; */
     width: 10vw;
     height: 20vh;
+    border: 2px solid black;
+}
+.slide_suggestion img {
+    width: 2vw;
 }
 #content #rand_category{
     margin-bottom: 10vh;

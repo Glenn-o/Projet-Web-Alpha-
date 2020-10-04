@@ -1,10 +1,7 @@
 <?php 
 $title = "Creation d'annonce";
 $css = "createProduct.css";
-
-?>
-
-<?php ob_start() ?>
+ob_start() ?>
 <section id="main">
     <h1> Creation d'annonce</h1>
     <?= $message ?>
@@ -17,7 +14,7 @@ $css = "createProduct.css";
         </select>
         <input type="text" class="input_modif"name="name" placeholder = "Nom">
         <input type="number" class="input_modif"name="price"  placeholder = "Prix">
-        <input type="text" class="input_modif"name="description"  placeholder = "Description">
+        <textarea type="text" class="input_modif"name="description"  placeholder = "Description" style="resize:none"></textarea>
         <select name="state" id="">
             <option value="neuf">Neuf</option>
             <option value="abime">Abimé</option>

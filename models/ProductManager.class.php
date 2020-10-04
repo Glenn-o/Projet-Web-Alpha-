@@ -86,13 +86,30 @@ class ProductManager extends Manager
     public static function getProductById($id)
     {
         $db = Database::getPDO();
-        $sql = "SELECT * from product where id_product = ".$id;
-        $result = $db->query($sql);
-        if($result != false)
-        {
-            return $result;
-        }
+        $req = $db->prepare("SELECT
+            Product.*,
+            FORMAT(Product.price, 2) as format_price,
+            (SELECT image FROM product_image Image 
+            WHERE Image.id_product = Product.id_product  LIMIT 1) as image
+            FROM product Product
+            WHERE id_product = ?");
+        $req->execute([$id]);
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
 
+    public static function getRandomProductNumber($nbr)
+    {
+        $db = Database::getPDO();
+        $req = $db->prepare("SELECT
+            Product.*,
+            (SELECT image FROM product_image Image 
+            WHERE Image.id_product = Product.id_product  LIMIT 1) as image
+            FROM product Product
+            ORDER BY RAND()
+            LIMIT :nbr");
+        $req->bindParam(':nbr', $nbr, PDO::PARAM_INT);
+        $req->execute();
+        return $req;
     }
 
     // Recupere toutes les photos d'une annonce
@@ -123,22 +140,29 @@ class ProductManager extends Manager
     {
         $db = Database::getPDO();
         // Create sql
-        $sql = 'SELECT * FROM product as Prod';
+        $sql = "SELECT Product.*,
+        FORMAT(Product.price, 2) as format_price,
+        (SELECT image FROM product_image Image 
+        WHERE Image.id_product = Product.id_product  LIMIT 1) cover_image 
+        FROM product as Product";
         $tabWhere = [];
         if($category !== 'default') {
             $tabWhere[] = "Type.name = '$category'";
-            $sql .= " INNER JOIN product_type as Type ON Type.id_product_type = Prod.id_product_type";
+            $sql .= " INNER JOIN product_type as Type ON Type.id_product_type = Product.id_product_type";
         }
         if($research !== "") {
-            $tabWhere[] = "Prod.name LIKE '%$research%'";
+            $tabWhere[] = "Product.name LIKE '%$research%'";
         }
         if($location != "") {
-            $tabWhere[] = "Prod.city = '$location'";
+            $tabWhere[] = "Product.city = '$location'";
         }
         if(count($tabWhere) > 0)
         {
             $sql .= ' WHERE '.join(" and ", $tabWhere);
         }
+        $sql .= " ORDER BY id_product DESC";
+
+        print($sql);
 
         return $db->query($sql);
     }
