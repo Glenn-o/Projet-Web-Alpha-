@@ -1,9 +1,11 @@
 <?php
+require('includes/vendor/autoload.php');
+require('includes/Utils.php');
 require('controllers/frontend.php');
 require('controllers/backend.php');
 
 session_start();
-if(GETPOST("action") == "deconnexion")
+if(Utils::GETPOST("action") == "deconnexion")
 {
     UserManager::deconnexion();
 }
@@ -47,31 +49,3 @@ catch(Exception $e)
 {
     echo "Erreur : " . $e;
 }
-
-#region Utils
-function GETPOST($champ)
-{
-    if(isset($_POST[$champ]))
-    {
-        return htmlentities($_POST[$champ]);
-    }
-    else if(isset($_GET[$champ]))
-    {
-        return htmlentities($_GET[$champ]);
-    }
-    else 
-    {
-        return "";
-    }
-}
-
-function GETPOSTEMPTY($champ) : bool
-{
-    if(!empty($_POST[$champ]) or !empty($_GET[$champ]))
-    {
-        return true;
-    }
-    else
-        return false;
-}
-#endregion

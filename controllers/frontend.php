@@ -5,9 +5,9 @@ require_once "models/UserManager.class.php";
 
 function listProducts()
 {
-    $category = GETPOST("category");
-    $research = GETPOST("research");
-    $location = GETPOST("location");
+    $category = Utils::GETPOST("category");
+    $research = Utils::GETPOST("research");
+    $location = Utils::GETPOST("location");
 
     $req = ProductManager::getProductByFilter($location, $research, $category);
 
@@ -17,10 +17,10 @@ function listProducts()
 function connexion()
 {
     $message = "";
-    if(GETPOST("action") == "tryConnexion")
+    if(Utils::GETPOST("action") == "tryConnexion")
     {
-        $username = GETPOST("username");
-        $password = GETPOST("password");
+        $username = Utils::GETPOST("username");
+        $password = Utils::GETPOST("password");
         if(empty($username) or empty($password))
         {
             throw new Exception("Mot de passe ou Pseudo non renseigné");
@@ -40,10 +40,10 @@ function connexion()
 function inscription()
 {
     $wrongPassword = "";
-    if(GETPOSTEMPTY("firstName") and GETPOSTEMPTY("lastName") and GETPOSTEMPTY("userName") and 
-    GETPOSTEMPTY("address") and GETPOSTEMPTY("city") and GETPOSTEMPTY("postalCode") and 
-    GETPOSTEMPTY("country") and GETPOSTEMPTY("phone") and GETPOSTEMPTY("password") and
-    GETPOSTEMPTY("email"))
+    if(Utils::ISGETPOST("firstName") and Utils::ISGETPOST("lastName") and Utils::ISGETPOST("userName") and 
+    Utils::ISGETPOST("address") and Utils::ISGETPOST("city") and Utils::ISGETPOST("postalCode") and 
+    Utils::ISGETPOST("country") and Utils::ISGETPOST("phone") and Utils::ISGETPOST("password") and
+    Utils::ISGETPOST("email"))
     {
             if(UserManager::createUser($wrongPassword))
             {
@@ -72,7 +72,7 @@ function clientSpace()
     if(!empty($_SESSION["name"]))
     {
         $id = UserManager::getIDByName($_SESSION["name"]);
-        if(GETPOST("action") == "modification")
+        if(Utils::GETPOST("action") == "modification")
             UserManager::updateUserById($id, $errorMessage);
         $data = UserManager::getUserByUsername($_SESSION["name"]);
         $reqProduct = ProductManager::getProductsByUserId($id);
@@ -88,7 +88,7 @@ function clientSpace()
 function createProduct()
 {
     $message = "";
-    if(GETPOST("action") == "creation")
+    if(Utils::GETPOST("action") == "creation")
     {
         $user_id = UserManager::getIdBySession();
         ProductManager::createProduct($user_id, $message);
@@ -98,7 +98,7 @@ function createProduct()
 
 function vueProduit()
 {
-    $product = ProductManager::getProductById(GETPOST("product"));
+    $product = ProductManager::getProductById(Utils::GETPOST("product"));
     $seller = UserManager::getUserById($product["id_user"]);
     require("views/frontend/adView.php");
 }
