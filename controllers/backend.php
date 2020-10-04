@@ -18,7 +18,7 @@ function pageAdmin()
             vueBill();
         break;
         default:
-        require 'view/backend/adminView.php';
+        require 'views/backend/adminView.php';
         break;
     }
 }

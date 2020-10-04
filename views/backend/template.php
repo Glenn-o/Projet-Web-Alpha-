@@ -17,7 +17,7 @@
         <a href="index.php?page=adminSpace&vue=user" class="button">Reclamation</a>             
         <a href="index.php?page=adminSpace&vue=user" class="button">Message Moderation</a>             
         <a href="index.php?page=adminSpace&vue=user" class="button">Gestion Administration</a>            
-        <a href="">
+        <a href="index.php">
         <img src="public/img/logout.png" alt="logo logout" id="logo_logout">
         </a>         
     </div>

@@ -115,7 +115,7 @@ class UserManager extends Manager
     {
         $db = Database::getPDO();
         $req = $db->prepare("SELECT * from users where id_user = ?");
-        $req->execute($id);
+        $req->execute([$id]);
         return $req->fetch(PDO::FETCH_ASSOC);
 
     }

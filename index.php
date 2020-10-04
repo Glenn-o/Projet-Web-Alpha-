@@ -30,6 +30,9 @@ try {
             case "createProduct":
                 createProduct();
             break;
+            case "ad":
+                vueProduit();
+            break;
             //BACKEND
             case "adminSpace":
                 pageAdmin();

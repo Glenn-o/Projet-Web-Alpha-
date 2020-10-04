@@ -88,6 +88,7 @@ $css = "clientSpace.css";
             <button class="button_info" type="submit">Modifier</button>
         </form>
     </div>
+    <a href="index.php?action=deconnexion">Deconnexion</a>
 </section>
 
 <?php $content = ob_get_clean() ?>

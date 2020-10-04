@@ -60,6 +60,8 @@ function inscription()
 
 function pageAccueil()
 {
+    $randomProduct = ProductManager::getRandomProductNumber(6);
+    $randomCategory = ProductManager::getRandomProductNumber(6);
     require("views/frontend/accueilView.php");
 }
 
@@ -92,6 +94,13 @@ function createProduct()
         ProductManager::createProduct($user_id, $message);
     }
     require("views/frontend/creationProductView.php");
+}
+
+function vueProduit()
+{
+    $product = ProductManager::getProductById(GETPOST("product"));
+    $seller = UserManager::getUserById($product["id_user"]);
+    require("views/frontend/adView.php");
 }
 
 
