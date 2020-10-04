@@ -2,11 +2,6 @@
 $title = "Vue produit";
 $css = "ad.css";
 
-// SI SESSION
-// SINON SI PAS SESSION
-// SINON 
-
-
 if(Utils::ACTIVESESSION())
 {
     $id = UserManager::getIDByName($_SESSION["name"]);
