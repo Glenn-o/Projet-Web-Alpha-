@@ -31,21 +31,24 @@ class ProductManager extends Manager
         //PREMIUM
         try
         {
-            $name = GETPOST('name');
-            $price = GETPOST('price');
-            $description = GETPOST('description');
-            $state = GETPOST('state');
-            $city = GETPOST('city');
-            $status = GETPOST('status');
-            switch (GETPOST('categorie'))
+            if(Utils::GETPOSTSETEMPTY('name') or Utils::GETPOSTSETEMPTY('price') or Utils::GETPOSTSETEMPTY('description') or Utils::GETPOSTSETEMPTY('state') or Utils::GETPOSTSETEMPTY('city') or Utils::GETPOSTSETEMPTY('status') or Utils::GETPOSTSETEMPTY('categorie') and Utils::ISFILESET('image'))
+            {
+                throw new Exception("Tout les champs ne sont pas renseignés");
+            }
+            $name = Utils::GETPOST('name');
+            $price = Utils::GETPOST('price');
+            $description = Utils::GETPOST('description');
+            $state = Utils::GETPOST('state');
+            $city = Utils::GETPOST('city');
+            $status = Utils::GETPOST('status');
+            switch (Utils::GETPOST('categorie'))
             {
                 case 'console': $id_product_type = 1;
                 case 'jeu': $id_product_type = 2;
                 case 'accessoire': $id_product_type = 3;
-                default: $id_product_type = 1;
+                default: throw new Exception("Pas de categorie selectionné");
             }
-            $premium = GETPOSTEMPTY("premium") ? '1' : '0';
-            print('<br>'.$premium.'<br>');
+            $premium = Utils::ISGETPOST("premium") ? '1' : '0';
             //REQUETE
             $sql = "INSERT INTO `product`(`name`, `price`, `description`, `state`, `premium`, `city`, `status`, `id_product_type`, `id_user`) VALUES (:name,:price,:description,:state,:premium,:city,1,:id_product_type,:id_user)";
             $req = $db->prepare($sql);
@@ -63,9 +66,6 @@ class ProductManager extends Manager
             $message = "Requete Reussi !";
 
             $image = parent::getFile('img_01');
-            print '<pre>';
-            print_r($_FILES);
-            print '</pre>';
             if($image != FALSE) // Si une image a été envoyé
             {
                 $lastID = $db->lastInsertId();
@@ -213,6 +213,14 @@ class ProductManager extends Manager
         $sql .= "fk_product_id = ".$_POST["categorie"];
         $sql .= " WHERE id_product = ".$id;
         $result = $db->query($sql);
+        return $result != FALSE;
+    }
+
+    public static function setStatusById($id, bool $value) : bool
+    {
+        $db = Database::getPDO();
+        $value = $value ? 'true' : 'false';
+        $result = $db->query('UPDATE product SET status = '.$value .' WHERE id_product = '. $id);
         return $result != FALSE;
     }
     #endregion

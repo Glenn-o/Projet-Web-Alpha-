@@ -6,7 +6,7 @@ require_once "models/UserManager.class.php";
 
 function pageAdmin()
 {
-    switch(GETPOST("vue"))
+    switch(Utils::GETPOST("vue"))
     {
         case "user":
             vueUser();
