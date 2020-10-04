@@ -162,8 +162,6 @@ class ProductManager extends Manager
         }
         $sql .= " ORDER BY id_product DESC";
 
-        print($sql);
-
         return $db->query($sql);
     }
 
