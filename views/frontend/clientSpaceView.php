@@ -65,6 +65,7 @@ $css = "clientSpace.css";
             ?>
             <div class="card">
             <p><?= $reg["name"] ?></p>
+            <img src="data:img/png/jpg;base64,<?= $reg["cover_image"] ?>"
             </div>
             <?php
             }
@@ -78,10 +79,10 @@ $css = "clientSpace.css";
         <form action="<?= $pageModif ?>" method="post" class="form_info_user">
             <div id="ads">
                 <label class="label_checkbox" id="lblchbox1" for="chbox1">Recevoir les dernières nouveautés</label>
-                <input type="checkbox" id="chbox1" name="newsletter" value="1" <?= $data["newsletter"] ? "checked" : "" ?> >
+                <input type="checkbox" id="chbox1" name="newsletter" value="1" <?= $data["config_news"] ? "checked" : "" ?> >
 
                 <label class="label_checkbox" id="lblchbox2" for="chbox2">Recevoir les offres de nos partenaires</label>
-                <input type="checkbox" id="chbox2" name="partnernews" value="1" <?= $data["partnernews"] ? "checked" : "" ?> >
+                <input type="checkbox" id="chbox2" name="partnernews" value="1" <?= $data["config_part"] ? "checked" : "" ?> >
 
             </div>
             <button class="button_info" type="submit">Modifier</button>

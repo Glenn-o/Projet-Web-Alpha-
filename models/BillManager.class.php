@@ -1,10 +1,15 @@
 <?php
 
-class BillManager
+require "models/Manager.class.php";
+
+class BillManager extends Manager
 {
     //CRUD
     //CREATE
-
+    public static function createBill()
+    {
+        
+    }
     //READ
 
     //UPDATE

@@ -83,6 +83,17 @@ function clientSpace()
     require("views/frontend/clientSpaceView.php");
 }
 
+function createProduct()
+{
+    $message = "";
+    if(GETPOST("action") == "creation")
+    {
+        $user_id = UserManager::getIdBySession();
+        ProductManager::createProduct($user_id, $message);
+    }
+    require("views/frontend/creationProductView.php");
+}
+
 
 #region Utils
 

@@ -1,8 +1,9 @@
 <?php
 
 require_once "models/Database.class.php";
+require_once "models/Manager.class.php";
 
-class ProductManager
+class ProductManager extends Manager
 {
     // Info product
     /*
@@ -22,16 +23,62 @@ class ProductManager
 
 
     #region CREATE
-    public static function createProduct()
+    public static function createProduct($id_user, &$message)
     {
+        print_r($_POST);
+        //DATABASE
         $db = Database::getPDO();
-        $premium = $_POST["premium"] ? true : false;
-        $image1 = base64_encode($_POST["image1"]);
-        $sql = "INSERT INTO product(name, description, price, image1, state, city, premium, id_product_type) VALUES ";
-        $sql .= "('".$_POST["name"]."','".$_POST["description"]."',".$_POST["price"].",'".$image1;
-        $sql .= "','".$_POST["state"]."','".$_POST["city"]."',".$premium.")";
-        $result = $db->query($sql);
-        return $result != false;
+        //PREMIUM
+        try
+        {
+            $name = GETPOST('name');
+            $price = GETPOST('price');
+            $description = GETPOST('description');
+            $state = GETPOST('state');
+            $city = GETPOST('city');
+            $status = GETPOST('status');
+            switch (GETPOST('categorie'))
+            {
+                case 'console': $id_product_type = 1;
+                case 'jeu': $id_product_type = 2;
+                case 'accessoire': $id_product_type = 3;
+                default: $id_product_type = 1;
+            }
+            $premium = GETPOSTEMPTY("premium") ? '1' : '0';
+            print('<br>'.$premium.'<br>');
+            //REQUETE
+            $sql = "INSERT INTO `product`(`name`, `price`, `description`, `state`, `premium`, `city`, `status`, `id_product_type`, `id_user`) VALUES (:name,:price,:description,:state,:premium,:city,1,:id_product_type,:id_user)";
+            $req = $db->prepare($sql);
+            $tabParam = [
+                ":name"=>$name,
+                ":price" => $price,
+                ":description" => $description,
+                ":state" => $state,
+                ":city" => $city,
+                ":premium" => $premium,
+                ":id_product_type" => $id_product_type,
+                ":id_user" => $id_user
+            ];
+            $req->execute($tabParam);
+            $message = "Requete Reussi !";
+
+            $image = parent::getFile('img_01');
+            print '<pre>';
+            print_r($_FILES);
+            print '</pre>';
+            if($image != FALSE) // Si une image a été envoyé
+            {
+                $lastID = $db->lastInsertId();
+                $req = $db->prepare("INSERT INTO `product_image`(`image`, `id_product`) VALUES (:image, :lastID)");
+                $req->execute([':image'=>$image, ':lastID' => $lastID]);
+                $message .= "Image crée !";
+            }
+            
+        }
+        catch(Exception $error)
+        {
+            $message = $error->getMessage();
+        }
     }
     #endregion
 
@@ -39,7 +86,7 @@ class ProductManager
     public static function getProductById($id)
     {
         $db = Database::getPDO();
-        $sql = "SELECT $ from product where id_product = ".$id;
+        $sql = "SELECT * from product where id_product = ".$id;
         $result = $db->query($sql);
         if($result != false)
         {
@@ -52,17 +99,9 @@ class ProductManager
     public static function getAllPictureByProductID($id) : array
     {
         $db = Database::getPDO();
-        $sql = 'SELECT image1, ifnull(length(image2), ""), ifnull(length(image3), "")
-                ,ifnull(length(image4), ""),ifnull(length(image5), "") from product';
+        $sql = "SELECT image FROM product_image WHERE id_product = ".$id;
         $result = $db->query($sql);
-        if($result != FALSE)
-        {
-            return $result;
-        }
-        else
-        {
-            return FALSE;
-        }
+        return $result;
     }
 
     // Recupere toutes les annonces
@@ -107,7 +146,12 @@ class ProductManager
     public static function getProductsByUserId($user_id)
     {
         $db = Database::getPDO();
-        $req = $db->prepare("SELECT * FROM product WHERE id_user_creator = ?");
+        $req = $db->prepare("SELECT
+            Product.*,
+            (SELECT image FROM product_image Image 
+            WHERE Image.id_product = Product.id_product  LIMIT 1) cover_image
+            FROM product Product
+            WHERE id_user = ?");
         $req->execute([$user_id]);
         return $req;
     }
