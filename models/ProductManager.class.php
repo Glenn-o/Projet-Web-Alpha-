@@ -62,8 +62,10 @@ class ProductManager extends Manager
             $req->execute($tabParam);
             $message = "Requete Reussi !";
 
-            $image = parent::getFileWithDefault('image_O1');
-            print('<br>'.$image.'<br>');
+            $image = parent::getFile('img_01');
+            print '<pre>';
+            print_r($_FILES);
+            print '</pre>';
             if($image != FALSE) // Si une image a été envoyé
             {
                 $lastID = $db->lastInsertId();

@@ -26,8 +26,8 @@ $css = "createProduct.css";
         <input type="checkbox" class="input_modif"name="premium">
         <input type="text" class="input_modif"name="city"  placeholder = "Ville de vente">
         <div>
-            <label for="img_O1">Image :</label>
-            <input type="file" name="img_01" id="avatar">
+            <label for="img_01">Image :</label>
+            <input type="file" name="img_01" id="img_01">
         </div>
         
         <button type="submit"> Valider </button>

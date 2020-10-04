@@ -68,7 +68,7 @@ class UserManager extends Manager
         }
         $db = Database::getPDO();
         $password = sha1(GETPOST("password"));
-        $avatar = parent::getFileWithDefault('avatar');
+        $avatar = parent::getFile('avatar');
         $sql = "INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `username`, `password`, `avatar`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         $tabParam = [
