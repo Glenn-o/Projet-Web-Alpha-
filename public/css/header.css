@@ -1,9 +1,10 @@
 #header header{
     font-family: 'Roboto', sans-serif;
-    border-bottom: 2px solid #707070;
     margin: 0;
     padding: 0;
-    height: 50px;
+    height: 8vh;
+    padding-bottom: 2vh;
+    background-color: white;
 }
 #button_ad{
     width: 14vw;
@@ -21,13 +22,13 @@
     float: right;
     width: 25vw;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    height: 50px;
+    height: 8vh;
     margin-right: 2vw;
 }
 #container_user{
-    height: 50px;
+    height: 8vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,11 +38,13 @@
     width: 2vw;
 }
 #container_user p{
-    font-size: 0.7em;
+    font-size: 2vh;
     margin: 0;
 }
 #logo_fog{
     float: left;
     margin-left: 1vw;
     width: 6vw;
+    margin-top: 0.5vh;
 }
+

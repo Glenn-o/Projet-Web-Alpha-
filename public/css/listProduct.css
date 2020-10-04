@@ -1,0 +1,53 @@
+body, html {
+    padding: 0;
+    margin: 0;
+    font-family:  'Roboto', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    background-image: url("../img/background.png");
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+#main {
+    min-height: 100vh;
+}
+.a_product{
+    text-decoration: none;
+    color: black;
+    cursor: initial;
+}
+.div_product{
+    width: 60vw;
+    margin: auto;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    background-color: #EBECEF;
+    border-radius: 1vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    cursor: pointer;
+}
+.price_product{
+    font-size: 1.2vw;
+}
+.description_product{
+    width: 30vw;
+    height: auto;
+    font-size: 1.2vw;
+    word-wrap:break-word;
+}
+.name_product{
+    font-size: 1.2vw;
+}
+#produit{
+    height: 20vh;
+}
+#div_info_user p{
+    font-size: 1.2vw;
+}
+#div_info_user p::first-letter {
+    text-transform: uppercase;
+}
