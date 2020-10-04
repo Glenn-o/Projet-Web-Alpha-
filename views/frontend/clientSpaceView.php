@@ -4,12 +4,8 @@ $css = "clientSpace.css";
 ?>
 
 <?php ob_start() ?>
-<<<<<<< HEAD
 <h1> Espace Client</h1>
 <?= $errorMessage ?>
-=======
-
->>>>>>> modif list product
 <section id="main">
     <h1 id="titre"> Espace Client</h1>
     <div id="container1">
