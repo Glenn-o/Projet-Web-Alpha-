@@ -1,6 +1,7 @@
 <?php
 require_once "models/ProductManager.class.php";
 require_once "models/UserManager.class.php";
+require_once "models/BillManager.class.php";
 
 
 function listProducts()
@@ -98,6 +99,17 @@ function createProduct()
 
 function vueProduit()
 {
+    if(Utils::GETPOST('action') == "achat")
+    {
+        if(BillManager::createBill(Utils::GETPOST('product')))
+        {
+            header("Location: index.php");
+        }
+        else{
+            throw new Exception("La facture n'as pas reussi a se creer");
+        }
+
+    }
     $product = ProductManager::getProductById(Utils::GETPOST("product"));
     $seller = UserManager::getUserById($product["id_user"]);
     require("views/frontend/adView.php");

@@ -41,9 +41,14 @@ class Utils
             return false;
     }
 
-    function ISFILESET($fileName) : bool
+    public static function ISFILESET($fileName) : bool
     {
         return !empty($_FILES[$fileName]);
+    }
+
+    public static function ACTIVESESSION()
+    {
+        return !empty($_SESSION["name"]);
     }
 }
 #endregion

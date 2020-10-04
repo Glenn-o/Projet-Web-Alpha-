@@ -215,6 +215,14 @@ class ProductManager extends Manager
         $result = $db->query($sql);
         return $result != FALSE;
     }
+
+    public static function setStatusById($id, bool $value) : bool
+    {
+        $db = Database::getPDO();
+        $value = $value ? 'true' : 'false';
+        $result = $db->query('UPDATE product SET status = '.$value .' WHERE id_product = '. $id);
+        return $result != FALSE;
+    }
     #endregion
 
     #region DELETE
