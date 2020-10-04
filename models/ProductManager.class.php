@@ -31,7 +31,7 @@ class ProductManager extends Manager
         //PREMIUM
         try
         {
-            if(Utils::GETPOSTSETEMPTY('name') or Utils::GETPOSTSETEMPTY('price') or Utils::GETPOSTSETEMPTY('description') or Utils::GETPOSTSETEMPTY('state') or Utils::GETPOSTSETEMPTY('city') or Utils::GETPOSTSETEMPTY('status') or Utils::GETPOSTSETEMPTY('categorie'))
+            if(Utils::GETPOSTSETEMPTY('name') or Utils::GETPOSTSETEMPTY('price') or Utils::GETPOSTSETEMPTY('description') or Utils::GETPOSTSETEMPTY('state') or Utils::GETPOSTSETEMPTY('city') or Utils::GETPOSTSETEMPTY('status') or Utils::GETPOSTSETEMPTY('categorie') and Utils::ISFILESET('image'))
             {
                 throw new Exception("Tout les champs ne sont pas renseignés");
             }
