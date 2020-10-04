@@ -14,22 +14,26 @@ try {
         {
             case "accueil":
                 pageAccueil();
-                break;
+            break;
             case "connexion":
                 connexion();
-                break;
+            break;
             case "inscription":
                 inscription();
-                break;
+            break;
             case "listProducts":
                 listProducts();
-                break;
+            break;
             case "clientSpace":
                 clientSpace();
-                break;
+            break;
+            case "createProduct":
+                createProduct();
+            break;
+            //BACKEND
             case "adminSpace":
                 pageAdmin();
-                break;
+            break;
         }
     }
     else {

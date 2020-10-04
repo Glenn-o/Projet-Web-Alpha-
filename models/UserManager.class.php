@@ -68,7 +68,7 @@ class UserManager extends Manager
         }
         $db = Database::getPDO();
         $password = sha1(GETPOST("password"));
-        $avatar = parent::getFile();
+        $avatar = parent::getFileWithDefault('avatar');
         $sql = "INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `username`, `password`, `avatar`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         $tabParam = [
@@ -193,7 +193,7 @@ class UserManager extends Manager
             
             //Gestion avatar
             if(!empty($_FILES['avatar']['name'])){ // Si image envoyé dans formulaire, on va la chercher
-                $tabUpdate['avatar'] = parent::getFile();
+                $tabUpdate['avatar'] = parent::getFileWithDefault('avatar');
             }
 
             $sql = "UPDATE users SET ";
@@ -269,6 +269,26 @@ class UserManager extends Manager
         $req = $db->prepare("SELECT id_user FROM users WHERE username = ?");
         $req->execute([$userName]);
         return $req->fetch(PDO::FETCH_ASSOC)["id_user"];
+    }
+
+    public static function getIdBySession()
+    {
+        if(!empty($_SESSION["name"]))
+        {
+            return self::getIDByName($_SESSION["name"]);
+        }
+        else
+            return FALSE;
+    }
+
+    public static function getUserBySession()
+    {
+        if(!empty($_SESSION["name"]))
+        {
+            return self::getUserByUsername($_SESSION["name"]);
+        }
+        else
+            return FALSE;
     }
     #endregion
 

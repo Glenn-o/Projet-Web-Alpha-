@@ -65,6 +65,7 @@ $css = "clientSpace.css";
             ?>
             <div class="card">
             <p><?= $reg["name"] ?></p>
+            <img src="data:img/png/jpg;base64,<?= $reg["cover_image"] ?>"
             </div>
             <?php
             }

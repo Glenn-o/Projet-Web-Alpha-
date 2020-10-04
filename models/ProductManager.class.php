@@ -23,40 +23,60 @@ class ProductManager extends Manager
 
 
     #region CREATE
-    public static function createProduct()
+    public static function createProduct($id_user, &$message)
     {
+        print_r($_POST);
         //DATABASE
         $db = Database::getPDO();
         //PREMIUM
-        $name = GETPOST('name');
-        $price = GETPOST('price');
-        $description = GETPOST('$description');
-        $state = GETPOST('state');
-        $city = GETPOST('city');
-        $status = GETPOST('status');
-        switch (GETPOST('categorie'))
+        try
         {
-            case 'console': $id_product_type = 1;
-            case 'jeu': $id_product_type = 2;
-            case 'accessoire': $id_product_type = 3;
-            default: $id_product_type = 1;
+            $name = GETPOST('name');
+            $price = GETPOST('price');
+            $description = GETPOST('description');
+            $state = GETPOST('state');
+            $city = GETPOST('city');
+            $status = GETPOST('status');
+            switch (GETPOST('categorie'))
+            {
+                case 'console': $id_product_type = 1;
+                case 'jeu': $id_product_type = 2;
+                case 'accessoire': $id_product_type = 3;
+                default: $id_product_type = 1;
+            }
+            $premium = GETPOSTEMPTY("premium") ? '1' : '0';
+            print('<br>'.$premium.'<br>');
+            //REQUETE
+            $sql = "INSERT INTO `product`(`name`, `price`, `description`, `state`, `premium`, `city`, `status`, `id_product_type`, `id_user`) VALUES (:name,:price,:description,:state,:premium,:city,1,:id_product_type,:id_user)";
+            $req = $db->prepare($sql);
+            $tabParam = [
+                ":name"=>$name,
+                ":price" => $price,
+                ":description" => $description,
+                ":state" => $state,
+                ":city" => $city,
+                ":premium" => $premium,
+                ":id_product_type" => $id_product_type,
+                ":id_user" => $id_user
+            ];
+            $req->execute($tabParam);
+            $message = "Requete Reussi !";
+
+            $image = parent::getFileWithDefault('image_O1');
+            print('<br>'.$image.'<br>');
+            if($image != FALSE) // Si une image a été envoyé
+            {
+                $lastID = $db->lastInsertId();
+                $req = $db->prepare("INSERT INTO `product_image`(`image`, `id_product`) VALUES (:image, :lastID)");
+                $req->execute([':image'=>$image, ':lastID' => $lastID]);
+                $message .= "Image crée !";
+            }
+            
         }
-        $premium = GETPOST("premium") ? true : false;
-        $image = base64_encode(GETPOST("image"));
-        //REQUETE
-        $sql = "INSERT INTO `product`(`name`, `price`, `description`, `state`, `premium`, `city`, `status`, `id_product_type`, `id_user`) VALUES (:name,:price,:description,:state,:premium,:city,:status,:id_product_type,:id_user)";
-        $req = $db->prepare($sql);
-        $tabParam = [
-            ":name"=>$name,
-            ":price" => $price,
-            ":description" => $description,
-            ":state" => $state,
-            ":premium" => $premium,
-            ":city" => $city,
-            ":status" => $status,
-            ":id_product_type" => $id_product_type,
-            ":id_user" => $id_user
-        ];
+        catch(Exception $error)
+        {
+            $message = $error->getMessage();
+        }
     }
     #endregion
 
@@ -124,7 +144,12 @@ class ProductManager extends Manager
     public static function getProductsByUserId($user_id)
     {
         $db = Database::getPDO();
-        $req = $db->prepare("SELECT * FROM product WHERE id_user = ?");
+        $req = $db->prepare("SELECT
+            Product.*,
+            (SELECT image FROM product_image Image 
+            WHERE Image.id_product = Product.id_product  LIMIT 1) cover_image
+            FROM product Product
+            WHERE id_user = ?");
         $req->execute([$user_id]);
         return $req;
     }
