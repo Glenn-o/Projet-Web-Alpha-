@@ -23,7 +23,7 @@ ob_start();
         <div class="title_product"><h1 id="product_state"><?= $product["state"] ?></h1></div>
         <div class="title_product"><h1 id="product_price"><?= $product["format_price"] ?> €</h1></div>
         <p id="product_description"><?= $product["description"] ?></p>
-        <a <?= $presenceAcheter ?> ><button>Acheter</button></a>
+        <a <?= $presenceAcheter ?> id="button_buy">Acheter</a>
     </div>
     <div id="container2">
         <div id="seller">

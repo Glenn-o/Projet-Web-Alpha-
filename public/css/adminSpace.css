@@ -1,6 +1,7 @@
 body, html{
     padding: 0;
     margin: 0;
+    min-height: 100vh;
     font-family:  'Roboto', sans-serif;
 }
 #main {
@@ -13,6 +14,7 @@ body, html{
     height: 100vh;
     display: flex;
     flex-direction: column;
+    position: fixed;
 }
 #pannel_left h1{
     margin-top: 5vh;
@@ -42,3 +44,161 @@ body, html{
     width: 80%;
     margin: auto;
 }
+h1{
+    margin-top: 0;
+    padding-top: 0vh;
+
+}
+.div_user{
+    background-color: #EBECEF;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    display: flex;
+    border-radius: 1vh;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 70vw;  
+}
+.div_user a{
+    height: 5vh;
+    width: 10vw;
+    background-color:#4264aa;
+    color: white;
+    border: 0.3vh solid #4264aa;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3vw;
+}
+.div_user a:focus, .div_user a:hover{
+    background-color: #EBECEF;
+    color: #4264aa;
+    transition: 200ms;
+}
+#main_right{
+    float: right;
+    width: 83.7vw;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    justify-content: space-around;
+}
+#produit{
+    width: 10vw;
+}
+#info_user1{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    height: 99vh;
+    margin: auto;
+    width: 90%;
+}
+#info_user1 img{
+    width: 10vw;
+}
+#info_user1 p{
+    font-size: 1.3vw;
+}
+#info_user1 span{
+    font-weight: bold;
+}
+#button_modif{
+    background-color: #4264aa;
+    color: white;
+    height: 5vh;
+    width: 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border: 0.3vh solid #4264aa;
+    margin-right: 2vw;
+    font-size: 1.3vw;
+}
+#button_modif:hover,#button_modif:focus{
+    background-color: white;
+    color: #4264aa;
+    transition: 200ms;
+}
+#button_supp{
+    background-color: #e74c3c;
+    color: white;
+    height: 5vh;
+    width: 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border: 0.3vh solid #e74c3c;
+    margin-left: 2vw;
+    font-size: 1.3vw;
+}
+#button_supp:hover,#button_supp:focus{
+    background-color: white;
+    color: #e74c3c;
+    transition: 200ms;
+}
+#button_user{
+    display: flex;
+}
+#info_user2{
+    height: auto;
+}
+#info_user2 form{
+    display: flex;
+    background-color: #EBECEF;
+    border-radius: 1vw;
+    width: 80%;
+    margin: auto;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.3vw;
+}
+#info_user2 input{
+    width: 50vw;
+    height: 5vh;
+    font-size: 1vw;
+    margin-top: 5vh;
+    border: none;
+    border-bottom: 0.3vh solid black;
+    background-color: transparent;
+    margin-bottom: 5vh;
+}
+#info_user2 input:focus{
+    border-bottom: #4264aa solid 0.3vh;
+    outline: none;
+}
+#info_user2 input[type=file]{
+    border-bottom: none;
+}
+#info_user2 form button{
+    background-color: #4264aa;
+    color: white;
+    height: 5vh;
+    width: 20vw;
+    border: 0.3vh solid #4264aa;
+    margin-right: 2vw;
+    font-size: 1.3vw;
+    cursor: pointer;
+}
+#info_user2 form button:focus,#info_user2 form button:hover{
+    background-color: transparent;
+    color: #4264aa;
+    transition: 200ms;
+}  
