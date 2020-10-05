@@ -125,15 +125,27 @@ class ProductManager extends Manager
     public static function getAllProducts()
     {
         $db = Database::getPDO();
-        $sql = "SELECT * from product";
-        $result = $db->query($sql);
-        if($result != false)
-        {
-            return $result;
-        }
-        else
-            return FALSE;
+        $sql = "SELECT
+        Product.*,
+        FORMAT(Product.price, 2) as format_price,
+        (SELECT image FROM product_image Image 
+        WHERE Image.id_product = Product.id_product LIMIT 1) as image
+        FROM product Product";
+        $req = $db->query($sql);
+        return $req;
+    }
 
+    public static function getAllActiveProducts()
+    {
+        $db = Database::getPDO();
+        $sql = "SELECT
+        Product.*,
+        (SELECT image FROM product_image Image 
+        WHERE Image.id_product = Product.id_product  LIMIT 1) as image
+        FROM product Product
+        WHERE Product.status = 0";
+        $result = $db->query($sql);
+        return $req;
     }
 
     public static function getProductByFilter($location, $research, $category)

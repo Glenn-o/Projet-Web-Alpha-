@@ -101,7 +101,7 @@ class UserManager extends Manager
     #endregion
 
     #region READ
-    //Recupere un User par son ID
+    //Recupere un User par son username
     public static function getUserByUsername($userName)
     {
         $db = Database::getPDO();
@@ -111,6 +111,7 @@ class UserManager extends Manager
 
     }
 
+    //Recupere un User par son ID
     public static function getUserById($id)
     {
         $db = Database::getPDO();
@@ -119,6 +120,7 @@ class UserManager extends Manager
         return $req->fetch(PDO::FETCH_ASSOC);
 
     }
+
     // Recupere toutes les annonces
     public static function getAllUsers()
     {
