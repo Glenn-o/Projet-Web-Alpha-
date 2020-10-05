@@ -125,15 +125,27 @@ class ProductManager extends Manager
     public static function getAllProducts()
     {
         $db = Database::getPDO();
-        $sql = "SELECT * from product";
-        $result = $db->query($sql);
-        if($result != false)
-        {
-            return $result;
-        }
-        else
-            return FALSE;
+        $sql = "SELECT
+        Product.*,
+        FORMAT(Product.price, 2) as format_price,
+        (SELECT image FROM product_image Image 
+        WHERE Image.id_product = Product.id_product LIMIT 1) as image
+        FROM product Product";
+        $req = $db->query($sql);
+        return $req;
+    }
 
+    public static function getAllActiveProducts()
+    {
+        $db = Database::getPDO();
+        $sql = "SELECT
+        Product.*,
+        (SELECT image FROM product_image Image 
+        WHERE Image.id_product = Product.id_product  LIMIT 1) as image
+        FROM product Product
+        WHERE Product.status = 0";
+        $result = $db->query($sql);
+        return $req;
     }
 
     public static function getProductByFilter($location, $research, $category)
@@ -226,12 +238,20 @@ class ProductManager extends Manager
     #endregion
 
     #region DELETE
-    public static function deleteProductById()
+    public static function deleteProductById($id)
     {
         $db = Database::getPDO();
-        $sql = "DELETE FROM product WHERE product_id = ".$id;
+        $sql = "DELETE FROM product WHERE id_product = ".$id;
         $result = $db->query($sql);
         return $result != FALSE;
+    }
+
+    public static function deleteAllByUser($id_user)
+    {
+        $db = Database::getPDO();
+        $sql = "DELETE FROM product WHERE id_user = ".$id_user;
+        $result = $db->query($sql);
+        return $result != FALSE; // Si ok retourne vrai, sinon faux
     }
     #endregion
 }
