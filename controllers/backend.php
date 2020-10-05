@@ -42,6 +42,17 @@ function vueUser()
                 throw new Exception("Erreur dans la creation de l'utilisateur");
             }
         }
+        else if($action == "suppression")
+        {  
+            if(UserManager::deleteUserById($userId))
+            {
+                header("Location: index.php?page=adminSpace&vue=product");
+            }
+            else
+            {
+                throw new Exception("Erreur dans la suppression du produit");
+            }
+        }
         else
         {
             $user = UserManager::getUserById($userId);
@@ -72,9 +83,20 @@ function vueProduct()
                 throw new Exception("Erreur dans la modification du produit");
             }
         }
+        else if($action == "suppression")
+        {  
+            if(ProductManager::deleteProductById($productId))
+            {
+                header("Location: index.php?page=adminSpace&vue=product");
+            }
+            else
+            {
+                throw new Exception("Erreur dans la suppression du produit");
+            }
+        }
         else
         {
-            $product = ProductManager::getProductById($userId);
+            $product = ProductManager::getProductById($productId);
         }
     }
     else
