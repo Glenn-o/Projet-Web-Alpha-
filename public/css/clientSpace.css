@@ -18,14 +18,76 @@ body, html{
     background-color: #EBECEF;
     width: 40.5vw;
     height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-right: 0.5vw;
+   
 }
+.form_info_user{
+    display: flex;
+    height: 30vh;
+    align-items: center;
+    flex-direction: row;
+}
+#div_avatar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: space-evenly;
+}
+#div_avatar img{
+    width: 7vw;
+    height: auto;
+}
+#div_password_email{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-around;
+}
+/* .div_flex{
+    display: flex;
+    flex-direction: column;
+} */
 #main #last_ad{
     border-radius: 10px;
     background-color: #EBECEF;
     width: 30.5vw;
     height: 60vh;
     margin-left: 0.5vw;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    text-align: center;
+}
+#main #last_ad .card{
+    display: flex;
+    border: 0.3vh solid black;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    border-radius: 1vh;
+    height: 20vh;
+    width: 90%;
+    margin: auto;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+}
+#main #last_ad .card img{
+    width: auto;
+    height: 10vh;
+}
+#main #last_ad .card p{
+    font-size: 1.2vw;
+}
+#main #last_ad h1{
+    font-size: 1.5vw;
 }
 #main{
     display: flex;
@@ -49,6 +111,29 @@ body, html{
     height: 30vh;
     width: 35.5vw;
     margin-right: 0.5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2vw;
+    justify-content: space-evenly;
+}
+#main #ads input{
+    width: 2.5vw;
+    height: 2.5vh;
+}
+#container2 button{
+    height: 5vh;
+    width: 10vw;
+    background-color: #4264aa;
+    color: white;
+    border: 0.3vh solid #4264aa;
+    font-size: 1.2vw;
+    cursor: pointer;
+}
+#container2 button:hover, #container2 button:focus{
+    background-color: #EBECEF;
+    color: #4264aa;
+    transition: 200ms;
 }
 #main #newsletter{
     border-radius: 10px;
@@ -61,4 +146,82 @@ body, html{
     text-align: center;
     font-size: 2vw;
     text-transform: uppercase;
+}
+#title_ads{
+    text-align: center;
+    font-size: 1.5vw;
+    padding: 0;
+    margin: 0;
+    margin-top: 1vh;
+}
+#logout{
+    background-color: #e74c3c;
+    height: 5vh;
+    width: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    border: 0.3vh solid #e74c3c;
+    margin: auto;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    font-size: 1.2vw;
+}
+#logout:focus, #logout:hover{
+    background-color: white;
+    color: #e74c3c;
+    transition: 200ms;
+    
+}
+#form_info_user_perso{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-top: 0.2vh solid black;
+    font-size: 1.2vw;
+}
+#form_info_user_perso input{
+    width: 12vw;
+    height: 3vh;
+    font-size: 1vw;
+}
+#form_info_name{
+    font-size: 1.2vw;
+    display: flex;
+}
+#form_info_name input{
+    width: 12vw;
+    height: 3vh;
+    font-size: 1vw;
+}
+#div_name_adresse{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    padding-left: 1vw;
+    align-items: center;
+}
+#div_adresse{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    align-items: center;
+}
+#div_adresse button, #div_avatar button{
+    height: 5vh;
+    width: 10vw;
+    background-color: #4264aa;
+    border: 0.3vh solid #4264aa;
+    color: white;
+    cursor: pointer;
+    font-size: 1vw;
+}
+#div_adresse button:focus, #div_adresse button:hover, #div_avatar button:focus, #div_avatar button:hover{
+    background-color: #EBECEF;
+    color: #4264aa;
+    transition: 200ms;
 }

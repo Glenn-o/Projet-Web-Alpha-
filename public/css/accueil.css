@@ -79,14 +79,24 @@ body, html{
     display: flex;
     justify-content: space-evenly;
 }
+#content a{
+    text-decoration: none;
+}
 .slide_category{
     /* background-color: black; */
     width: 10vw;
     height: 20vh;
-    border: 2px solid black;
+    display: flex;
+    font-size: 1.2vw;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
 }
 .slide_category img {
-    width: 2vw;
+    width: 9vw;
+}
+.slide_category p{
+    color: black;
 }
 #content #user_suggestion{
     margin-bottom: 10vh;
@@ -97,10 +107,16 @@ body, html{
     /* background-color: black; */
     width: 10vw;
     height: 20vh;
-    border: 2px solid black;
+    font-size: 1.2vw;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
 }
 .slide_suggestion img {
-    width: 2vw;
+    width: 9vw;
+}
+.slide_suggestion p{
+    color: black;
 }
 #content #rand_category{
     margin-bottom: 10vh;
