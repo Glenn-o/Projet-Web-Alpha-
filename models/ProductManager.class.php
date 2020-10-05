@@ -238,12 +238,20 @@ class ProductManager extends Manager
     #endregion
 
     #region DELETE
-    public static function deleteProductById()
+    public static function deleteProductById($id)
     {
         $db = Database::getPDO();
-        $sql = "DELETE FROM product WHERE product_id = ".$id;
+        $sql = "DELETE FROM product WHERE id_product = ".$id;
         $result = $db->query($sql);
         return $result != FALSE;
+    }
+
+    public static function deleteAllByUser($id_user)
+    {
+        $db = Database::getPDO();
+        $sql = "DELETE FROM product WHERE id_user = ".$id_user;
+        $result = $db->query($sql);
+        return $result != FALSE; // Si ok retourne vrai, sinon faux
     }
     #endregion
 }

@@ -1,6 +1,7 @@
 <?php
 $title = "Liste Utilisateurs";
 $css = "adminSpace.css";
+$idSession = UserManager::getIdBySession();
 ob_start() 
 ?>
 <section id="main">
@@ -28,7 +29,14 @@ if($action == "affichage")
             <p>Pays : <?= $user["country"] ?> ></p>
 
             <p>Téléphone : <?= $user["phone"] ?></p>
+            <?php if($idSession != $user["id_user"])
+            {
+            ?>
             <a href="index.php?page=adminSpace&vue=user&action=modification&user=<?= $user["id_user"] ?>"><button>Modifier</button></a>
+            <a href="index.php?page=adminSpace&vue=user&action=suppression&user=<?= $user["id_user"] ?>"><button>Supprimer</button></a>
+            <?php 
+            }
+            ?>
         </form>
     </div>
 <?php
@@ -94,7 +102,7 @@ else
             <p class="firstName_user"><?= $user["firstname"] ?></p>
             <p class="username_user"><?= $user["username"] ?> </p>
         </div>
-        <a href="index.php?page=adminSpace&vue=user&action=affichage&user=<?= $user["id_user"] ?>"><button>Modifier</button></a>
+        <a href="index.php?page=adminSpace&vue=user&action=affichage&user=<?= $user["id_user"] ?>"><button>Afficher</button></a>
     </div>
 <?php
     }

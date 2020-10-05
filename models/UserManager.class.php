@@ -237,9 +237,14 @@ class UserManager extends Manager
     #region DELETE
     public static function deleteUserById($id)
     {
+        if(UserManager::getIdBySession() == $id)
+        {
+            return false;
+        }
+        ProductManager::deleteAllByUser($id);
         $db = Database::getPDO();
         $sql = "DELETE FROM users WHERE id_user = ".$id;
-        $result = $db->query();
+        $result = $db->query($sql);
         return $result != FALSE; // Si ok retourne vrai, sinon faux
     }
     #endregion

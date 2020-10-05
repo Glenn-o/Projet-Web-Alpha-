@@ -9,12 +9,13 @@ if($action == "affichage")
 {
 ?>
     <div id="info_product">
-        <img src="data:img/png;base64,<?= $product["image"] ?>" alt="photo du produit"></div>
-        <p> id="product_name"><?= $product["name"] ?></h1>
-        <p> id="product_state"><?= $product["state"] ?></h1>
-        <p> id="product_price"><?= $product["format_price"] ?> €</p>
-        <p> id="product_description"><?= $product["description"] ?></p>
+        <img src="data:img/jpg/png;base64,<?= $product["image"] ?>" alt="photo du produit"></div>
+        <p>Nom : <?= $product["name"] ?></h1>
+        <p>Etat : <?= $product["state"] ?></h1>
+        <p>Prix : <?= $product["format_price"] ?> €</p>
+        <p>Description : <?= $product["description"] ?></p>
         <a href="index.php?page=adminSpace&vue=product&action=modification&product=<?= $product["id_product"] ?>"><button>Modifier</button></a>
+        <a href="index.php?page=adminSpace&vue=product&action=suppression&product=<?= $product["id_product"] ?>"><button>Supprimer</button></a>
     </div>
 <?php
 }
@@ -60,7 +61,7 @@ else
         <p> Etat : <?= $product["state"] ?></p>
         <p> Prix : <?= $product["format_price"] ?> €</p>
         <p> Description : <?= $product["description"] ?></p>
-        <a href="index.php?page=adminSpace&vue=product&action=affichage&product=<?= $product["id_user"] ?>"><button>Afficher</button></a>
+        <a href="index.php?page=adminSpace&vue=product&action=affichage&product=<?= $product["id_product"] ?>"><button>Afficher</button></a>
     </div>
 <?php
     }
