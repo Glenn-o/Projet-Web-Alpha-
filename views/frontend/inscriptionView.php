@@ -8,7 +8,7 @@ $css = "inscription.css";
 <section id="main">
     <h1> Inscription</h1>
 
-    <form action="<?= $_SERVER["PHP_SELF"].'?page=inscription&action=inscription'?>" method="POST" enctype="multipart/form-data">
+    <form action="index.php?page=inscription&action=inscription" method="POST" enctype="multipart/form-data">
         <h2> Rentrez vos information pour pouvoir vous inscrire </h2>
         <input type="text" class="input_modif"name="firstName" placeholder = "Nom">
         <input type="text" class="input_modif"name="lastName"  placeholder = "Prénom">

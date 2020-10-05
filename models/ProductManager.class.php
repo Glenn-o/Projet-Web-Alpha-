@@ -127,6 +127,7 @@ class ProductManager extends Manager
         $db = Database::getPDO();
         $sql = "SELECT
         Product.*,
+        FORMAT(Product.price, 2) as format_price,
         (SELECT image FROM product_image Image 
         WHERE Image.id_product = Product.id_product LIMIT 1) as image
         FROM product Product";

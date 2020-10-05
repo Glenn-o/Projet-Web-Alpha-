@@ -26,13 +26,61 @@ function pageAdmin()
 
 function vueUser()
 {
-    $reqUsers = UserManager::getAllUsers();
+    $message = "";
+    $action = Utils::GETPOST('action');
+    if($action != "")
+    {
+        $userId = Utils::GETPOST('user');
+        if($action == "validation")
+        {
+            if(UserManager::updateUserById($userId, $message))
+            {
+                header("Location: index.php?page=adminSpace&vue=user");
+            }
+            else
+            {
+                throw new Exception("Erreur dans la creation de l'utilisateur");
+            }
+        }
+        else
+        {
+            $user = UserManager::getUserById($userId);
+        }
+    }
+    else
+    {
+        $reqUsers = UserManager::getAllUsers();
+    }
     require 'views/backend/AdminUsersView.php';
 }
 
 function vueProduct()
 {
-    $reqProducts = ProductManager::getAllProducts();
+    $message = "";
+    $action = Utils::GETPOST('action');
+    if($action != "")
+    {
+        $productId = Utils::GETPOST('product');
+        if($action == "validation")
+        {
+            if(ProductManager::updateProductById($productId, $message))
+            {
+                header("Location: index.php?page=adminSpace&vue=product");
+            }
+            else
+            {
+                throw new Exception("Erreur dans la modification du produit");
+            }
+        }
+        else
+        {
+            $product = ProductManager::getProductById($userId);
+        }
+    }
+    else
+    {
+        $reqProduct = ProductManager::getAllProducts();
+    }
     require 'views/backend/AdminProductsView.php';
 }
 
