@@ -13,7 +13,7 @@
         <h1>Panneau d'Administration</h1>             
         <a href="index.php?page=adminSpace&vue=user" class="button">Utilisateur</a>
         <a href="index.php?page=adminSpace&vue=product" class="button">Annonce</a>             
-        <a href="index.php?page=adminSpace&vue=bills" class="button">Transaction</a>             
+        <a href="index.php?page=adminSpace&vue=bill" class="button">Transaction</a>             
         <a href="index.php?page=adminSpace&vue=user" class="button">Reclamation</a>             
         <a href="index.php?page=adminSpace&vue=user" class="button">Message Moderation</a>             
         <a href="index.php?page=adminSpace&vue=user" class="button">Gestion Administration</a>            
