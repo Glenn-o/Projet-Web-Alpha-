@@ -20,7 +20,10 @@ ob_start() ?>
             <option value="abime">Abimé</option>
             <option value="piece">En pièce</option>
         </select>
-        <input type="checkbox" class="input_modif"name="premium">
+        <div id="checkbox_div">
+            <label for="checkbox">Premium : </label>
+            <input type="checkbox" id="checkbox" class="input_modif"name="premium">
+        </div>
         <input type="text" class="input_modif"name="city"  placeholder = "Ville de vente">
         <div>
             <label for="img_01">Image :</label>

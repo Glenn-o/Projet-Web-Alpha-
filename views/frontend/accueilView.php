@@ -24,10 +24,6 @@ $css = "accueil.css";
 </section>
 
 <section id="content">
-    <h1>top categories</h1>
-    <div id="category">
-
-    </div>
     <h1>interessant pour vous</h1>
     <div id="user_suggestion">
     <?php
@@ -41,7 +37,7 @@ $css = "accueil.css";
     }
     ?>
     </div>
-    <h1>Dans la categorie</h1>
+    <h1>Les derniers produits</h1>
     <div id="rand_category">
     <?php
     while($prod = $randomCategory->fetch(PDO::FETCH_ASSOC))
@@ -54,6 +50,7 @@ $css = "accueil.css";
     }
     ?>
     </div>
+    <a class="twitter-timeline" data-lang="fr" data-width="300" data-height="300" data-theme="light" href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Tweets by Fog</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 </section>
 
 <?php $content = ob_get_clean() ?>

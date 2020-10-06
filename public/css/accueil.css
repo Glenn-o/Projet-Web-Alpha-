@@ -7,6 +7,7 @@ body, html{
     padding: 0;
     margin: 0;
     min-height: 100vh;
+    width: 100%;
     position: relative;
     font-family:  'Roboto', sans-serif;
     background-image: url("../img/background.png");
@@ -79,14 +80,24 @@ body, html{
     display: flex;
     justify-content: space-evenly;
 }
+#content a{
+    text-decoration: none;
+}
 .slide_category{
     /* background-color: black; */
     width: 10vw;
     height: 20vh;
-    border: 2px solid black;
+    display: flex;
+    font-size: 1.2vw;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
 }
 .slide_category img {
-    width: 2vw;
+    width: 9vw;
+}
+.slide_category p{
+    color: black;
 }
 #content #user_suggestion{
     margin-bottom: 10vh;
@@ -97,10 +108,16 @@ body, html{
     /* background-color: black; */
     width: 10vw;
     height: 20vh;
-    border: 2px solid black;
+    font-size: 1.2vw;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
 }
 .slide_suggestion img {
-    width: 2vw;
+    width: 9vw;
+}
+.slide_suggestion p{
+    color: black;
 }
 #content #rand_category{
     margin-bottom: 10vh;
@@ -111,4 +128,61 @@ body, html{
     background-color: black;
     width: 10vw;
     height: 20vh;
+}
+.twitter-timeline{
+    display: block;
+    margin: auto;
+}
+@media screen and (max-width: 1024px){
+    #form form{
+        display: flex;
+        flex-direction: column;
+        width: 90vw;
+        border: 0.3vw solid #707070;
+    }
+    #container_input{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #rand_category{
+        flex-wrap: wrap;
+    }
+    #user_suggestion{
+        flex-wrap: wrap;
+    }
+    .slide_suggestion{
+        height: 20vh;
+        width: 30vw;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        font-size: 3vw;
+    }
+    .slide_category{
+        height: 20vh;
+        width: 30vw;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        font-size: 3vw;
+    }
+    .slide_category img{
+        width: 20vw;
+    }
+    .slide_suggestion img{
+        width: 20vw;
+    }
+    #container_input select{
+        width: 45vw;
+        
+    }
+    #submit_search img{
+        width: 40vw;
+        margin-top: 5vh;
+    }
+    #submit_search button{
+        background-color: transparent;
+    }
+    #submit_search{
+        background-color: transparent;
+    }
 }
