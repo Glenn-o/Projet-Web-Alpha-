@@ -95,7 +95,7 @@ body, html {
     background-color: #EBECEF;
     padding: 2rem 2rem ;
     border-radius: 10px;
-    margin-top: -3rem;
+    margin-top: 5vh;
 }
 
 #container2 {
@@ -168,4 +168,49 @@ button{
     background-color: transparent;
     color: #4264aa;
     transition: 200ms;
+}
+@media screen and (max-width: 1024px){
+    #seller{
+        height: auto;
+        
+        margin: 0;
+        margin: auto;
+    }
+    #main_product h1, #main_bill h1, #main_right h1{
+        font-size: 5vh;
+    }
+    #main{
+        display: flex;
+        flex-direction: column;
+    }
+    .button_seller_email{
+        width: auto;
+    }
+    .button_seller_phone{
+        width: auto;
+    }
+    #container1 img{
+        width: 35vw;
+        height: auto;
+        align-items: center;
+        display: flex;
+    }
+    .title_product{
+        font-size: 1.3vh;
+    }
+    .title_product:first-of-type{
+        margin-left: 0;
+        width: 20vw;
+    }
+    .title_product:last-of-type{
+        margin: 0;
+        width: 20vw;
+        font-size: 1vh;
+    }
+    #container1 a{
+        grid-column: 2;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        width: 30vw;
+    }
 }

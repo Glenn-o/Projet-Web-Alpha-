@@ -50,7 +50,7 @@
 #burger{
     display: none;
 }
-@media screen and (max-width: 1024px) {
+@media screen and (orientation: portrait) {
     #header{
         margin-top: 0;
         height: 8vh;
@@ -106,7 +106,7 @@
     #burger{
         margin-right: 2vw;
         right: 0;
-        width: 10vw;
+        width: 8vh;
         z-index: 100;
         display: flex;
         align-items: center;

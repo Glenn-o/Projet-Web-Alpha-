@@ -7,6 +7,7 @@ body, html{
     padding: 0;
     margin: 0;
     min-height: 100vh;
+    width: 100%;
     position: relative;
     font-family:  'Roboto', sans-serif;
     background-image: url("../img/background.png");
@@ -128,6 +129,60 @@ body, html{
     width: 10vw;
     height: 20vh;
 }
-@media screen and (min-width : 600px) and (max-width: 1024px){
-    
+.twitter-timeline{
+    display: block;
+    margin: auto;
+}
+@media screen and (max-width: 1024px){
+    #form form{
+        display: flex;
+        flex-direction: column;
+        width: 90vw;
+        border: 0.3vw solid #707070;
+    }
+    #container_input{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #rand_category{
+        flex-wrap: wrap;
+    }
+    #user_suggestion{
+        flex-wrap: wrap;
+    }
+    .slide_suggestion{
+        height: 20vh;
+        width: 30vw;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        font-size: 3vw;
+    }
+    .slide_category{
+        height: 20vh;
+        width: 30vw;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        font-size: 3vw;
+    }
+    .slide_category img{
+        width: 20vw;
+    }
+    .slide_suggestion img{
+        width: 20vw;
+    }
+    #container_input select{
+        width: 45vw;
+        
+    }
+    #submit_search img{
+        width: 40vw;
+        margin-top: 5vh;
+    }
+    #submit_search button{
+        background-color: transparent;
+    }
+    #submit_search{
+        background-color: transparent;
+    }
 }

@@ -50,6 +50,7 @@ $css = "accueil.css";
     }
     ?>
     </div>
+    <a class="twitter-timeline" data-lang="fr" data-width="300" data-height="300" data-theme="light" href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Tweets by Fog</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 </section>
 
 <?php $content = ob_get_clean() ?>

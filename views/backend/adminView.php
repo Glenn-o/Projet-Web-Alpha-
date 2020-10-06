@@ -1,10 +1,6 @@
 <?php
 $title = "Page Admin";
 $css = "adminSpace.css";
-
-ob_start(); ?>
-
-<h1 style="text-align: center;">Bienvenue sur l'espace Administrateur, veuillez selectionner un onglet</h1>
-<?php $content = ob_get_clean() ?>
-
+header("Location: index.php?page=adminSpace&vue=user")
+?>
 <?php require "template.php" ?>
