@@ -47,4 +47,70 @@
     width: 6vw;
     margin-top: 0.5vh;
 }
-
+#burger{
+    display: none;
+}
+@media screen and (max-width: 1024px) {
+    #header{
+        margin-top: 0;
+        height: 8vh;
+        background-color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        width: 100vw;
+    }
+    #header2{
+        display: none;
+        margin: 0;
+        background-color: white;
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        z-index: 99;
+        padding: 0;
+    }
+    #logo_fog{
+        padding-top: 5vh;
+        width: 30vw;
+        margin: auto;
+        display: block;
+        float: none;
+    }
+    #container_menu{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 70vh;
+        width: 100vw;
+        margin: auto;
+    }
+    #logo_user{
+        width: 20vw;
+    }
+    #button_ad{
+        width: 50vw;
+    }
+    #logo_bell{
+        width: 10vw;
+    }
+    #logo_admin{
+        width: 10vw;
+    }
+    #container_user{
+        text-align: center;
+    }
+    #burger{
+        margin-right: 2vw;
+        right: 0;
+        width: 10vw;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        position: fixed;
+        cursor: pointer;
+    }
+}

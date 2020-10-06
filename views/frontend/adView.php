@@ -29,12 +29,29 @@ ob_start();
         <div id="seller">
             <div id="seller_name"><h1><?= $seller["username"] ?></h1></div>
             <div id="avatar"><image  src="data:img/png/jpg;base64,<?= $seller["avatar"] ?>" alt="avatar utilisateur"></div>
-            <div id="buttons_seller"> <button class="button_seller" type="submit">Contacter par mail</button>
-            <button class="button_seller" type="submit">Afficher téléphone</button></div>
+            <div id="buttons_seller"> <button class="button_seller_email" type="submit">Contacter par mail</button>
+            <button class="button_seller_phone" type="submit">Afficher téléphone</button></div>
         </div>
 
     </div>
 </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+<script>
+$(function(){
+    $(".button_seller_phone").click(function(){
+        var seller_name = $('.seller_name').val()
+        $.post("includes/EmailPhoneSeller.php", {submit: 'phone', name:<?= '"'. $seller['username']  . '"'?>},function(data){
+            $(".button_seller_phone").html(data);
+        })
+    });
+    $(".button_seller_email").click(function(){
+        $.post("includes/EmailPhoneSeller.php", {submit: 'email', name:<?= '"'. $seller['username']  . '"'?>},function(data){
+            $(".button_seller_email").html(data);
+        })
+    });
+    
+})
+</script>
 <?php
 $content = ob_get_clean();
 

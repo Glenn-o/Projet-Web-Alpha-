@@ -26,7 +26,8 @@
 </head>
 <body>
     <section id="header">
-        <header>
+    <img src="public/img/burger.png" id="burger"alt="logo_burger">
+        <header id="header2">
             <a href="index.php"><img src="public/img/logo.png" alt="logo_fog" id="logo_fog"></a>
             <div id="container_menu">
                 <a href='<?=  $buttonConnexion?> '><img src="public/img/button.png" alt="button" id="button_ad"></a>
@@ -65,6 +66,6 @@
             <a href="">Vos droits et obligations</a>
         </div>
     </section>
-
+    <script src="public/js/app.ts"></script>
 </body>
 </html>

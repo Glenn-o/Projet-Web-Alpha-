@@ -5,6 +5,7 @@ $idSession = UserManager::getIdBySession();
 ob_start() 
 ?>
 <section id="main_right">
+    <h1>Liste des utilisateur</h1>
 <?php
 if($action == "affichage")
 {

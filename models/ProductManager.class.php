@@ -25,7 +25,6 @@ class ProductManager extends Manager
     #region CREATE
     public static function createProduct($id_user, &$message)
     {
-        print_r($_POST);
         //DATABASE
         $db = Database::getPDO();
         //PREMIUM

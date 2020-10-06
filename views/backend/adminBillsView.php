@@ -3,13 +3,12 @@ $title = "Liste Factures";
 $css = "adminSpace.css";
 ob_start() 
 ?>
-<section id="main">
+<section id="main_bill">
 <?php
 while ($bill = $reqBills->fetch(PDO::FETCH_ASSOC))
 {
 ?>
     <div class="div_bill">
-        <div id="div_info_bill">
             <p class="lastName_bill"><?= $bill["bill_date"] ?></p>
             <p class="firstName_bill"><?= $bill["prod_name"] ?></p>
             <p class="billname_bill"><?= $bill["prod_price"] ?> </p>
@@ -19,7 +18,6 @@ while ($bill = $reqBills->fetch(PDO::FETCH_ASSOC))
             <p class="lastName_bill"><?= $bill["sell_lastname"] ?></p>
             <p class="firstName_bill"><?= $bill["sell_firstname"] ?></p>
             <p class="billname_bill"><?= $bill["sell_adress"] ?> </p>
-        </div>
     </div>
 <?php
 }

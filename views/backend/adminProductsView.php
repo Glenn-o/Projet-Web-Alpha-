@@ -3,26 +3,29 @@ $title = "Liste Utilisateurs";
 $css = "adminSpace.css";
 ob_start() 
 ?>
-<section id="main">
+<section id="main_product">
+<h1>Liste des annonces</h1>
 <?php
 if($action == "affichage")
 {
 ?>
-    <div id="info_product">
-        <img src="data:img/jpg/png;base64,<?= $product["image"] ?>" alt="photo du produit"></div>
-        <p>Nom : <?= $product["name"] ?></h1>
-        <p>Etat : <?= $product["state"] ?></h1>
-        <p>Prix : <?= $product["format_price"] ?> €</p>
-        <p>Description : <?= $product["description"] ?></p>
-        <a href="index.php?page=adminSpace&vue=product&action=modification&product=<?= $product["id_product"] ?>"><button>Modifier</button></a>
-        <a href="index.php?page=adminSpace&vue=product&action=suppression&product=<?= $product["id_product"] ?>"><button>Supprimer</button></a>
+    <div id="info_product1">
+        <img src="data:img/jpg/png;base64,<?= $product["image"] ?>" alt="photo du produit">
+        <p>Nom : <span><?= $product["name"] ?></span></h1>
+        <p>Etat : <span><?= $product["state"] ?></span></h1>
+        <p>Prix : <span><?= $product["format_price"] ?> €</span></p>
+        <p id="description_p">Description : <span><?= $product["description"] ?></span></p>
+        <div id="div_button_ad">
+            <a href="index.php?page=adminSpace&vue=product&action=modification&product=<?= $product["id_product"] ?>" id="button_modif_ad">Modifier</a>
+            <a href="index.php?page=adminSpace&vue=product&action=suppression&product=<?= $product["id_product"] ?>" id="button_supp_ad">Supprimer</a>
+        </div>
     </div>
 <?php
 }
 else if($action == "modification")
 {
 ?>
-    <div id="info_product">
+    <div id="info_product2">
             <form action="index.php?page=adminSpace&vue=product&action=validation&product= <?= $product["id_product"] ?>" method="post" class="form_info_product" enctype="multipart/form-data">
                 <select name="categorie" id="">
                     <option value="default">Categorie</option>
@@ -38,9 +41,12 @@ else if($action == "modification")
                     <option value="abime">Abimé</option>
                     <option value="piece">En pièce</option>
                 </select>
-                <input type="checkbox" class="input_modif"name="premium">
+               <div id="div_premium">
+                    <label for="premium">Premium : </label>
+                    <input type="checkbox" id="premium"name="premium">
+               </div>
                 <input type="text" class="input_modif"name="city"  placeholder = "Ville de vente">
-                <div>
+                <div id="div_avatar">
                     <label for="img_01">Image :</label>
                     <input type="file" name="img_01" id="img_01">
                 </div>
@@ -55,13 +61,13 @@ else
     while ($product = $reqProduct->fetch(PDO::FETCH_ASSOC))
     {
 ?>
-    <div class="div_user">
-        <img src="data:img/png;base64,<?= $product["image"] ?>" alt="photo du produit">
-        <p> Nom : <?= $product["name"] ?></p>
-        <p> Etat : <?= $product["state"] ?></p>
-        <p> Prix : <?= $product["format_price"] ?> €</p>
-        <p> Description : <?= $product["description"] ?></p>
-        <a href="index.php?page=adminSpace&vue=product&action=affichage&product=<?= $product["id_product"] ?>"><button>Afficher</button></a>
+    <div class="div_user_product">
+        <img src="data:img/png;base64,<?= $product["image"] ?>" >
+        <p> Nom : <span><?= $product["name"] ?></span></p>
+        <p> Etat : <span><?= $product["state"] ?></span></p>
+        <p> Prix : <span><?= $product["format_price"] ?> €</span></p>
+        <p> Description : <span><?= $product["description"] ?></span></p>
+        <a href="index.php?page=adminSpace&vue=product&action=affichage&product=<?= $product["id_product"] ?>">Afficher</a>
     </div>
 <?php
     }

@@ -24,10 +24,6 @@ $css = "accueil.css";
 </section>
 
 <section id="content">
-    <h1>top categories</h1>
-    <div id="category">
-
-    </div>
     <h1>interessant pour vous</h1>
     <div id="user_suggestion">
     <?php
@@ -41,7 +37,7 @@ $css = "accueil.css";
     }
     ?>
     </div>
-    <h1>Dans la categorie</h1>
+    <h1>Les derniers produits</h1>
     <div id="rand_category">
     <?php
     while($prod = $randomCategory->fetch(PDO::FETCH_ASSOC))
