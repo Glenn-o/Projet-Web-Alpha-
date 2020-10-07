@@ -1,6 +1,6 @@
 <?php
 $title = "Test Template";
-$css = "index.css";
+$css = "accueil.css";
 ?>
 
 <?php ob_start(); ?>
@@ -24,52 +24,33 @@ $css = "index.css";
 </section>
 
 <section id="content">
-    <h1>top categories</h1>
-    <div id="category">
-
-    </div>
     <h1>interessant pour vous</h1>
     <div id="user_suggestion">
-        <div id="slide_suggestion1">
-
-        </div>
-        <div id="slide_suggestion2">
-
-        </div>
-        <div id="slide_suggestion3">
-
-        </div>
-        <div id="slide_suggestion4">
-
-        </div>
-        <div id="slide_suggestion5">
-
-        </div>
-        <div id="slide_suggestion6">
-
-        </div>
+    <?php
+    while($prod = $randomProduct->fetch(PDO::FETCH_ASSOC))
+    { ?>
+        <a href="index.php?page=ad&product=<?= $prod["id_product"] ?>"><div class="slide_suggestion">
+        <img src="data:img/png/jpg;base64,<?= $prod["image"] ?>">
+        <p><?= $prod["name"] ?></p>
+        </div></a>
+    <?php
+    }
+    ?>
     </div>
-    <h1>Dans la categorie</h1>
+    <h1>Les derniers produits</h1>
     <div id="rand_category">
-        <div id="slide_rand1">
-
-        </div>
-        <div id="slide_rand2">
-
-        </div>
-        <div id="slide_rand3">
-
-        </div>
-        <div id="slide_rand4">
-
-        </div>
-        <div id="slide_rand5">
-
-        </div>
-        <div id="slide_rand6">
-
-        </div>
+    <?php
+    while($prod = $randomCategory->fetch(PDO::FETCH_ASSOC))
+    { ?>
+        <a href="index.php?page=ad&product=<?= $prod["id_product"] ?>"><div class="slide_category">
+        <img src="data:img/png/jpg;base64,<?= $prod["image"] ?>">
+        <p><?= $prod["name"] ?></p>
+        </div></a>
+    <?php
+    }
+    ?>
     </div>
+    <a class="twitter-timeline" data-lang="fr" data-width="300" data-height="300" data-theme="light" href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Tweets by Fog</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 </section>
 
 <?php $content = ob_get_clean() ?>

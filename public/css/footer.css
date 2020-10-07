@@ -80,3 +80,24 @@
 #footer a:hover{
     text-decoration: underline;
 }
+@media screen and (max-width: 1024px){
+    #footer{
+       display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    #footer_left{
+        width: 90vw;
+    }
+    #footer_center{
+        width: 90vw;
+        align-items: center;
+    }
+    #footer_center img{
+        height: 5vw;
+    }
+    #footer_right{
+        width: 90vw;
+    }
+}

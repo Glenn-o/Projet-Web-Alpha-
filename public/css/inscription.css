@@ -93,3 +93,35 @@ label{
 input[type=file]{
     font-size: 1vw;
 }
+@media screen and (max-width: 1024px){
+    body{
+        padding-top: 5vh;
+    }
+    #main form{
+        width: 90vw;
+    }
+    #main form input{
+        width: 80vw;
+        font-size: 3vh;
+        border-bottom: 0.2vh solid black;
+    }
+    #main form input[type=file]{
+        border-bottom: none;
+    }
+    #main form label{
+        font-size: 3vh;
+    }
+    #main h1{
+        font-size: 3vh;
+    }
+    #main form h2{
+        font-size: 2vh;
+    }
+    #main form p{
+        font-size: 2Vh;
+    }
+    #main form button{
+        width: 25vw;
+        font-size: 2vh;
+    }
+}

@@ -61,26 +61,26 @@ class UserManager extends Manager
     public static function createUser(&$errorMessage) : bool
     {
         // print_r([$_POST["password"], $_POST["password_confirmed"]]);
-        if(GETPOST("password") !== GETPOST("password-confirmed"))
+        if(Utils::GETPOST("password") !== Utils::GETPOST("password-confirmed"))
         {
             $errorMessage = "Les champs mot de passe ne correspondent pas";
             return FALSE;
         }
         $db = Database::getPDO();
-        $password = sha1(GETPOST("password"));
-        $avatar = parent::getFile();
+        $password = sha1(Utils::GETPOST("password"));
+        $avatar = parent::getFile('avatar');
         $sql = "INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `username`, `password`, `avatar`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         $tabParam = [
-            GETPOST('lastName'),
-            GETPOST('firstName'),
-            GETPOST('address'),
-            GETPOST('city'),
-            GETPOST('postalCode'),
-            GETPOST("country"),
-            GETPOST('phone'),
-            GETPOST('email'),
-            GETPOST('userName'),
+            Utils::GETPOST('lastName'),
+            Utils::GETPOST('firstName'),
+            Utils::GETPOST('address'),
+            Utils::GETPOST('city'),
+            Utils::GETPOST('postalCode'),
+            Utils::GETPOST("country"),
+            Utils::GETPOST('phone'),
+            Utils::GETPOST('email'),
+            Utils::GETPOST('userName'),
             $password,
             $avatar
         ];
@@ -93,7 +93,7 @@ class UserManager extends Manager
         catch(PDOException $error )
         {
             if($error->getCode() == '23000')
-                $errorMessage = "Utilisateur existant : ". GETPOST('userName');
+                $errorMessage = "Utilisateur existant : ". Utils::GETPOST('userName');
             return false;
         }
         
@@ -101,7 +101,7 @@ class UserManager extends Manager
     #endregion
 
     #region READ
-    //Recupere un User par son ID
+    //Recupere un User par son username
     public static function getUserByUsername($userName)
     {
         $db = Database::getPDO();
@@ -111,14 +111,16 @@ class UserManager extends Manager
 
     }
 
+    //Recupere un User par son ID
     public static function getUserById($id)
     {
         $db = Database::getPDO();
         $req = $db->prepare("SELECT * from users where id_user = ?");
-        $req->execute($id);
+        $req->execute([$id]);
         return $req->fetch(PDO::FETCH_ASSOC);
 
     }
+
     // Recupere toutes les annonces
     public static function getAllUsers()
     {
@@ -142,38 +144,38 @@ class UserManager extends Manager
         //GESTION CHAMPS NORMAUX
         try{
             $tabUpdate =  [];
-            if(GETPOST("lastname") != "")
-                $tabUpdate["lastname"] = GETPOST("lastname");
-            if(GETPOST("firstname") != "")
-                $tabUpdate["firstname"] = GETPOST("firstname");
-            if(GETPOST("address") != "")
-                $tabUpdate["address"] = GETPOST("address");
-            if(GETPOST("city") != "")
-                $tabUpdate["city"] = GETPOST("city");
-            if(GETPOST("postal_code") != "")
-                $tabUpdate["postal_code"] = GETPOST("postal_code");
-            if(GETPOST("country") != "")
-                $tabUpdate["country"] = GETPOST("country");
-            if(GETPOST("phone") != "")
-                $tabUpdate["phone"] = GETPOST("phone");
-            if(GETPOST("email") != "")
-                $tabUpdate["email"] = GETPOST("email");
-            if(GETPOST("username") != "")
-                $tabUpdate["username"] = GETPOST("username");
-            $tabUpdate["config_news"] = GETPOSTEMPTY("newsletter") ? "1" : 0;
-            $tabUpdate["config_part"] = GETPOSTEMPTY("partnernews") ? "1" : 0;
+            if(Utils::GETPOST("lastname") != "")
+                $tabUpdate["lastname"] = Utils::GETPOST("lastname");
+            if(Utils::GETPOST("firstname") != "")
+                $tabUpdate["firstname"] = Utils::GETPOST("firstname");
+            if(Utils::GETPOST("address") != "")
+                $tabUpdate["address"] = Utils::GETPOST("address");
+            if(Utils::GETPOST("city") != "")
+                $tabUpdate["city"] = Utils::GETPOST("city");
+            if(Utils::GETPOST("postal_code") != "")
+                $tabUpdate["postal_code"] = Utils::GETPOST("postal_code");
+            if(Utils::GETPOST("country") != "")
+                $tabUpdate["country"] = Utils::GETPOST("country");
+            if(Utils::GETPOST("phone") != "")
+                $tabUpdate["phone"] = Utils::GETPOST("phone");
+            if(Utils::GETPOST("email") != "")
+                $tabUpdate["email"] = Utils::GETPOST("email");
+            if(Utils::GETPOST("username") != "")
+                $tabUpdate["username"] = Utils::GETPOST("username");
+            $tabUpdate["config_news"] = Utils::ISGETPOST("newsletter") ? "1" : 0;
+            $tabUpdate["config_part"] = Utils::ISGETPOST("partnernews") ? "1" : 0;
             
             //GESTION PASSWORD
-            if(GETPOSTEMPTY("password") and GETPOSTEMPTY("password_confirmed") and GETPOSTEMPTY("old_password"))
+            if(Utils::ISGETPOST("password") and Utils::ISGETPOST("password_confirmed") and Utils::ISGETPOST("old_password"))
             {
-                if(GETPOST("password") === GETPOST("password_confirmed"))
+                if(Utils::GETPOST("password") === Utils::GETPOST("password_confirmed"))
                 {
-                    if(GETPOSTEMPTY("old_password"))
+                    if(Utils::ISGETPOST("old_password"))
                     {
-                        $oldPassword = sha1(GETPOST("old_password"));
+                        $oldPassword = sha1(Utils::GETPOST("old_password"));
                         if(self::getPassword($id) === $oldPassword)
                         {
-                            $tabUpdate["password"] = sha1(GETPOST("password"));
+                            $tabUpdate["password"] = sha1(Utils::GETPOST("password"));
                         }
                         else
                         {
@@ -193,7 +195,7 @@ class UserManager extends Manager
             
             //Gestion avatar
             if(!empty($_FILES['avatar']['name'])){ // Si image envoyé dans formulaire, on va la chercher
-                $tabUpdate['avatar'] = parent::getFile();
+                $tabUpdate['avatar'] = parent::getFileWithDefault('avatar');
             }
 
             $sql = "UPDATE users SET ";
@@ -216,7 +218,7 @@ class UserManager extends Manager
         catch(Exception $error )
         {
             if($error->getCode() == '23000')
-                $errorMessage = "Utilisateur existant : ". GETPOST('userName');
+                $errorMessage = "Utilisateur existant : ". Utils::GETPOST('userName');
             else
                 $errorMessage = $error->getMessage();
             return false;
@@ -235,9 +237,14 @@ class UserManager extends Manager
     #region DELETE
     public static function deleteUserById($id)
     {
+        if(UserManager::getIdBySession() == $id)
+        {
+            return false;
+        }
+        ProductManager::deleteAllByUser($id);
         $db = Database::getPDO();
         $sql = "DELETE FROM users WHERE id_user = ".$id;
-        $result = $db->query();
+        $result = $db->query($sql);
         return $result != FALSE; // Si ok retourne vrai, sinon faux
     }
     #endregion
@@ -269,6 +276,26 @@ class UserManager extends Manager
         $req = $db->prepare("SELECT id_user FROM users WHERE username = ?");
         $req->execute([$userName]);
         return $req->fetch(PDO::FETCH_ASSOC)["id_user"];
+    }
+
+    public static function getIdBySession()
+    {
+        if(!empty($_SESSION["name"]))
+        {
+            return self::getIDByName($_SESSION["name"]);
+        }
+        else
+            return FALSE;
+    }
+
+    public static function getUserBySession()
+    {
+        if(!empty($_SESSION["name"]))
+        {
+            return self::getUserByUsername($_SESSION["name"]);
+        }
+        else
+            return FALSE;
     }
     #endregion
 
