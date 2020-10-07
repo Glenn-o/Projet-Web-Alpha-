@@ -7,20 +7,27 @@ require_once "models/BillManager.class.php";
 
 function pageAdmin()
 {
-    switch(Utils::GETPOST("vue"))
+    if(UserManager::getTypeBySession() > 1)
     {
-        case "user":
-            vueUser();
-        break;
-        case "product":
-            vueProduct();
-        break;
-        case "bill":
-            vueBill();
-        break;
-        default:
-        require 'views/backend/adminView.php';
-        break;
+        switch(Utils::GETPOST("vue"))
+        {
+            case "user":
+                vueUser();
+            break;
+            case "product":
+                vueProduct();
+            break;
+            case "bill":
+                vueBill();
+            break;
+            default:
+                require 'views/backend/adminView.php';
+            break;
+        }
+    }
+    else
+    {
+        throw new Exception("Vous n'avez pas le droit d'acceder a cet espace");
     }
 }
 
