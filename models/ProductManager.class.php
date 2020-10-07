@@ -30,7 +30,7 @@ class ProductManager extends Manager
         //PREMIUM
         try
         {
-            if(Utils::GETPOSTSETEMPTY('name') or Utils::GETPOSTSETEMPTY('price') or Utils::GETPOSTSETEMPTY('description') or Utils::GETPOSTSETEMPTY('state') or Utils::GETPOSTSETEMPTY('city') or Utils::GETPOSTSETEMPTY('status') or Utils::GETPOSTSETEMPTY('categorie') and Utils::ISFILESET('image'))
+            if(Utils::GETPOSTSETEMPTY('name') or Utils::GETPOSTSETEMPTY('price') or Utils::GETPOSTSETEMPTY('description') or Utils::GETPOSTSETEMPTY('state') or Utils::GETPOSTSETEMPTY('city') or Utils::GETPOSTSETEMPTY('categorie'))
             {
                 throw new Exception("Tout les champs ne sont pas renseignés");
             }
@@ -42,9 +42,9 @@ class ProductManager extends Manager
             $status = Utils::GETPOST('status');
             switch (Utils::GETPOST('categorie'))
             {
-                case 'console': $id_product_type = 1;
-                case 'jeu': $id_product_type = 2;
-                case 'accessoire': $id_product_type = 3;
+                case 'console': $id_product_type = 1; break;
+                case 'jeu': $id_product_type = 2; break;
+                case 'accessoire': $id_product_type = 3; break;
                 default: throw new Exception("Pas de categorie selectionné");
             }
             $premium = Utils::ISGETPOST("premium") ? '1' : '0';

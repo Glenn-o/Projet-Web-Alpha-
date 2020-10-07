@@ -28,23 +28,14 @@ class UserManager extends Manager
     {
         $db = Database::getPDO();
         $password = sha1($password);
-        $checkUserSQL = 'SELECT username FROM users WHERE username =  "'.$userName.'"';
+        $checkUserSQL = 'SELECT password FROM users WHERE username = "'.$userName.'" and password = "'.$password.'"';
         $resultUser = $db->query($checkUserSQL);
         if($resultUser->rowCount() > 0) // Si user trouvé grace a nom
         {
-            $checkPassword = 'SELECT password FROM users WHERE password = "'.$password.'"';
-            $resultUser = $db->query($checkPassword);
-            if($resultUser->rowCount() > 0) // Si mot de passe correspond
-            {
-                $_SESSION["name"] = $_POST["username"];
+            $_SESSION["name"] = $_POST["username"];
 
-                header('Location: index.php');
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            header('Location: index.php');
+            return true;
         }
         $db = null;
         return false;
@@ -227,8 +218,10 @@ class UserManager extends Manager
 
     public static function getTypeById($id)
     {
+        #INNER JOIN user_type Role ON User.id_user_type = Role.id_user_type
         $db = Database::getPDO();
-        $sql = "SELECT id_user_type FROM users WHERE id_user = ".$id;
+        $sql = "SELECT id_user_type FROM users User
+                WHERE id_user = ".$id;
         $result = $db->query($sql)->fetch(PDO::FETCH_ASSOC)["id_user_type"];
         return $result;
     }
@@ -286,6 +279,25 @@ class UserManager extends Manager
         }
         else
             return FALSE;
+    }
+
+    public static function getTypeBySession()
+    {
+        #INNER JOIN user_type Role ON User.id_user_type = Role.id_user_type
+        if(!empty($_SESSION["name"]))
+        {
+            $db = Database::getPDO();
+            $idUser = self::getIDByName($_SESSION["name"]);
+            $sql = "SELECT id_user_type FROM users User
+                    WHERE id_user = ?";
+            $req = $db->prepare($sql);
+            $req->execute([$idUser]);
+            return $req->fetch(PDO::FETCH_ASSOC)["id_user_type"];
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     public static function getUserBySession()
