@@ -2,9 +2,7 @@
 $title = "Inscription";
 $css = "inscription.css";
 
-?>
-
-<?php ob_start() ?>
+ob_start() ?>
 <section id="main">
     <h1> Inscription</h1>
 
@@ -30,6 +28,7 @@ $css = "inscription.css";
     </form>
 </section>
 
-<?php $content = ob_get_clean() ?>
-
-<?php require "template.php" ?>
+<?php
+$content = ob_get_clean();
+require "template.php";
+?>
