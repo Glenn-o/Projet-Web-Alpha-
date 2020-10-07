@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="facture.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+    <link href="../../public/css/facture.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Facture</title>
 </head>
+
 <body>
     <section id="content">
 
@@ -22,32 +24,40 @@
         </div>
 
         <div id="idBuyer" class="identification">
-            <p id="nameBuyer">Prenom Nom VENDEUR</p>
-            <p id="addressBuyer">Adresse VENDEUR</p>
-            <p id="cpBuyer">CP VENDEUR</p>
-            <p id="cityBuyer">Ville VENDEUR</p>
+            <p id="nameBuyer">Prenom Nom ACHETEUR</p>
+            <p id="addressBuyer">Adresse ACHETEUR</p>
+            <p id="cpBuyer">CP ACHETEUER</p>
+            <p id="cityBuyer">Ville ACHETEUR</p>
         </div>
 
         <div id="date">
             LE <div id="dateValue">XX/XX/XXXX</div>
         </div>
 
-        <div id="Product">
-            <div id="designation">Designation :</div>
-            <div id="quantity">Quantité :</div>
-            <div id="price">Prix Unitaire :</div>
-            <div id="total">Total :</div>
-            <div id="designationValue">Texte</div>
-            <div id="quantityValue">Int</div>
-            <div id="priceValue">X €</div>
-            <div id="totalValue">X €</div>
+        <div id="product">
+            <table>
+                <tr id="ligne1">
+                    <td id="designation">Designation :</td>
+                    <td id="quantity">Quantité :</td>
+                    <td id="price">Prix Unitaire :</td>
+                    <td id="total">Total :</td>
+                </tr>
+                <tr id="ligne2">
+                    <td id="designationValue">Texte :</td>
+                    <td id="quantityValue">Int</td>
+                    <td id="priceValue">X €</td>
+                    <td id="totalValue">X €</td>
+                </tr>
+
+            </table>
         </div>
 
-        <div id="FogDescription">
+        <div id="fogDescription">
             <p>Facture générée établie par Fog.fr pour la transaction entre deux particuliers</p>
             <p>La responsabilité de l'exactitude des données présente sont à la charge des parties concernées</p>
         </div>
 
     </section>
 </body>
+
 </html>
