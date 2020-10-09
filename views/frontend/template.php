@@ -47,7 +47,7 @@
             <h1>A propos de F.O.G</h1>
             <hr>
             <a href="">Qui sommes nous ?</a>
-            <a href="">Nous contacter</a>
+            <a href="index.php?page=contact">Nous contacter</a>
             <a href="">Plan du site</a>
         </div>
         <div id="footer_center">
