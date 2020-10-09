@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/facture.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Facture</title>
+</head>
+
+<body>
+    <section id="content">
+
+        <Div id="idSeller" class="identification">
+            <p id="nameSeller">:nomVendeur:</p>
+            <p id="addressSeller">:addresseVendeur:</p>
+            <p id="cpSeller">:cpVendeur:</p>
+            <p id="citySeller">:villeVendeur:</p>
+        </Div>
+
+        <div id="title">
+            FACTURE
+        </div>
+
+        <div id="idBuyer" class="identification">
+            <p id="nameBuyer">:nomAcheteur:</p>
+            <p id="addressBuyer">:addresseAcheteur:</p>
+            <p id="cpBuyer">:cpAcheteur:</p>
+            <p id="cityBuyer">:villeAcheteur:</p>
+        </div>
+
+        <div id="date">
+            LE <div id="dateValue">:dateFacture:</div>
+        </div>
+
+        <div id="product">
+            <table>
+                <tr id="ligne1">
+                    <td id="designation">Designation :</td>
+                    <td id="quantity">Quantité :</td>
+                    <td id="price">Prix Unitaire :</td>
+                    <td id="total">Total :</td>
+                </tr>
+                <tr id="ligne2">
+                    <td id="designationValue">:nomProduit:</td>
+                    <td id="quantityValue">:quantiteProduit:</td>
+                    <td id="priceValue">:prixProduit: €</td>
+                    <td id="totalValue">:totalProduit: €</td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div id="fogDescription">
+            <p>Facture générée établie par Fog.fr pour la transaction entre deux particuliers</p>
+            <p>La responsabilité de l'exactitude des données présente sont à la charge des parties concernées</p>
+        </div>
+
+    </section>
+</body>
+
+</html>
