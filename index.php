@@ -35,6 +35,9 @@ try {
             case "ad":
                 vueProduit();
             break;
+            case "contact":
+                contact();
+            break;
             //BACKEND
             case "adminSpace":
                 pageAdmin();
