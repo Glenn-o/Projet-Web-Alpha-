@@ -115,7 +115,19 @@ function vueProduit()
     require("views/frontend/adView.php");
 }
 
+function contact()
+{
+    if(Utils::GETPOST('action') == "mail")
+    {
+        $message = Utils::GETPOST('message');
+        $subject = Utils::GETPOST('subject');
 
-#region Utils
+        // Dans le cas où nos lignes comportent plus de 70 caractères, nous les coupons en  utilisant wordwrap()
+        $message = wordwrap($message, 70, "\r\n");
 
-#endregion
+        // Envoi du mail
+        $result = mail('dupycournau@gmail.com', $subject, $message);
+        print $result ? "Mail accepté" : "Mail Refusé";
+    }
+    require "views/frontend/contactView.php";
+}

@@ -60,9 +60,41 @@ class BillManager extends Manager
         return $req = $db->query($sql);
     }
 
+    public static function getBillById($id)
+    {
+        $db = Database::getPDO();
+        $sql = "SELECT 
+        Bill.date as bill_date, Bill.bill_pdf as bill_pdf,
+        Prod.name as prod_name, Prod.price as prod_price,
+        Buyer.lastname as buy_lastname, Buyer.firstname as buy_firstname , Buyer.address as buy_adress,
+        Seller.lastname as sell_lastname, Seller.firstname as sell_firstname, Seller.address as sell_adress 
+        FROM billing Bill
+        INNER JOIN product Prod ON Bill.id_product = Prod.id_product
+        INNER JOIN users Seller on Bill.id_seller = Seller.id_user
+        INNER JOIN users Buyer on Bill.id_buyer = Buyer.id_user
+        WHERE id_billing = ".$id;
+        return $req = $db->query($sql);
+    }
+
     //UPDATE
+    public static function updateBillById($id)
+    {
+        $db = Database::getPDO();
+        $sql = "UPDATE billing
+                SET date = ?,
+                quantity = ?,
+                bill_pdf = ?,
+                id_seller = ?,
+                id_buyer = ?,
+                id_product = ?";
+    }
 
     //DELETE
-
+    public static function deleteBillById($id)
+    {
+        $db = Database::getPDO();
+        $sql = "DELETE FROM billing WHERE id_billing = $id";
+        return $db->query($sql);
+    }
     //GETTER ET SETTER
 }
