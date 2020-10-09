@@ -1,7 +1,7 @@
 <?php
 $title = "Test Template";
 $css = "accueil.css";
-BillManager::createPDF();
+BillManager::createPDF(1);
 ?>
 
 <?php ob_start(); ?>
