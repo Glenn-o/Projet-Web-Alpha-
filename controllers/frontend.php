@@ -131,8 +131,3 @@ function contact()
     }
     require "views/frontend/contactView.php";
 }
-
-
-#region Utils
-
-#endregion
