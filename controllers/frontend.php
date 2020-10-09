@@ -121,12 +121,16 @@ function contact()
     {
         $message = Utils::GETPOST('message');
         $subject = Utils::GETPOST('subject');
+        $email = Utils::GETPOST('email');
 
         // Dans le cas où nos lignes comportent plus de 70 caractères, nous les coupons en  utilisant wordwrap()
         $message = wordwrap($message, 70, "\r\n");
-
-        // Envoi du mail
-        $result = mail('dupycournau@gmail.com', $subject, $message);
+        $headers =  'MIME-Version: 1.0' . "\r\n"; 
+        $headers .= 'From: ' . $email . "\r\n";
+        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n"; 
+        
+       
+        $result = mail($email, $subject, $message, $headers);
         print $result ? "Mail accepté" : "Mail Refusé";
     }
     require "views/frontend/contactView.php";
