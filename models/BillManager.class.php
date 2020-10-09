@@ -1,13 +1,25 @@
 <?php
 
-
 require_once "models/Manager.class.php";
-
+use Mpdf\Mpdf;
 
 class BillManager extends Manager
 {
     //CRUD
     //CREATE
+    public static function createPDF()
+    {
+        $mpdf= new Mpdf(["mode" => "utf-8"]);
+        $fileName = "public/ressource/facture.html";
+        $handle = fopen($fileName, "r");
+        $html = fread($handle, filesize($fileName));
+        fclose($handle);
+        $stylesheet = file_get_contents('public/css/facture.css'); // external css
+        $mpdf->WriteHTML($stylesheet,1);
+        $mpdf->WriteHTML($html,2);
+        $mpdf->Output();
+        //Injecttion
+    }
 
     public static function createBill($id_product)
     {
