@@ -20,7 +20,7 @@ body, html{
     margin-top: 10vh;
     height: auto;
     border: 0.1vw solid #707070;
-    width: 40vw;
+    width: 90vh;
     height: auto;
     font-family: "BubbleGum";
 }
@@ -132,6 +132,9 @@ body, html{
 .twitter-timeline{
     display: block;
     margin: auto;
+}
+#div_twitter{
+    margin: 10vh auto;
 }
 @media screen and (max-width: 1024px){
     #form form{

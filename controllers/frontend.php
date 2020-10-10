@@ -140,15 +140,25 @@ function contact()
 {
     if(Utils::GETPOST('action') == "mail")
     {
-        $message = Utils::GETPOST('message');
-        $subject = Utils::GETPOST('subject');
+        if(!empty($_POST['message']) && !empty($_POST['subject']) &&!empty($_POST['email'])){
+            $message = Utils::GETPOST('message');
+            $subject = Utils::GETPOST('subject');
+            $email = Utils::GETPOST('email');
+            // Dans le cas où nos lignes comportent plus de 70 caractères, nous les coupons en  utilisant wordwrap()
+            $message = wordwrap($message, 70, "\r\n");
+            $headers =  'MIME-Version: 1.0' . "\r\n"; 
+            $headers .= 'From: ' . $email . "\r\n";
+            $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n"; 
+            
+           
+            $result = mail("fog@contact.com", $subject, $message, $headers);
+            $result ? $send = "Votre mail à bien été envoyé" : $error = "Votre Mail n'a pas pu être envoyé veuillez reesseyer";
+        }
+        else{
+            $error = "Veuillez remplir toutes les informations";
+        }
 
-        // Dans le cas où nos lignes comportent plus de 70 caractères, nous les coupons en  utilisant wordwrap()
-        $message = wordwrap($message, 70, "\r\n");
-
-        // Envoi du mail
-        $result = mail('dupycournau@gmail.com', $subject, $message);
-        print $result ? "Mail accepté" : "Mail Refusé";
+       
     }
     require "views/frontend/contactView.php";
 }
