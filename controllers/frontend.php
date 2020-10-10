@@ -91,7 +91,7 @@ function clientSpace()
         $id = UserManager::getIDByName($_SESSION["name"]);
         if(Utils::GETPOST("action") == "modification")
             UserManager::updateUserById($id, $message);
-        $data = UserManager::getUserByUsername($_SESSION["name"]);
+        $data = UserManager::getUserBySession();
         $reqProduct = ProductManager::getProductsByUserId($id);
 
     }
