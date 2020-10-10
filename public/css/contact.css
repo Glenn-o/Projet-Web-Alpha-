@@ -1,0 +1,61 @@
+body, html {
+    padding: 0;
+    margin: 0;
+    font-family:  'Roboto', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    background-image: url("../img/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#main h1{
+    text-align: center;
+    font-size: 2vw;
+}
+#main form{
+    margin: auto;
+    background-color: #EBECEF;
+    border-radius: 2vh;
+    width: 50vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+#main form input{
+    font-size: 1vw;
+    width: 30vw;
+    height: 5vh;
+    margin-top: 5vh;
+    padding-left: 1vw;
+}
+#main form h2{
+    font-size: 2vw;
+}
+#main form textarea{
+    width: 30vw;
+    font-size: 1vw;
+    padding-left: 1vw;
+    margin-top: 5vh;
+    height: 20vh;
+    font-family:  'Roboto', sans-serif;
+}
+#main form input[type=submit]{
+    background-color: #4264aa;
+    color: white;
+    border: 0.3vh solid #4264aa;
+    cursor: pointer;
+}
+#main form input[type=submit]:hover, #main form input[type=submit]:focus{
+    background-color: transparent;
+    color: #4264aa;
+    transition: 200ms;
+}
+#main form span{
+    color: red;
+}
+#send{
+    color: #2ecc71;
+}

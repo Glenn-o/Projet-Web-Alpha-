@@ -45,7 +45,7 @@ margin-left: 1%;
 #product{
     grid-column: 1/3;
     grid-row: 3;
-    width: 50%;
+    width: 100%;
     margin: auto;
     margin-top: 10%;
 }
@@ -56,10 +56,12 @@ margin-left: 1%;
 #ligne2{
     background-color: skyblue;
 }
-#product>table
+#product table
 {
-    border: 3px solid darkblue;
+    margin: auto;
     border-collapse: collapse;
+    border: 3px solid darkblue;
+   
 }
 #product table td{
     border: 1px solid darkblue;
