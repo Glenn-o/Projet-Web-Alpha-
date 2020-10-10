@@ -18,7 +18,7 @@ ob_start() ?>
         <input type="number" class="input_modif"name="phone"  placeholder = "Téléphone">
         <input type="email" class="input_modif"name="email"  placeholder = "Email">
         <input type="password"class="input_modif" name="password"  placeholder = "Mot de passe">
-        <input type="password"class="input_modif" name="password-confirmed"  placeholder = "Confirmation"><p><span><?= $wrongPassword?><span></p>
+        <input type="password"class="input_modif" name="password-confirmed"  placeholder = "Confirmation"><p><span><?= $message?><span></p>
         <div>
             <label for="avatar">Avatar :</label>
             <input type="file" name="avatar" id="avatar">

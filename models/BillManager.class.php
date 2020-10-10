@@ -15,40 +15,51 @@ class BillManager extends Manager
     //CREATE
     /**
      * Crée le PDF d'une facture
-     * @param $id_facture ID de la facture
+     * @param $id_buyer ID de la facture
+     * @param $id_seller ID de la facture
+     * @param $id_product ID de la facture
      * @return $pdf Fichier PDF en base64
      */
-    public static function createPDF($id_facture)
+    public static function createPDF($id_seller, $id_buyer, $id_product)
     {
         $mpdf= new Mpdf(["mode" => "utf-8"]);
         $fileName = "public/ressource/facture.html";
         $handle = fopen($fileName, "r");
         $html = fread($handle, filesize($fileName));
         //injection
-        $bill = BillManager::getBillById($id_facture);
+        // $bill = BillManager::getBillById($id_facture);
+        $buyer = UserManager::getUserById($id_buyer);
+        $seller = UserManager::getUserById($id_seller);
+        $product = ProductManager::getProductById($id_product);
         //vendeur
-        $html = str_replace(":nomVendeur:", $bill["sell_lastname"], $html);
-        $html = str_replace(":addresseVendeur:", $bill["sell_address"], $html);
-        $html = str_replace(":cpVendeur:", $bill["sell_cp"], $html);
-        $html = str_replace(":villeVendeur:", $bill["sell_city"], $html);
+        $html = str_replace(":nomVendeur:", $buyer["lastname"], $html);
+        $html = str_replace(":addresseVendeur:", $buyer["address"], $html);
+        $html = str_replace(":cpVendeur:", $buyer["postal_code"], $html);
+        $html = str_replace(":villeVendeur:", $buyer["city"], $html);
         //acheteur
-        $html = str_replace(":nomAcheteur:", $bill["buy_lastname"], $html);
-        $html = str_replace(":addresseAcheteur:", $bill["buy_address"], $html);
-        $html = str_replace(":cpAcheteur:", $bill["buy_cp"], $html);
-        $html = str_replace(":villeAcheteur:", $bill["buy_city"], $html);
+        $html = str_replace(":nomAcheteur:", $seller["lastname"], $html);
+        $html = str_replace(":addresseAcheteur:", $seller["address"], $html);
+        $html = str_replace(":cpAcheteur:", $seller["postal_code"], $html);
+        $html = str_replace(":villeAcheteur:", $seller["city"], $html);
         // Facture
-        $html = str_replace(":nomProduit:", $bill["prod_name"], $html);
+        $html = str_replace(":nomProduit:", $product["name"], $html);
         $html = str_replace(":quantiteProduit:", 1, $html);
-        $html = str_replace(":prixProduit:", $bill["prod_price"], $html);
-        $html = str_replace(":totalProduit:", 1 * floatval($bill["prod_price"]), $html);
+        $html = str_replace(":prixProduit:", $product["price"], $html);
+        $html = str_replace(":totalProduit:", 1 * floatval($product["price"]), $html);
         // Date
-        $html = str_replace(":dateFacture:", $bill["bill_date"], $html);
+        $html = str_replace(":dateFacture:", date('Ydm'), $html);
         //fin d'injection
         fclose($handle);
         $stylesheet = file_get_contents('public/css/facture.css'); // external css
         $mpdf->WriteHTML($stylesheet,1);
         $mpdf->WriteHTML($html,2);
+        $path = "public/ressource/bill_pdf.pdf";
+        $mpdf->Output($path);
+        $data = file_get_contents($path);
+        $base64 = base64_encode($data);
+        unlink($path);
         $mpdf->Output();
+        return $base64;
     }
 
     /**
@@ -61,16 +72,17 @@ class BillManager extends Manager
         {
             $db = Database::getPDO();
             $product = ProductManager::getProductById($id_product);
-
-            $sql = "INSERT INTO `billing`(`date`, `quantity`, `id_seller`, `id_buyer`, `id_product`) VALUES (:date,:quantity,:id_seller,:id_buyer,:id_product)";
+            $id_buyer = UserManager::getIdBySession();
+            $id_seller = $product["id_user"];
+            $sql = "INSERT INTO `billing`(`date`, `quantity`, `id_seller`, `id_buyer`, `id_product`, `bill_pdf`) VALUES (:date,:quantity,:id_seller,:id_buyer,:id_product, :bill_pdf)";
 
             $req = $db->prepare($sql);
             $tabParam = [
                 ":date"=> date('Ydm'),
                 ":quantity" => '1',
-                // ":bill_pdf" => $bill_pdf,
-                ":id_seller" => $product["id_user"],
-                ":id_buyer" => UserManager::getIdBySession(),
+                ":bill_pdf" => self::createPDF($id_seller, $id_buyer, $id_product),
+                ":id_seller" => $id_seller,
+                ":id_buyer" => $id_buyer,
                 ":id_product" => $id_product
             ];
             $req->execute($tabParam);
