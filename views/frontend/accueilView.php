@@ -50,8 +50,11 @@ $css = "home.css";
     <?php
     }
     ?>
+    
     </div>
-    <a class="twitter-timeline" data-lang="fr" data-width="300" data-height="300" data-theme="light" href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Tweets by Fog</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+    <div id="div_twitter">
+        <a class="twitter-timeline" data-width="300" data-height="300" href="https://twitter.com/Fog37433151?ref_src=twsrc%5Etfw">Tweets by Fog37433151</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+    </div>
 </section>
 
 <?php $content = ob_get_clean() ?>
