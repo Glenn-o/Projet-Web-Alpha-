@@ -2,6 +2,10 @@
 
 class Manager
 {
+    /**
+     * Renvoie le fichier spécifié ou un fichier par default si absent
+     * @return string Image en base64
+     */
     public static function getFileWithDefault($fileName){
         $directory = "public/img/";
         if(!empty($_FILES[$fileName]['name'])){ // Si image envoyé dans formulaire, on va la chercher
@@ -26,6 +30,11 @@ class Manager
         }
     }
 
+    /**
+     * Renvoie le fichier specifié
+     * @return string Fichier spécifié
+     * @throws \Exception Mauvais format ou fichier absent
+     */
     public static function getFile($fileName) {
         $directory = "public/img/";
         if(!empty($_FILES[$fileName]['name'])){ // Si image envoyé dans formulaire, on va la chercher
