@@ -47,17 +47,16 @@ class UserManager extends Manager
      * @return bool Resultat de la creation
      * @throws \Exception Si erreur lors de la creation de l'utilisateur
     */
-    public static function createUser(&$message) : bool
+    public static function createUser(&$message)
     {
         if(Utils::GETPOST("password") !== Utils::GETPOST("password-confirmed"))
         {
-            $message = "Les champs mot de passe ne correspondent pas";
-            return FALSE;
+            throw new Exception("Mot de passe non similaire");
         }
         $db = Database::getPDO();
         $password = sha1(Utils::GETPOST("password"));
         $avatar = parent::getFile('avatar');
-        $sql = "INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `username`, `password`, `avatar`) VALUES (:lastName,:firstName,:address,:city,:postalCode,:country,:phone,:email,:userName,:password,:avatar)";
+        $sql = "INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `username`, `password`, `avatar`, config_news, config_part, id_user_type) VALUES (:lastName,:firstName,:address,:city,:postalCode,:country,:phone,:email,:userName,:password,:avatar, 0, 0, 1)";
 
         $tabParam = [
             ":lastName" => Utils::GETPOST('lastName'),
@@ -83,7 +82,8 @@ class UserManager extends Manager
         {
             if($error->getCode() == '23000')
                 $message = "Utilisateur existant : ". Utils::GETPOST('userName');
-            return false;
+            else
+                $message = $error->getMessage();
         }
         
     }
