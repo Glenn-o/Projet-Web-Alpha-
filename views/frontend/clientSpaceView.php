@@ -12,16 +12,16 @@ $css = "clientSpace.css";
             <form action="<?= $pageModif ?>" id="form_info_name"method="post" class="form_info_user" enctype="multipart/form-data">
                 <div id="div_password_email">
                     <div>
+                        <label class="label_info"id="lbl2" for="inp2">Ancien mot de passe :</label>
+                        <input type="password" class="text_info" id="inp2" name="old_password" value="">
+                    </div>
+                    <div>
                         <label class="label_info"id="lbl2" for="inp2">Mot de passe :</label>
                         <input type="password" class="text_info" id="inp2" name="password" value="">
                     </div>
                     <div>
                         <label class="label_info"id="lbl2" for="inp2">Confirmation :</label>
                         <input type="password" class="text_info" id="inp2" name="password_confirmed" value="">
-                    </div>
-                    <div>
-                        <label class="label_info"id="lbl2" for="inp2">Ancien mot de passe :</label>
-                        <input type="password" class="text_info" id="inp2" name="old_password" value="">
                     </div>
                     <div>
                         <label class="label_info" id="lbl3" for="inp3">E-mail :</label>
