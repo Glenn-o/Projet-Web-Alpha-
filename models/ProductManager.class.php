@@ -30,7 +30,7 @@ class ProductManager extends Manager
         //PREMIUM
         try
         {
-            if(Utils::GETPOSTSETEMPTY('name') or Utils::GETPOSTSETEMPTY('price') or Utils::GETPOSTSETEMPTY('description') or Utils::GETPOSTSETEMPTY('state') or Utils::GETPOSTSETEMPTY('city') or Utils::GETPOSTSETEMPTY('categorie'))
+            if(Utils::GETPOSTSETEMPTY('name') or Utils::GETPOSTSETEMPTY('price') or Utils::GETPOSTSETEMPTY('description') or Utils::GETPOSTSETEMPTY('state') or Utils::GETPOSTSETEMPTY('city') or Utils::GETPOSTSETEMPTY('category'))
             {
                 throw new Exception("Tout les champs ne sont pas renseignés");
             }
@@ -40,7 +40,7 @@ class ProductManager extends Manager
             $state = Utils::GETPOST('state');
             $city = Utils::GETPOST('city');
             $status = Utils::GETPOST('status');
-            switch (Utils::GETPOST('categorie'))
+            switch (Utils::GETPOST('category'))
             {
                 case 'console': $id_product_type = 1; break;
                 case 'game': $id_product_type = 2; break;
@@ -197,7 +197,7 @@ class ProductManager extends Manager
         $sql .= "name = '".$_POST["name"]."', description = '".$_POST["description"]."',";
         $sql .= "price = ".$_POST["price"].", image1 = '".$image1."',";
         $sql .= "state = '".$_POST["state"]."', city = '".$_POST["city"]."', premium = ".$premium;
-        $sql .= "fk_product_id = ".$_POST["categorie"];
+        $sql .= "fk_product_id = ".$_POST["category"];
         $sql .= " WHERE id_product = ".$id;
         $result = $db->query($sql);
         return $result != FALSE;
