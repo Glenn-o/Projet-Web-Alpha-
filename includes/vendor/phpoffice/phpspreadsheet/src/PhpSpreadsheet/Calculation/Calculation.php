@@ -4621,14 +4621,14 @@ class Calculation
     }
 
     // trigger an error, but nicely, if need be
-    protected function raiseFormulaError($errorMessage)
+    protected function raiseFormulaError($message)
     {
-        $this->formulaError = $errorMessage;
+        $this->formulaError = $message;
         $this->cyclicReferenceStack->clear();
         if (!$this->suppressFormulaErrors) {
-            throw new Exception($errorMessage);
+            throw new Exception($message);
         }
-        trigger_error($errorMessage, E_USER_ERROR);
+        trigger_error($message, E_USER_ERROR);
 
         return false;
     }

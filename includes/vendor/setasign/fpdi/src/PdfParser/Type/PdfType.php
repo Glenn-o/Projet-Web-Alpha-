@@ -53,15 +53,15 @@ class PdfType
      *
      * @param string $type
      * @param PdfType $value
-     * @param string $errorMessage
+     * @param string $message
      * @return mixed
      * @throws PdfTypeException
      */
-    protected static function ensureType($type, $value, $errorMessage)
+    protected static function ensureType($type, $value, $message)
     {
         if (!($value instanceof $type)) {
             throw new PdfTypeException(
-                $errorMessage,
+                $message,
                 PdfTypeException::INVALID_DATA_TYPE
             );
         }

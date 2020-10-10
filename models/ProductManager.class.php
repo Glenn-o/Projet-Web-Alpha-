@@ -43,8 +43,8 @@ class ProductManager extends Manager
             switch (Utils::GETPOST('category'))
             {
                 case 'console': $id_product_type = 1; break;
-                case 'game': $id_product_type = 2; break;
-                case 'accessorie': $id_product_type = 3; break;
+                case 'jeu': $id_product_type = 2; break;
+                case 'accessoire': $id_product_type = 3; break;
                 default: throw new Exception("Pas de categorie selectionné");
             }
             $premium = Utils::ISGETPOST("premium") ? '1' : '0';
@@ -70,7 +70,14 @@ class ProductManager extends Manager
                 $lastID = $db->lastInsertId();
                 $req = $db->prepare("INSERT INTO `product_image`(`image`, `id_product`) VALUES (:image, :lastID)");
                 $req->execute([':image'=>$image, ':lastID' => $lastID]);
-                $message .= "Image crée !";
+                if($req !== FALSE)
+                {
+                    header("Location: index.php?page=ad&product=".$lastID);
+                }
+                else
+                {
+                    throw new Exception("Erreur a la creation de l'image.");
+                }
             }
             
         }
@@ -193,12 +200,16 @@ class ProductManager extends Manager
     public static function updateProductById($id)
     {
         $db = Database::getPDO();
-        $sql = "UPDATE product SET ";
-        $sql .= "name = '".$_POST["name"]."', description = '".$_POST["description"]."',";
-        $sql .= "price = ".$_POST["price"].", image1 = '".$image1."',";
-        $sql .= "state = '".$_POST["state"]."', city = '".$_POST["city"]."', premium = ".$premium;
-        $sql .= "fk_product_id = ".$_POST["category"];
-        $sql .= " WHERE id_product = ".$id;
+        $sql = "UPDATE product SET name = :name , price = :price , description = :description , state = :state,premium = :premium , city = :city , status = :status WHERE id_product = :id";
+        $tabParam = [
+            ":name" => Utils::GETPOST("name"),
+            ":price" => Utils::GETPOST("price"),
+            ":description" => Utils::GETPOST("description"),
+            ":state" => Utils::GETPOST("state"),
+            ":premium" => Utils::GETPOST("premium"),
+            ":city" => Utils::GETPOST("city"),
+            ":status" => Utils::GETPOST("status")
+        ];
         $result = $db->query($sql);
         return $result != FALSE;
     }

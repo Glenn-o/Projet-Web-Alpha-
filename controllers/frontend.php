@@ -79,7 +79,7 @@ function homePage()
 {
     $randomProduct = ProductManager::getRandomProductNumber(6);
     $randomCategory = ProductManager::getRandomProductNumber(6);
-    require("views/frontend/accueilView.php");
+    require("views/frontend/homePageView.php");
 }
 
 function clientSpace()
