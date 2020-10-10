@@ -1,5 +1,5 @@
 <?php
-$title = "Pga d'accueil";
+$title = "Page d'accueil";
 $css = "home.css";
 // BillManager::createPDF(1);
 ?>
