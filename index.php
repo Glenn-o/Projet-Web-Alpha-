@@ -14,17 +14,17 @@ try {
     if (isset($_GET['page'])) {
         switch($_GET['page'])
         {
-            case "accueil":
-                pageAccueil();
+            case "home":
+                homePage();
             break;
-            case "connexion":
-                connexion();
+            case "login":
+                login();
             break;
-            case "inscription":
-                inscription();
+            case "register":
+                register();
             break;
-            case "listProducts":
-                listProducts();
+            case "productSearch":
+                productSearch();
             break;
             case "clientSpace":
                 clientSpace();
@@ -40,12 +40,12 @@ try {
             break;
             //BACKEND
             case "adminSpace":
-                pageAdmin();
+                adminSpace();
             break;
         }
     }
     else {
-        pageAccueil();
+        homePage();
     }
 }
 catch(Exception $e) 

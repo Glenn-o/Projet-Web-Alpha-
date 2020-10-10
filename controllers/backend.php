@@ -5,7 +5,7 @@ require_once "models/UserManager.class.php";
 require_once "models/BillManager.class.php";
 
 
-function pageAdmin()
+function adminSpace()
 {
     if(UserManager::getTypeBySession() > 1)
     {

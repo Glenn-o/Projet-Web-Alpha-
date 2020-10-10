@@ -1,13 +1,13 @@
 <?php
 $title = "Test Template";
-$css = "accueil.css";
+$css = "home.css";
 BillManager::createPDF(1);
 ?>
 
 <?php ob_start(); ?>
 
 <section id="form">
-    <form action="index.php?page=listProducts" method="POST">
+    <form action="index.php?page=productSearch" method="POST">
         <div id="container_input">
             <select name="category" id="">
                 <option value="default">Categorie</option>

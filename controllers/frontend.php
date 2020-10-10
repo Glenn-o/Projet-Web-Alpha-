@@ -4,7 +4,7 @@ require_once "models/UserManager.class.php";
 require_once "models/BillManager.class.php";
 
 
-function listProducts()
+function productSearch()
 {
     $category = Utils::GETPOST("category");
     $research = Utils::GETPOST("research");
@@ -15,7 +15,7 @@ function listProducts()
     require ("views/frontend/listProductsView.php");
 }
 
-function connexion()
+function login()
 {
     $message = "";
     if(Utils::GETPOST("action") == "tryConnexion")
@@ -38,7 +38,7 @@ function connexion()
     require("views/frontend/connexionView.php");
 }
 
-function inscription()
+function register()
 {
     $wrongPassword = "";
     if(Utils::ISGETPOST("firstName") and Utils::ISGETPOST("lastName") and Utils::ISGETPOST("userName") and 
@@ -59,7 +59,7 @@ function inscription()
     require("views/frontend/inscriptionView.php");
 }
 
-function pageAccueil()
+function homePage()
 {
     $randomProduct = ProductManager::getRandomProductNumber(6);
     $randomCategory = ProductManager::getRandomProductNumber(6);
