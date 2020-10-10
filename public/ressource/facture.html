@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../public/css/facture.css" rel="stylesheet">
+    <link href="../css/facture.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Facture</title>
 </head>
@@ -12,23 +12,22 @@
 <body>
     <section id="content">
 
-        <div id="idSeller" class="identification">
-            <p id="nameSeller">Prenom Nom VENDEUR</p>
-            <p id="addressSeller">Adresse VENDEUR</p>
-            <p id="cpSeller">CP VENDEUR</p>
-            <p id="citySeller">Ville VENDEUR</p>
-        </div>
+        <Div id="idSeller" class="identification">
+            <p id="nameSeller">:nomVendeur:</p>
+            <p id="addressSeller">:addresseVendeur:</p>
+            <p id="cpSeller">:cpVendeur:</p>
+            <p id="citySeller">:villeVendeur:</p>
+        </Div>
 
-         
         <div id="idBuyer" class="identification">
-            <p id="nameBuyer">Prenom Nom ACHETEUR</p>
-            <p id="addressBuyer">Adresse ACHETEUR</p>
-            <p id="cpBuyer">CP ACHETEUER</p>
-            <p id="cityBuyer">Ville ACHETEUR</p>
+            <p id="nameBuyer">:nomAcheteur:</p>
+            <p id="addressBuyer">:addresseAcheteur:</p>
+            <p id="cpBuyer">:cpAcheteur:</p>
+            <p id="cityBuyer">:villeAcheteur:</p>
         </div>
 
         <div id="date">
-            <div id="dateValue"><span>LE </span>XX/XX/XXXX</div>
+           <div id="dateValue"><span>LE </span>:dateFacture:</div>
         </div>
 
         <div id="product">
@@ -40,10 +39,10 @@
                     <td id="total">Total :</td>
                 </tr>
                 <tr id="ligne2">
-                    <td id="designationValue">Texte :</td>
-                    <td id="quantityValue">Int</td>
-                    <td id="priceValue">X €</td>
-                    <td id="totalValue">X €</td>
+                    <td id="designationValue">:nomProduit:</td>
+                    <td id="quantityValue">:quantiteProduit:</td>
+                    <td id="priceValue">:prixProduit: €</td>
+                    <td id="totalValue">:totalProduit: €</td>
                 </tr>
 
             </table>

@@ -6,7 +6,7 @@ ob_start() ?>
     <h1> Creation d'annonce</h1>
     <?= $message ?>
     <form action="index.php?page=createProduct&action=creation" method="POST" enctype="multipart/form-data">
-        <select name="categorie" id="">
+        <select name="category" id="">
             <option value="default">Categorie</option>
             <option value="console">Console</option>
             <option value="jeu">Jeux-video</option>

@@ -4,7 +4,7 @@ $css = "clientSpace.css";
 ?>
 
 <?php ob_start() ?>
-<?= $errorMessage ?>
+<?= $message ?>
 <section id="main">
     <h1 id="titre"> Espace Client</h1>
     <div id="container1">
@@ -12,16 +12,16 @@ $css = "clientSpace.css";
             <form action="<?= $pageModif ?>" id="form_info_name"method="post" class="form_info_user" enctype="multipart/form-data">
                 <div id="div_password_email">
                     <div>
+                        <label class="label_info"id="lbl2" for="inp2">Ancien mot de passe :</label>
+                        <input type="password" class="text_info" id="inp2" name="old_password" value="">
+                    </div>
+                    <div>
                         <label class="label_info"id="lbl2" for="inp2">Mot de passe :</label>
                         <input type="password" class="text_info" id="inp2" name="password" value="">
                     </div>
                     <div>
                         <label class="label_info"id="lbl2" for="inp2">Confirmation :</label>
                         <input type="password" class="text_info" id="inp2" name="password_confirmed" value="">
-                    </div>
-                    <div>
-                        <label class="label_info"id="lbl2" for="inp2">Ancien mot de passe :</label>
-                        <input type="password" class="text_info" id="inp2" name="old_password" value="">
                     </div>
                     <div>
                         <label class="label_info" id="lbl3" for="inp3">E-mail :</label>
@@ -108,7 +108,7 @@ $css = "clientSpace.css";
             </div>
         </form>
     </div>
-    <a href="index.php?action=deconnexion" id="logout">Deconnexion</a>
+    <a href="index.php?action=logout" id="logout">Déconnexion</a>
 </section>
 
 <?php $content = ob_get_clean() ?>

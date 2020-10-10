@@ -86,7 +86,7 @@ class DataValidation
     private $showInputMessage = false;
 
     /**
-     * Show ErrorMessage.
+     * Show message.
      *
      * @var bool
      */
@@ -320,7 +320,7 @@ class DataValidation
     }
 
     /**
-     * Get Show ErrorMessage.
+     * Get Show message.
      *
      * @return bool
      */
@@ -330,7 +330,7 @@ class DataValidation
     }
 
     /**
-     * Set Show ErrorMessage.
+     * Set Show message.
      *
      * @param bool $value
      *

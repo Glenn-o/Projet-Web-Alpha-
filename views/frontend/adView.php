@@ -11,7 +11,7 @@ if(Utils::ACTIVESESSION())
         $presenceAcheter = 'href="index.php?page=ad&action=achat$product='.$product["id_product"].'"';
 }
 else
-    $presenceAcheter = 'href="index.php?page=connexion"';
+    $presenceAcheter = 'href="index.php?page=login"';
 
 ob_start();
 ?>
@@ -43,7 +43,7 @@ $(function(){
     $(".button_seller_phone").click(function(){
         var seller_name = $('.seller_name').val()
         $.post("includes/EmailPhoneSeller.php", {submit: 'phone', name:<?= '"'. $seller['username']  . '"'?>},function(data){
-            $(".button_seller_phone").html(data);
+            $(".button_seller_phone").html("+33" + data);
         })
     });
     $(".button_seller_email").click(function(){
