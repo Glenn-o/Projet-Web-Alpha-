@@ -116,6 +116,7 @@ class ProductManager extends Manager
             (SELECT image FROM product_image Image 
             WHERE Image.id_product = Product.id_product  LIMIT 1) as image
             FROM product Product
+            WHERE status = 1
             ORDER BY RAND()
             LIMIT :nbr");
         $req->bindParam(':nbr', $nbr, PDO::PARAM_INT);
