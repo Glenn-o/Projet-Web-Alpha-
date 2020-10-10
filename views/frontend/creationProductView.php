@@ -6,11 +6,11 @@ ob_start() ?>
     <h1> Creation d'annonce</h1>
     <?= $message ?>
     <form action="index.php?page=createProduct&action=creation" method="POST" enctype="multipart/form-data">
-        <select name="categorie" id="">
+        <select name="category" id="">
             <option value="default">Categorie</option>
             <option value="console">Console</option>
-            <option value="jeu">Jeux-video</option>
-            <option value="accessoire">Accessoires</option>
+            <option value="game">Jeux-video</option>
+            <option value="accessorie">Accessoires</option>
         </select>
         <input type="text" class="input_modif"name="name" placeholder = "Nom">
         <input type="number" class="input_modif"name="price"  placeholder = "Prix">

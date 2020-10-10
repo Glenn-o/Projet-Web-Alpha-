@@ -30,7 +30,7 @@ class ProductManager extends Manager
         //PREMIUM
         try
         {
-            if(Utils::GETPOSTSETEMPTY('name') or Utils::GETPOSTSETEMPTY('price') or Utils::GETPOSTSETEMPTY('description') or Utils::GETPOSTSETEMPTY('state') or Utils::GETPOSTSETEMPTY('city') or Utils::GETPOSTSETEMPTY('categorie'))
+            if(Utils::GETPOSTSETEMPTY('name') or Utils::GETPOSTSETEMPTY('price') or Utils::GETPOSTSETEMPTY('description') or Utils::GETPOSTSETEMPTY('state') or Utils::GETPOSTSETEMPTY('city') or Utils::GETPOSTSETEMPTY('category'))
             {
                 throw new Exception("Tout les champs ne sont pas renseignés");
             }
@@ -40,11 +40,11 @@ class ProductManager extends Manager
             $state = Utils::GETPOST('state');
             $city = Utils::GETPOST('city');
             $status = Utils::GETPOST('status');
-            switch (Utils::GETPOST('categorie'))
+            switch (Utils::GETPOST('category'))
             {
                 case 'console': $id_product_type = 1; break;
-                case 'jeu': $id_product_type = 2; break;
-                case 'accessoire': $id_product_type = 3; break;
+                case 'game': $id_product_type = 2; break;
+                case 'accessorie': $id_product_type = 3; break;
                 default: throw new Exception("Pas de categorie selectionné");
             }
             $premium = Utils::ISGETPOST("premium") ? '1' : '0';
@@ -189,30 +189,6 @@ class ProductManager extends Manager
         return $req;
     }
 
-    // Retourne un tableau d'enregistrement selon un numero de page et un numero maximum de produit
-    public static function getAllByPage($pageNbr, $maxProduct)
-    {
-        $db = Database::getPDO();
-        $sql = "SELECT * FROM product";
-        $result = $db->query($sql);
-        $count = $result->rowCount();
-        $all = $res->fetchAll();
-        $nbrPage = ceil($count / $maxProduct);
-        $capResult = $page * $maxProduct;
-        if($capResult > $count)
-        {
-            $capResult = $count;
-        }
-        $start = ($page-1) * $maxProduct;
-        $tabReturn = [];
-        for($i=$start;$i< $capResult;$i++)
-        {
-            $tabReturn[] = $all[$i];
-        }
-        return $tabReturn;
-    }
-    #endregion
-
     #region UPDATE
     public static function updateProductById($id)
     {
@@ -221,7 +197,7 @@ class ProductManager extends Manager
         $sql .= "name = '".$_POST["name"]."', description = '".$_POST["description"]."',";
         $sql .= "price = ".$_POST["price"].", image1 = '".$image1."',";
         $sql .= "state = '".$_POST["state"]."', city = '".$_POST["city"]."', premium = ".$premium;
-        $sql .= "fk_product_id = ".$_POST["categorie"];
+        $sql .= "fk_product_id = ".$_POST["category"];
         $sql .= " WHERE id_product = ".$id;
         $result = $db->query($sql);
         return $result != FALSE;

@@ -4,7 +4,7 @@ $css = "clientSpace.css";
 ?>
 
 <?php ob_start() ?>
-<?= $errorMessage ?>
+<?= $message ?>
 <section id="main">
     <h1 id="titre"> Espace Client</h1>
     <div id="container1">
@@ -108,7 +108,7 @@ $css = "clientSpace.css";
             </div>
         </form>
     </div>
-    <a href="index.php?action=deconnexion" id="logout">Deconnexion</a>
+    <a href="index.php?action=logout" id="logout">Déconnexion</a>
 </section>
 
 <?php $content = ob_get_clean() ?>

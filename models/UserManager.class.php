@@ -41,7 +41,7 @@ class UserManager extends Manager
         return false;
     }
 
-    public static function deconnexion()
+    public static function logout()
     {
         session_unset();
         session_destroy();
@@ -79,7 +79,7 @@ class UserManager extends Manager
         try{
             $req = $db->prepare($sql);
             $req->execute($tabParam);
-            header('Location: index.php?page=connexion');
+            header('Location: index.php?page=login');
         }
         catch(PDOException $error )
         {
