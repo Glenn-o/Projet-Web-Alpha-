@@ -11,7 +11,7 @@ if(Utils::ACTIVESESSION())
         $presenceAcheter = 'href="index.php?page=ad&action=achat$product='.$product["id_product"].'"';
 }
 else
-    $presenceAcheter = 'href="index.php?page=connexion"';
+    $presenceAcheter = 'href="index.php?page=login"';
 
 ob_start();
 ?>
