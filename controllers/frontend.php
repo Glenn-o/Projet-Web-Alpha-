@@ -79,7 +79,7 @@ function homePage()
 {
     $randomProduct = ProductManager::getRandomProductNumber(6);
     $randomCategory = ProductManager::getRandomProductNumber(6);
-    require("views/frontend/accueilView.php");
+    require("views/frontend/homePageView.php");
 }
 
 function clientSpace()
@@ -91,7 +91,7 @@ function clientSpace()
         $id = UserManager::getIDByName($_SESSION["name"]);
         if(Utils::GETPOST("action") == "modification")
             UserManager::updateUserById($id, $message);
-        $data = UserManager::getUserByUsername($_SESSION["name"]);
+        $data = UserManager::getUserBySession();
         $reqProduct = ProductManager::getProductsByUserId($id);
 
     }

@@ -12,8 +12,8 @@ $css = "home.css";
             <select name="category" id="">
                 <option value="default">Categorie</option>
                 <option value="console">Console</option>
-                <option value="game">Jeux-video</option>
-                <option value="accessorie">Accessoires</option>
+                <option value="jeu">Jeux-video</option>
+                <option value="accessoire">Accessoires</option>
             </select>
             <input type="text" name="research" id="" placeholder="rechercher">
             <input type="text" name="location" id="" placeholder="lieu">
