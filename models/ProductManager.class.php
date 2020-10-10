@@ -3,26 +3,21 @@
 require_once "models/Database.class.php";
 require_once "models/Manager.class.php";
 
+
+/**
+ * Classe contant toutes les fonctions utile a la gestion des Produits / Annonces
+ *
+ * @author  FOGteam
+ */
 class ProductManager extends Manager
 {
-    // Info product
-    /*
-    name string
-    description string
-    price float
-    image1 blob
-    image2 blob
-    image3 blob
-    image4 blob
-    image5 blob
-    state string
-    city string
-    premium bool
-    id_product_type
-    */
-
-
     #region CREATE
+    /**
+     * Crée un nouvel produit
+     * @param  string $id_user ID de l'utilisateur qui a créé le produit
+     * @param  string $message Reference a la variable qui contiendra le message
+     * @throws \Exception Si erreur lors de la creation du produit
+    */
     public static function createProduct($id_user, &$message)
     {
         //DATABASE
@@ -89,7 +84,12 @@ class ProductManager extends Manager
     #endregion
 
     #region READ
-    public static function getProductById($id)
+    /**
+     * Recupere un produit
+     * @param  string $id_product ID du produit souhaité
+     * @return $req Le produit recherché
+    */
+    public static function getProductById($id_product)
     {
         $db = Database::getPDO();
         $req = $db->prepare("SELECT
@@ -99,10 +99,15 @@ class ProductManager extends Manager
             WHERE Image.id_product = Product.id_product  LIMIT 1) as image
             FROM product Product
             WHERE id_product = ?");
-        $req->execute([$id]);
+        $req->execute([$id_product]);
         return $req->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Recupere un nombre d'enregistrement aleatoire
+     * @param  string $nbr Nombre d'enregistrement souhaité
+     * @return $this Le PDOStatement contenant les enregistrement aleatoire
+    */
     public static function getRandomProductNumber($nbr)
     {
         $db = Database::getPDO();
@@ -118,16 +123,24 @@ class ProductManager extends Manager
         return $req;
     }
 
-    // Recupere toutes les photos d'une annonce
-    public static function getAllPictureByProductID($id) : array
+    /**
+     * Recupere toutes les images d'une annonce par l'ID de ce dernier
+     * @param  string $id_product Nom de la categorie recherché
+     * @return $this Le PDOStatement contenant les images
+    */
+    public static function getAllPictureByProductID($id_product) : array
     {
         $db = Database::getPDO();
-        $sql = "SELECT image FROM product_image WHERE id_product = ".$id;
+        $sql = "SELECT image FROM product_image WHERE id_product = ".$id_product;
         $result = $db->query($sql);
         return $result;
     }
 
     // Recupere toutes les annonces
+    /**
+     * Recupere toutes les annonces
+     * @return $this Le PDOStatement contenant tout les produits
+    */
     public static function getAllProducts()
     {
         $db = Database::getPDO();
@@ -141,6 +154,10 @@ class ProductManager extends Manager
         return $req;
     }
 
+    /**
+     * Recupere toutes les annonces qui ne sont pas desactivés
+     * @return $this Le PDOStatement contenant les annonces non desactivées
+    */
     public static function getAllActiveProducts()
     {
         $db = Database::getPDO();
@@ -154,6 +171,13 @@ class ProductManager extends Manager
         return $req;
     }
 
+    /**
+     * Recupere toutes les annonces avec les filtres du formulaire de recherche
+     * @param  string $location Ville recherché
+     * @param  string $research Nom ou partie de nom recherché
+     * @param  string $category Nom de la categorie recherché
+     * @return $this Le PDOStatement contenant les annonces filtrés
+    */
     public static function getProductByFilter($location, $research, $category)
     {
         $db = Database::getPDO();
@@ -183,6 +207,12 @@ class ProductManager extends Manager
         return $db->query($sql);
     }
 
+    /**
+     * Recupere toutes les annonces créé par un utilisateur via l'ID de ce dernier
+     * @param  string $user_id Id de l'utilisateur
+     * @return $req Retourne le PDOStatement contenant tout les resultats
+     *
+    */
     public static function getProductsByUserId($user_id)
     {
         $db = Database::getPDO();
@@ -197,10 +227,15 @@ class ProductManager extends Manager
     }
 
     #region UPDATE
-    public static function updateProductById($id)
+    /**
+     * Met a jour un produit.
+     * @param string $user_id Id du produit a modifier
+     * @return bool Vrai si le produit a bien été update, sinon Faux.
+    */
+    public static function updateProductById($id_product) : bool
     {
         $db = Database::getPDO();
-        $sql = "UPDATE product SET name = :name , price = :price , description = :description , state = :state,premium = :premium , city = :city , status = :status WHERE id_product = :id";
+        $sql = "UPDATE product SET name = :name , price = :price , description = :description , state = :state,premium = :premium , city = :city , status = :status WHERE id_product = :id_product";
         $tabParam = [
             ":name" => Utils::GETPOST("name"),
             ":price" => Utils::GETPOST("price"),
@@ -208,30 +243,47 @@ class ProductManager extends Manager
             ":state" => Utils::GETPOST("state"),
             ":premium" => Utils::GETPOST("premium"),
             ":city" => Utils::GETPOST("city"),
-            ":status" => Utils::GETPOST("status")
+            ":status" => Utils::GETPOST("status"),
+            ":id_product" => $id_product
         ];
         $result = $db->query($sql);
         return $result != FALSE;
     }
 
-    public static function setStatusById($id, bool $value) : bool
+    /**
+     * Change le status premium d'un produit
+     * @param $id_product Id du produit a modifier
+     * @param $value Nouvelle valeur
+     * @return bool Vrai si le produit a bien été update, sinon Faux.
+    */
+    public static function setStatusById($id_product, bool $value) : bool
     {
         $db = Database::getPDO();
         $value = $value ? 'true' : 'false';
-        $result = $db->query('UPDATE product SET status = '.$value .' WHERE id_product = '. $id);
+        $result = $db->query('UPDATE product SET status = '.$value .' WHERE id_product = '. $id_product);
         return $result != FALSE;
     }
     #endregion
 
     #region DELETE
-    public static function deleteProductById($id)
+    /**
+     * Supprime un produit via son ID
+     * @param $id_product Id du produit a supprimer
+     * @return bool Vrai si le produit a bien été supprimé, sinon Faux.
+    */
+    public static function deleteProductById($id_product)
     {
         $db = Database::getPDO();
-        $sql = "DELETE FROM product WHERE id_product = ".$id;
+        $sql = "DELETE FROM product WHERE id_product = ".$id_product;
         $result = $db->query($sql);
         return $result != FALSE;
     }
 
+    /**
+     * Supprime tout les produits lié a un user
+     * @param $id_user ID de l'utilisateur
+     * @return bool Vrai si tout les produits ont été supprimé, sinon Faux
+    */
     public static function deleteAllByUser($id_user)
     {
         $db = Database::getPDO();
