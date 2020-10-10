@@ -1,14 +1,14 @@
 <?php
-    $presenceSession = !empty($_SESSION["name"]);
-    if($presenceSession)
+    $currentSession = Utils::ACTIVESESSION();
+    if($currentSession)
     {
-        $id = UserManager::getIDByName($_SESSION["name"]);
-        $adminSpace = UserManager::getTypeById($id) != 1;
-        $buttonConnexion = "index.php?page=createProduct";
+        $idSession = UserManager::getIDBySession();
+        $adminSpace = UserManager::getTypeById($idSession) != 1;
+        $connectionButton = "index.php?page=createProduct";
     }
     else
     {
-        $buttonConnexion = "index.php?page=login";
+        $connectionButton = "index.php?page=login";
         $adminSpace = FALSE;
     }
 ?>
@@ -30,12 +30,12 @@
         <header id="header2">
             <a href="index.php"><img src="public/img/logo.png" alt="logo_fog" id="logo_fog"></a>
             <div id="container_menu">
-                <a href='<?=  $buttonConnexion?> '><img src="public/img/button.png" alt="button" id="button_ad"></a>
+                <a href='<?=  $connectionButton?> '><img src="public/img/button.png" alt="button" id="button_ad"></a>
                 <a href="#"><img src="public/img/bell.png" alt="logo_bell" id="logo_bell"></a>
                 <a href="index.php?page=adminSpace"><img src="public/img/wrench.png" alt="logo_admin" id="logo_admin" <?php echo $adminSpace ? '' : 'style="display:none"' ?> ></a>
-                <a href='<?php echo $presenceSession ? "index.php?page=clientSpace" : "index.php?page=login" ?>'><div id="container_user">
-                    <img src='<?php echo $presenceSession ? "data:image/jpg/png;base64,".UserManager::getAvatar($_SESSION["name"]) : "public/img/user.png" ?>' alt="logo_user" id="logo_user">
-                    <p><?php echo $presenceSession ? $_SESSION["name"] : "Se connecter"; ?></p>
+                <a href='<?php echo $currentSession ? "index.php?page=clientSpace" : "index.php?page=login" ?>'><div id="container_user">
+                    <img src='<?php echo $currentSession ? "data:image/jpg/png;base64,".UserManager::getAvatar($_SESSION["name"]) : "public/img/user.png" ?>' alt="logo_user" id="logo_user">
+                    <p><?php echo $currentSession ? $_SESSION["name"] : "Se connecter"; ?></p>
                 </div></a>
             </div>
         </header>

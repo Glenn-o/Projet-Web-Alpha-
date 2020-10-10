@@ -5,9 +5,9 @@ require('controllers/frontend.php');
 require('controllers/backend.php');
 
 session_start();
-if(Utils::GETPOST("action") == "deconnexion")
+if(Utils::GETPOST("action") == "logout")
 {
-    UserManager::deconnexion();
+    UserManager::logout();
 }
 
 try {
@@ -33,7 +33,7 @@ try {
                 createProduct();
             break;
             case "ad":
-                vueProduit();
+                adView();
             break;
             case "contact":
                 contact();

@@ -41,7 +41,7 @@ class UserManager extends Manager
         return false;
     }
 
-    public static function deconnexion()
+    public static function logout()
     {
         session_unset();
         session_destroy();
