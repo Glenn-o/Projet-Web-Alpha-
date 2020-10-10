@@ -30,6 +30,8 @@ foreach($res as $index=>$value)
     <input type="hidden" name="location" value="<?= $location ?>">
     <input type="hidden" name="research" value="<?= $research ?>">
 <?php
+echo "<div id='select_page'>";
+
 if($pageNbr > 1)
 {
     $beforePage = $pageNbr - 1 ;
@@ -40,6 +42,7 @@ if($pageNbr < $nbrPage)
     $afterPage = $pageNbr + 1;
     print '<input type="submit" name="pageNbr" value="'.$afterPage.'">';
 }
+
 ?>
 </form>
 </section>

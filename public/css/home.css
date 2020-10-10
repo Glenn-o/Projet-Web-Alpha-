@@ -133,6 +133,9 @@ body, html{
     display: block;
     margin: auto;
 }
+#div_twitter{
+    margin: 10vh auto;
+}
 @media screen and (max-width: 1024px){
     #form form{
         display: flex;
