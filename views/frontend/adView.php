@@ -8,7 +8,7 @@ if(Utils::ACTIVESESSION())
     if($id == $product["id_user"])
         $presenceAcheter = 'style="display:none"';
     else
-        $presenceAcheter = 'href="index.php?page=ad&action=achat$product='.$product["id_product"].'"';
+        $presenceAcheter = 'href="index.php?page=ad&action=achat&product='.$product["id_product"].'"';
 }
 else
     $presenceAcheter = 'href="index.php?page=login"';

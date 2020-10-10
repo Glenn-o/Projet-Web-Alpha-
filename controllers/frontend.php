@@ -62,17 +62,21 @@ function register()
     Utils::ISGETPOST("country") and Utils::ISGETPOST("phone") and Utils::ISGETPOST("password") and
     Utils::ISGETPOST("email"))
     {
-            if(UserManager::createUser($message))
-            {
-                $message =  'connexion reussie';
-            }
+        try
+        {
+            UserManager::createUser($message);
+        }
+        catch(Exception $error)
+        {
+        
+        }
     }
     else
     {
         $message = "Tout les champs ne sont pas remplis";
     }
 
-    require("views/frontend/inscriptionView.php");
+    require("views/frontend/registerView.php");
 }
 
 function homePage()
@@ -123,6 +127,7 @@ function adView()
         }
         else{
             throw new Exception("La facture n'as pas reussi a se creer");
+            // header("Location: index.php?page=ad&product=".Utils::GETPOST("product"));
         }
 
     }

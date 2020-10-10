@@ -34,7 +34,7 @@ p {
     display: flex;
 }
 #dateValue{
-margin-left: 1%;
+    margin-left: 1%;
 }
 #idBuyer{
     grid-column: 2/3;
