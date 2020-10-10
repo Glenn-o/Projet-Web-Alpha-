@@ -49,12 +49,12 @@ class UserManager extends Manager
     #endregion
 
     #region CREATE
-    public static function createUser(&$errorMessage) : bool
+    public static function createUser(&$message) : bool
     {
         // print_r([$_POST["password"], $_POST["password_confirmed"]]);
         if(Utils::GETPOST("password") !== Utils::GETPOST("password-confirmed"))
         {
-            $errorMessage = "Les champs mot de passe ne correspondent pas";
+            $message = "Les champs mot de passe ne correspondent pas";
             return FALSE;
         }
         $db = Database::getPDO();
@@ -84,7 +84,7 @@ class UserManager extends Manager
         catch(PDOException $error )
         {
             if($error->getCode() == '23000')
-                $errorMessage = "Utilisateur existant : ". Utils::GETPOST('userName');
+                $message = "Utilisateur existant : ". Utils::GETPOST('userName');
             return false;
         }
         
@@ -129,7 +129,7 @@ class UserManager extends Manager
     #endregion
 
     #region UPDATE
-    public static function updateUserById($id, &$errorMessage) : bool
+    public static function updateUserById($id, &$message) : bool
     {
         $db = Database::getPDO();
         //GESTION CHAMPS NORMAUX
@@ -209,9 +209,9 @@ class UserManager extends Manager
         catch(Exception $error )
         {
             if($error->getCode() == '23000')
-                $errorMessage = "Utilisateur existant : ". Utils::GETPOST('userName');
+                $message = "Utilisateur existant : ". Utils::GETPOST('userName');
             else
-                $errorMessage = $error->getMessage();
+                $message = $error->getMessage();
             return false;
         }
     }
