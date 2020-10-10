@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Classe hérité par tout les manager et regroupant les méthodes utiles a tout manager.
+ */
 class Manager
 {
     /**
@@ -8,7 +11,7 @@ class Manager
      */
     public static function getFileWithDefault($fileName){
         $directory = "public/img/";
-        if(!empty($_FILES[$fileName]['name'])){ // Si image envoyé dans formulaire, on va la chercher
+        if(!empty($_FILES[$fileName]['name'])){
             $tmp_name = $_FILES[$fileName]['tmp_name'];
             $name = basename($_FILES[$fileName]['name']);
             move_uploaded_file($tmp_name, "$directory/$name");
@@ -24,7 +27,7 @@ class Manager
                 unlink($path);
                 return base64_encode($data);
             }
-        }else{                              // Sinon on prend celle par defaut
+        }else{
             $data = file_get_contents("$directory/user.png");
             return base64_encode($data);
         }

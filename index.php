@@ -14,6 +14,7 @@ try {
     if (isset($_GET['page'])) {
         switch($_GET['page'])
         {
+            //Fronted
             case "home":
                 homePage();
             break;
