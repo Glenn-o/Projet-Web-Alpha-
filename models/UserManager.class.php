@@ -99,7 +99,7 @@ class UserManager extends Manager
     {
         $db = Database::getPDO();
         $req = $db->prepare("SELECT * from users where username = ?");
-        $req->execute([$_SESSION["name"]]);
+        $req->execute([$userName]);
         return $req->fetch(PDO::FETCH_ASSOC);
 
     }
@@ -145,7 +145,7 @@ class UserManager extends Manager
         #INNER JOIN user_type Role ON User.id_user_type = Role.id_user_type
         $db = Database::getPDO();
         $sql = "SELECT id_user_type FROM users User
-                WHERE id_user = ".$id;
+                WHERE id_user = ".$id_user;
         $result = $db->query($sql)->fetch(PDO::FETCH_ASSOC)["id_user_type"];
         return $result;
     }
