@@ -43,8 +43,8 @@ class ProductManager extends Manager
             switch (Utils::GETPOST('categorie'))
             {
                 case 'console': $id_product_type = 1; break;
-                case 'jeu': $id_product_type = 2; break;
-                case 'accessoire': $id_product_type = 3; break;
+                case 'game': $id_product_type = 2; break;
+                case 'accessorie': $id_product_type = 3; break;
                 default: throw new Exception("Pas de categorie selectionné");
             }
             $premium = Utils::ISGETPOST("premium") ? '1' : '0';
@@ -188,30 +188,6 @@ class ProductManager extends Manager
         $req->execute([$user_id]);
         return $req;
     }
-
-    // Retourne un tableau d'enregistrement selon un numero de page et un numero maximum de produit
-    public static function getAllByPage($pageNbr, $maxProduct)
-    {
-        $db = Database::getPDO();
-        $sql = "SELECT * FROM product";
-        $result = $db->query($sql);
-        $count = $result->rowCount();
-        $all = $res->fetchAll();
-        $nbrPage = ceil($count / $maxProduct);
-        $capResult = $page * $maxProduct;
-        if($capResult > $count)
-        {
-            $capResult = $count;
-        }
-        $start = ($page-1) * $maxProduct;
-        $tabReturn = [];
-        for($i=$start;$i< $capResult;$i++)
-        {
-            $tabReturn[] = $all[$i];
-        }
-        return $tabReturn;
-    }
-    #endregion
 
     #region UPDATE
     public static function updateProductById($id)

@@ -1,7 +1,7 @@
 <?php
 $title = "Test Template";
 $css = "home.css";
-BillManager::createPDF(1);
+// BillManager::createPDF(1);
 ?>
 
 <?php ob_start(); ?>
@@ -12,8 +12,8 @@ BillManager::createPDF(1);
             <select name="category" id="">
                 <option value="default">Categorie</option>
                 <option value="console">Console</option>
-                <option value="jeux">Jeux-video</option>
-                <option value="accessoires">Accessoires</option>
+                <option value="game">Jeux-video</option>
+                <option value="accessorie">Accessoires</option>
             </select>
             <input type="text" name="research" id="" placeholder="rechercher">
             <input type="text" name="location" id="" placeholder="lieu">
