@@ -96,6 +96,7 @@
     }
     #footer_center img{
         height: 5vw;
+        margin-left: -8vw;
     }
     #footer_right{
         width: 90vw;
