@@ -3,10 +3,21 @@
 require_once "models/Manager.class.php";
 use Mpdf\Mpdf;
 
+
+/**
+ * Classe contant toutes les fonctions utile a la gestion des Factures
+ *
+ * @author  FOGteam
+ */
 class BillManager extends Manager
 {
     //CRUD
     //CREATE
+    /**
+     * Crée le PDF d'une facture
+     * @param $id_facture ID de la facture
+     * @return $pdf Fichier PDF en base64
+     */
     public static function createPDF($id_facture)
     {
         $mpdf= new Mpdf(["mode" => "utf-8"]);
@@ -40,6 +51,10 @@ class BillManager extends Manager
         $mpdf->Output();
     }
 
+    /**
+     * Crée une facture
+     * @param $id_product ID du produit
+     */
     public static function createBill($id_product)
     {
         try
@@ -76,6 +91,10 @@ class BillManager extends Manager
     }
     
     //READ
+    /**
+     * Recupere toutes les factures
+     * @return PDOStatement $req PDOStatement du resultat de la requete
+     */
     public static function getAllBills()
     {
         $db = Database::getPDO();
@@ -91,6 +110,11 @@ class BillManager extends Manager
         return $req = $db->query($sql);
     }
 
+    /**
+     * Recupere une facture par son ID
+     * @param $id_facture ID de la facture a récuperer
+     * @return PDOStatement $req Facture
+     */
     public static function getBillById($id)
     {
         $db = Database::getPDO();
@@ -108,24 +132,31 @@ class BillManager extends Manager
     }
 
     //UPDATE
+    /**
+     * Met a jour une facture
+     * @return bool $result Vrai si Update reussis sinon Faux
+     */
     public static function updateBillById($id)
     {
         $db = Database::getPDO();
         $sql = "UPDATE billing
-                SET date = ?,
-                quantity = ?,
-                bill_pdf = ?,
-                id_seller = ?,
-                id_buyer = ?,
-                id_product = ?";
+                SET date = :date,
+                quantity = :quantity,
+                bill_pdf = :pdf,
+                id_seller = :id_seller,
+                id_buyer = :id_buyer,
+                id_product = :id_product";
     }
 
     //DELETE
+    /**
+     * Supprime une facture
+     * @return bool $result Vrai si Update reussis sinon Faux
+     */
     public static function deleteBillById($id)
     {
         $db = Database::getPDO();
         $sql = "DELETE FROM billing WHERE id_billing = $id";
-        return $db->query($sql);
+        return $db->query($sql) != FALSE;
     }
-    //GETTER ET SETTER
 }

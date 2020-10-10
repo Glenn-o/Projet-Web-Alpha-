@@ -87,7 +87,7 @@ class ProductManager extends Manager
     /**
      * Recupere un produit
      * @param  string $id_product ID du produit souhaité
-     * @return $req Le produit recherché
+     * @return PDOStatement $req Retourne le resultat de la requete
     */
     public static function getProductById($id_product)
     {
@@ -106,7 +106,7 @@ class ProductManager extends Manager
     /**
      * Recupere un nombre d'enregistrement aleatoire
      * @param  string $nbr Nombre d'enregistrement souhaité
-     * @return $this Le PDOStatement contenant les enregistrement aleatoire
+     * @return PDOStatement $req Retourne le resultat de la requete
     */
     public static function getRandomProductNumber($nbr)
     {
@@ -126,7 +126,7 @@ class ProductManager extends Manager
     /**
      * Recupere toutes les images d'une annonce par l'ID de ce dernier
      * @param  string $id_product Nom de la categorie recherché
-     * @return $this Le PDOStatement contenant les images
+     * @return PDOStatement $req Retourne le resultat de la requete
     */
     public static function getAllPictureByProductID($id_product) : array
     {
@@ -139,7 +139,7 @@ class ProductManager extends Manager
     // Recupere toutes les annonces
     /**
      * Recupere toutes les annonces
-     * @return $this Le PDOStatement contenant tout les produits
+     * @return PDOStatement $req Retourne le resultat de la requete
     */
     public static function getAllProducts()
     {
@@ -156,7 +156,7 @@ class ProductManager extends Manager
 
     /**
      * Recupere toutes les annonces qui ne sont pas desactivés
-     * @return $this Le PDOStatement contenant les annonces non desactivées
+     * @return PDOStatement $req Retourne le resultat de la requete
     */
     public static function getAllActiveProducts()
     {
@@ -176,7 +176,7 @@ class ProductManager extends Manager
      * @param  string $location Ville recherché
      * @param  string $research Nom ou partie de nom recherché
      * @param  string $category Nom de la categorie recherché
-     * @return $this Le PDOStatement contenant les annonces filtrés
+     * @return PDOStatement $req Retourne le resultat de la requete
     */
     public static function getProductByFilter($location, $research, $category)
     {
@@ -210,7 +210,7 @@ class ProductManager extends Manager
     /**
      * Recupere toutes les annonces créé par un utilisateur via l'ID de ce dernier
      * @param  string $user_id Id de l'utilisateur
-     * @return $req Retourne le PDOStatement contenant tout les resultats
+     * @return PDOStatement $req Retourne le resultat de la requete
      *
     */
     public static function getProductsByUserId($user_id)
