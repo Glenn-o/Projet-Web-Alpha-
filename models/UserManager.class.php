@@ -5,52 +5,35 @@ require_once "models/Database.class.php";
 
 class UserManager extends Manager
 {
-    /*
-    Info Users
-
-    id int auto_increment
-    lastname string
-    firstname string 
-    adress string
-    city string
-    postal_code string
-    country string
-    phone number
-    email string
-    appreciation float
-    avatar blob/base64
-    username string
-    password string/sha1
-    */
 
     #region FONCTIONS CONNEXION / INSCRIPTION
+    
+    /**
+     * @param string $userName Nom utilisateur
+     * @param string $password mot de passe de l'utilisateur
+     * @return bool Resultat de la connexion
+     */
     public static function tryConnexion(string $userName, string $password) : bool
     {
         $db = Database::getPDO();
         $password = sha1($password);
-        $checkUserSQL = 'SELECT username FROM users WHERE username =  "'.$userName.'"';
+        $checkUserSQL = 'SELECT password FROM users WHERE username = "'.$userName.'" and password = "'.$password.'"';
         $resultUser = $db->query($checkUserSQL);
         if($resultUser->rowCount() > 0) // Si user trouvé grace a nom
         {
-            $checkPassword = 'SELECT password FROM users WHERE password = "'.$password.'"';
-            $resultUser = $db->query($checkPassword);
-            if($resultUser->rowCount() > 0) // Si mot de passe correspond
-            {
-                $_SESSION["name"] = $_POST["username"];
+            $_SESSION["name"] = $_POST["username"];
 
-                header('Location: index.php');
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            header('Location: index.php');
+            return true;
         }
         $db = null;
         return false;
     }
 
-    public static function deconnexion()
+    /**
+     * Deconnecte la session actuelle
+     */
+    public static function logout()
     {
         session_unset();
         session_destroy();
@@ -58,70 +41,87 @@ class UserManager extends Manager
     #endregion
 
     #region CREATE
-    public static function createUser(&$errorMessage) : bool
+    /**
+     * Crée un nouvel utilisateur
+     * @param  string $message Reference a la variable qui contiendra le message
+     * @return bool Resultat de la creation
+     * @throws \Exception Si erreur lors de la creation de l'utilisateur
+    */
+    public static function createUser(&$message)
     {
-        // print_r([$_POST["password"], $_POST["password_confirmed"]]);
         if(Utils::GETPOST("password") !== Utils::GETPOST("password-confirmed"))
         {
-            $errorMessage = "Les champs mot de passe ne correspondent pas";
-            return FALSE;
+            throw new Exception("Mot de passe non similaire");
         }
         $db = Database::getPDO();
         $password = sha1(Utils::GETPOST("password"));
         $avatar = parent::getFile('avatar');
-        $sql = "INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `username`, `password`, `avatar`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO `users`(`lastname`, `firstname`, `address`, `city`, `postal_code`, `country`, `phone`, `email`, `username`, `password`, `avatar`, config_news, config_part, id_user_type) VALUES (:lastName,:firstName,:address,:city,:postalCode,:country,:phone,:email,:userName,:password,:avatar, 0, 0, 1)";
 
         $tabParam = [
-            Utils::GETPOST('lastName'),
-            Utils::GETPOST('firstName'),
-            Utils::GETPOST('address'),
-            Utils::GETPOST('city'),
-            Utils::GETPOST('postalCode'),
-            Utils::GETPOST("country"),
-            Utils::GETPOST('phone'),
-            Utils::GETPOST('email'),
-            Utils::GETPOST('userName'),
-            $password,
-            $avatar
+            ":lastName" => Utils::GETPOST('lastName'),
+            ":firstName" => Utils::GETPOST('firstName'),
+            ":address" => Utils::GETPOST('address'),
+            ":city" => Utils::GETPOST('city'),
+            ":postalCode" => Utils::GETPOST('postalCode'),
+            ":country" => Utils::GETPOST("country"),
+            ":phone" => Utils::GETPOST('phone'),
+            ":email" => Utils::GETPOST('email'),
+            ":userName" => Utils::GETPOST('userName'),
+            ":password" => $password,
+            ":avatar" => $avatar
         ];
         
         try{
             $req = $db->prepare($sql);
             $req->execute($tabParam);
-            header('Location: index.php?page=connexion');
+            header('Location: index.php?page=login');
+            return true;
         }
-        catch(PDOException $error )
+        catch(Exception $error )
         {
             if($error->getCode() == '23000')
-                $errorMessage = "Utilisateur existant : ". Utils::GETPOST('userName');
-            return false;
+                $message = "Utilisateur existant : ". Utils::GETPOST('userName');
+            else
+                $message = $error->getMessage();
         }
         
     }
     #endregion
 
     #region READ
-    //Recupere un User par son username
+    /**
+     * Recupere un utilisateur par son nom d'utilisateur
+     * @param $userName Nom de l'utilisateur
+     * @return $req     tableau associatif avec info de l'utilisateur
+     */
     public static function getUserByUsername($userName)
     {
         $db = Database::getPDO();
         $req = $db->prepare("SELECT * from users where username = ?");
-        $req->execute([$_SESSION["name"]]);
+        $req->execute([$userName]);
         return $req->fetch(PDO::FETCH_ASSOC);
 
     }
 
-    //Recupere un User par son ID
-    public static function getUserById($id)
+    /**
+     * Recupere un utilisateur par son nom d'utilisateur
+     * @param $id_user Nom de l'utilisateur
+     * @return $req    Tableau associatif avec info de l'utilisateur
+     */
+    public static function getUserById($id_user)
     {
         $db = Database::getPDO();
         $req = $db->prepare("SELECT * from users where id_user = ?");
-        $req->execute([$id]);
+        $req->execute([$id_user]);
         return $req->fetch(PDO::FETCH_ASSOC);
 
     }
 
-    // Recupere toutes les annonces
+    /**
+     * Recupere tout les utilisateurs
+     * @return PDOStatement $req Retourne le resultat de la requete
+    */
     public static function getAllUsers()
     {
         $db = Database::getPDO();
@@ -135,10 +135,44 @@ class UserManager extends Manager
             return FALSE;
 
     }
+
+    /**
+     * Recupere le role d'un utilisateur
+     * @param $id_user Retourne le resultat de la requete
+    */
+    public static function getTypeById($id_user)
+    {
+        #INNER JOIN user_type Role ON User.id_user_type = Role.id_user_type
+        $db = Database::getPDO();
+        $sql = "SELECT id_user_type FROM users User
+                WHERE id_user = ".$id_user;
+        $result = $db->query($sql)->fetch(PDO::FETCH_ASSOC)["id_user_type"];
+        return $result;
+    }
+
+    /**
+     * Recupere un utilisateur par la Session
+     * @return string Tableau associatif si session, sinon faux 
+     */
+    public static function getUserBySession()
+    {
+        if(!empty($_SESSION["name"]))
+        {
+            return self::getUserByUsername($_SESSION["name"]);
+        }
+        else
+            return FALSE;
+    }
     #endregion
 
     #region UPDATE
-    public static function updateUserById($id, &$errorMessage) : bool
+    /**
+     * Met a jour un utilisateur.
+     * @param string $user_id Id du de l'utilisateur a modifier
+     * @param string &$message Reference au message qui sera affiché en cas d'erreur
+     * @return bool Vrai si l'utilisateur a bien été update, sinon Faux.
+    */
+    public static function updateUserById($id, &$message) : bool
     {
         $db = Database::getPDO();
         //GESTION CHAMPS NORMAUX
@@ -218,19 +252,11 @@ class UserManager extends Manager
         catch(Exception $error )
         {
             if($error->getCode() == '23000')
-                $errorMessage = "Utilisateur existant : ". Utils::GETPOST('userName');
+                $message = "Utilisateur existant : ". Utils::GETPOST('userName');
             else
-                $errorMessage = $error->getMessage();
+                $message = $error->getMessage();
             return false;
         }
-    }
-
-    public static function getTypeById($id)
-    {
-        $db = Database::getPDO();
-        $sql = "SELECT id_user_type FROM users WHERE id_user = ".$id;
-        $result = $db->query($sql)->fetch(PDO::FETCH_ASSOC)["id_user_type"];
-        return $result;
     }
     #endregion
 
@@ -249,14 +275,23 @@ class UserManager extends Manager
     }
     #endregion
 
-
-    #region Utils
-
-    public static function checkUsername(string $username)
+    #region Getter
+    /**
+     * Recupere le mot de passe
+     * @return $req Mot de passe crypté de l'utilisateur
+     */
+    public static function getPassword($id)
     {
-        $sql = "SELECT * from users WHERE username";
+        $db = Database::getPDO();
+        $req = $db->prepare("SELECT password FROM users WHERE id_user = ?");
+        $req->execute([$id]);
+        return $req->fetch(PDO::FETCH_ASSOC)["password"];
     }
 
+    /**
+     * Recupere l'avatar
+     * @return $req Image en base64
+     */
     public static function getAvatar(string $username)
     {
         $db = Database::getPDO();
@@ -270,6 +305,11 @@ class UserManager extends Manager
         $db = null;
     }
 
+    /**
+     * Retourne l'ID selon un nom
+     * @param $userName Nom de l'utilisateur
+     * @return $req ID de l'utilisateur
+     */
     public static function getIDByName($userName)
     {
         $db = Database::getPDO();
@@ -278,6 +318,10 @@ class UserManager extends Manager
         return $req->fetch(PDO::FETCH_ASSOC)["id_user"];
     }
 
+     /**
+     * Retourne l'ID de la session actuelle
+     * @return int ID de l'utilisateur ou Faux si pas de session
+     */
     public static function getIdBySession()
     {
         if(!empty($_SESSION["name"]))
@@ -288,24 +332,27 @@ class UserManager extends Manager
             return FALSE;
     }
 
-    public static function getUserBySession()
+    /**
+     * Retourne le role de la session actuelle
+     * @return int Role de l'utilisateur ou 0 si pas de session
+     */
+    public static function getTypeBySession()
     {
+        #INNER JOIN user_type Role ON User.id_user_type = Role.id_user_type
         if(!empty($_SESSION["name"]))
         {
-            return self::getUserByUsername($_SESSION["name"]);
+            $db = Database::getPDO();
+            $idUser = self::getIDByName($_SESSION["name"]);
+            $sql = "SELECT id_user_type FROM users User
+                    WHERE id_user = ?";
+            $req = $db->prepare($sql);
+            $req->execute([$idUser]);
+            return $req->fetch(PDO::FETCH_ASSOC)["id_user_type"];
         }
         else
-            return FALSE;
-    }
-    #endregion
-
-    #region Getter
-    public static function getPassword($id)
-    {
-        $db = Database::getPDO();
-        $req = $db->prepare("SELECT password FROM users WHERE id_user = ?");
-        $req->execute([$id]);
-        return $req->fetch(PDO::FETCH_ASSOC)["password"];
+        {
+            return 0;
+        }
     }
     #endregion
 

@@ -1,18 +1,19 @@
 <?php
-$title = "Test Template";
-$css = "accueil.css";
+$title = "Page d'accueil";
+$css = "home.css";
+// BillManager::createPDF(1);
 ?>
 
 <?php ob_start(); ?>
 
 <section id="form">
-    <form action="index.php?page=listProducts" method="POST">
+    <form action="index.php?page=productSearch" method="POST">
         <div id="container_input">
             <select name="category" id="">
                 <option value="default">Categorie</option>
                 <option value="console">Console</option>
-                <option value="jeux">Jeux-video</option>
-                <option value="accessoires">Accessoires</option>
+                <option value="jeu">Jeux-video</option>
+                <option value="accessoire">Accessoires</option>
             </select>
             <input type="text" name="research" id="" placeholder="rechercher">
             <input type="text" name="location" id="" placeholder="lieu">
@@ -24,10 +25,6 @@ $css = "accueil.css";
 </section>
 
 <section id="content">
-    <h1>top categories</h1>
-    <div id="category">
-
-    </div>
     <h1>interessant pour vous</h1>
     <div id="user_suggestion">
     <?php
@@ -41,7 +38,7 @@ $css = "accueil.css";
     }
     ?>
     </div>
-    <h1>Dans la categorie</h1>
+    <h1>Les derniers produits</h1>
     <div id="rand_category">
     <?php
     while($prod = $randomCategory->fetch(PDO::FETCH_ASSOC))
@@ -53,6 +50,10 @@ $css = "accueil.css";
     <?php
     }
     ?>
+    
+    </div>
+    <div id="div_twitter">
+        <a class="twitter-timeline" data-width="300" data-height="300" href="https://twitter.com/Fog37433151?ref_src=twsrc%5Etfw">Tweets by Fog37433151</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
     </div>
 </section>
 

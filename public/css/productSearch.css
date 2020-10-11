@@ -51,3 +51,45 @@ body, html {
 #div_info_user p::first-letter {
     text-transform: uppercase;
 }
+#select_page{
+    width: 20vw;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+#select_page input{
+    width: 3vw;
+    height: 5vh;
+    background-color: #4264aa;
+    border: 0.3vh solid #4264aa;
+    cursor: pointer;
+    color: white;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    text-align: center;
+}
+#select_page input:hover,#select_page input:focus {
+    background-color: transparent;
+    color: #4264aa;
+    transition: 200ms;
+}
+@media screen and (max-width: 1024px){
+    body{
+        padding-top: 10vh;
+    }
+    .div_product{
+        width: 90vw;
+    }
+    #produit{
+        height: 8vh;
+    }
+    .div_product p{
+        font-size: 3vw;
+    }
+    #div_info_user p{
+        font-size: 3vw;
+    }
+}

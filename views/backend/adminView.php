@@ -1,12 +1,6 @@
 <?php
 $title = "Page Admin";
 $css = "adminSpace.css";
-
-ob_start(); ?>
-
-<h1> La mega Teuf en fait ! </h1>
-<h2> Le pourquoi du comment </h2>
-
-<?php $content = ob_get_clean() ?>
-
+header("Location: index.php?page=adminSpace&vue=user")
+?>
 <?php require "template.php" ?>

@@ -1,7 +1,14 @@
 <?php
 
+/**
+ * Class regroupant toutes les fonctions de Base de donnée.
+ */
 class Database
 {
+    /**
+     * Recupere un objet PDO
+     * @return PDO Objet de connexion a la base de donnée fog_admin
+     */
     public static function getPDO() {
 
         $con = new PDO('mysql:host=localhost;dbname=fog_bdd', 'admin_fog', 'FogCesi2020!');

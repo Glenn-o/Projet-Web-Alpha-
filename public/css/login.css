@@ -5,7 +5,7 @@ body, html {
     min-height: 100vh;
     position: relative;
     background-image: url("../img/background.png");
-    background-size:cover;
+    background-size: cover;
     background-repeat: no-repeat;
 }
 #main{
@@ -99,4 +99,30 @@ body, html {
 #message_error{
     text-align: center;
     color: red;
+}
+@media screen and (max-width: 1024px){
+    body{
+        padding-top: 10vh;
+    }
+    #main h1{
+        font-size: 3vh;
+    }
+    #main form{
+        width: 90vw;
+        height: 60vh;
+    }
+    #main form input{
+        width: 80vw;
+        border-bottom: 0.1vh solid black;
+        font-size: 2vh;
+    }
+    #main form h2{
+        font-size: 3vh;
+    }
+    #message_error{
+        font-size: 3vh;
+    }
+    #main a{
+        font-size: 3vh;
+    }
 }
