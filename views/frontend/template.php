@@ -22,6 +22,7 @@
     <link href="public/css/header.css" rel="stylesheet">
     <link href="public/css/footer.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="icon" href="public/img/logo.ico" />
     <title><?= $title ?></title>
 </head>
 <body>
