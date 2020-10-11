@@ -12,6 +12,7 @@ $css = "clientSpace.css";
             <form action="<?= $pageModif ?>" id="form_info_name"method="post" class="form_info_user" enctype="multipart/form-data">
                 <div id="div_password_email">
                     <div>
+
                         <label class="label_info" id="lbl1" for="inp1">Pseudo</label>
                         <input type="text" class="text_info" id="inp1" name="username" value="<?= $data["username"] ?>">
                     </div>
