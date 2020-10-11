@@ -116,6 +116,7 @@ class ProductManager extends Manager
             (SELECT image FROM product_image Image 
             WHERE Image.id_product = Product.id_product  LIMIT 1) as image
             FROM product Product
+            WHERE status = 1
             ORDER BY RAND()
             LIMIT :nbr");
         $req->bindParam(':nbr', $nbr, PDO::PARAM_INT);
@@ -235,7 +236,8 @@ class ProductManager extends Manager
     public static function updateProductById($id_product) : bool
     {
         $db = Database::getPDO();
-        $sql = "UPDATE product SET name = :name , price = :price , description = :description , state = :state,premium = :premium , city = :city , status = :status WHERE id_product = :id_product";
+        $sql = "UPDATE product SET name = :name , price = :price , description = :description , 
+        state = :state,premium = :premium , city = :city , status = :status WHERE id_product = :id_product";
         $tabParam = [
             ":name" => Utils::GETPOST("name"),
             ":price" => Utils::GETPOST("price"),

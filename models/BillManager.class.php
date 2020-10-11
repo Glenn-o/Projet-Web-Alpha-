@@ -74,7 +74,8 @@ class BillManager extends Manager
             $product = ProductManager::getProductById($id_product);
             $id_buyer = UserManager::getIdBySession();
             $id_seller = $product["id_user"];
-            $sql = "INSERT INTO `billing`(`date`, `quantity`, `id_seller`, `id_buyer`, `id_product`, `bill_pdf`) VALUES (:date,:quantity,:id_seller,:id_buyer,:id_product, :bill_pdf)";
+            $sql = "INSERT INTO `billing`(`date`, `quantity`, `id_seller`, `id_buyer`, `id_product`, `bill_pdf`) 
+            VALUES (:date,:quantity,:id_seller,:id_buyer,:id_product, :bill_pdf)";
 
             $req = $db->prepare($sql);
             $tabParam = [
@@ -127,7 +128,7 @@ class BillManager extends Manager
      * @param $id_facture ID de la facture a récuperer
      * @return PDOStatement $req Facture
      */
-    public static function getBillById($id)
+    public static function getBillById($id_bill)
     {
         $db = Database::getPDO();
         $sql = "SELECT 
@@ -139,7 +140,7 @@ class BillManager extends Manager
         INNER JOIN product Prod ON Bill.id_product = Prod.id_product
         INNER JOIN users Seller on Bill.id_seller = Seller.id_user
         INNER JOIN users Buyer on Bill.id_buyer = Buyer.id_user
-        WHERE id_billing = ".$id;
+        WHERE id_billing = ".$id_facture;
         return $req = $db->query($sql)->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -148,7 +149,7 @@ class BillManager extends Manager
      * Met a jour une facture
      * @return bool $result Vrai si Update reussis sinon Faux
      */
-    public static function updateBillById($id)
+    public static function updateBillById($id_bill)
     {
         $db = Database::getPDO();
         $sql = "UPDATE billing
@@ -157,15 +158,17 @@ class BillManager extends Manager
                 bill_pdf = :pdf,
                 id_seller = :id_seller,
                 id_buyer = :id_buyer,
-                id_product = :id_product";
+                id_product = :id_product
+                WHERE id_billing = $id_bill";
+        return $db->query($sql) != FALSE;
     }
 
     //DELETE
     /**
      * Supprime une facture
-     * @return bool $result Vrai si Update reussis sinon Faux
+     * @return bool $result Vrai si Delete reussis sinon Faux
      */
-    public static function deleteBillById($id)
+    public static function deleteBillById($id_bill)
     {
         $db = Database::getPDO();
         $sql = "DELETE FROM billing WHERE id_billing = $id";
