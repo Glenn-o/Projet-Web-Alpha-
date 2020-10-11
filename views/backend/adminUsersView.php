@@ -37,6 +37,9 @@ if($action == "affichage")
 }
 else if($action == "modification")
 {
+    print '<pre>';
+    print_r($user);
+    print '</pre>';
 ?>
     <div id="info_user2">
             <form action="index.php?page=adminSpace&vue=user&action=validation&user= <?= $user["id_user"] ?>" method="post" class="form_info_user" enctype="multipart/form-data">
@@ -78,6 +81,15 @@ else if($action == "modification")
 
                 <label class="label_info" id="lbl1" for="inp1">Téléphone</label>
                 <input type="number" class="text_info" id="inp1" name="phone" value="<?= $user["phone"] ?>">
+
+                <label class="label_info" id="lbl1" for="inp1">Téléphone</label>
+                <input type="number" class="text_info" id="inp1" name="phone" value="<?= $user["phone"] ?>">
+
+                <select name="role" id="select1">
+                    <option value="user" <?php echo $user["id_user_type"] === '1' ? "selected" : "" ?> >Utilisateur</option>
+                    <option value="modo" <?php echo $user["id_user_type"] === '2' ? "selected" : "" ?> >Modérateur</option>
+                    <option value="admin" <?php echo $user["id_user_type"] === '3' ? "selected" : "" ?> >Administrateur</option>
+                </select>
 
                 <button class="button_info" type="submit">Valider Changement</button>
             </form>

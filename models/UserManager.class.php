@@ -196,6 +196,13 @@ class UserManager extends Manager
                 $tabUpdate["email"] = Utils::GETPOST("email");
             if(Utils::GETPOST("username") != "")
                 $tabUpdate["username"] = Utils::GETPOST("username");
+            
+            switch(Utils::GETPOST("role"))
+            {
+                case "user" : $tabUpdate["id_user_type"] = 1; break;
+                case "modo" : $tabUpdate["id_user_type"] = 2; break;
+                case "admin" : $tabUpdate["id_user_type"] = 3; break;
+            }
             $tabUpdate["config_news"] = Utils::ISGETPOST("newsletter") ? "1" : 0;
             $tabUpdate["config_part"] = Utils::ISGETPOST("partnernews") ? "1" : 0;
             

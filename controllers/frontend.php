@@ -62,18 +62,7 @@ function register()
     Utils::ISGETPOST("country") and Utils::ISGETPOST("phone") and Utils::ISGETPOST("password") and
     Utils::ISGETPOST("email"))
     {
-        try
-        {
-            UserManager::createUser($message);
-        }
-        catch(Exception $error)
-        {
-        
-        }
-    }
-    else
-    {
-        $message = "Tout les champs ne sont pas remplis";
+        UserManager::createUser($message);
     }
 
     require("views/frontend/registerView.php");
